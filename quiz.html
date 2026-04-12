@@ -1,0 +1,403 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="assets/js/theme-critical.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Quiz - Pro Coding</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <style>
+        :root {
+            --quiz-max-w: 600px;
+            --container-p: 40px;
+            --title-fs: 32px;
+            --q-fs: 20px;
+            --opt-p: 15px 20px;
+            --btn-p: 18px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            min-height: 100dvh;
+            background: var(--bg-primary);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: background 0.5s ease;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            width: 100%;
+            max-width: var(--quiz-max-w);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: var(--container-p);
+            box-shadow: var(--shadow-medium);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Header */
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .quiz-title {
+            color: var(--text-primary);
+            font-size: var(--title-fs);
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .quiz-progress {
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Question */
+        .question-box {
+            background: var(--dark-overlay);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .question-text {
+            color: var(--text-primary);
+            font-size: var(--q-fs);
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        /* Options */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option-btn {
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 12px;
+            padding: var(--opt-p);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            font-family: 'Outfit', sans-serif;
+            outline: none;
+        }
+
+        .option-btn:hover {
+            background: var(--glass-bg-strong);
+            transform: translateX(5px);
+            border-color: var(--glass-border-strong);
+        }
+
+        .option-btn.selected {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: #f093fb;
+            box-shadow: 0 0 10px rgba(240, 147, 251, 0.3);
+        }
+
+        .option-btn.correct { background: rgba(46, 204, 113, 0.3) !important; border-color: #2ecc71 !important; }
+        .option-btn.wrong { background: rgba(231, 76, 60, 0.3) !important; border-color: #e74c3c !important; }
+
+        /* Next Button */
+        .next-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            border: none;
+            border-radius: 15px;
+            padding: var(--btn-p);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(245, 87, 108, 0.3);
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(245, 87, 108, 0.4);
+        }
+
+        /* Back Button */
+        .back-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 45px;
+            height: 45px;
+            background: var(--nav-icon-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .back-home:hover {
+            background: var(--nav-icon-hover);
+            transform: scale(1.05);
+        }
+
+        .back-home svg { width: 24px; height: 24px; fill: var(--text-primary); }
+
+        /* Results View */
+        .results-view { display: none; text-align: center; }
+        .score-circle { width: 140px; height: 140px; background: var(--glass-bg); border-radius: 50%; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center; border: 4px solid #f093fb; font-size: 32px; font-weight: 800; color: var(--text-primary); box-shadow: 0 0 30px rgba(240, 147, 251, 0.3); }
+        .result-msg { color: var(--text-primary); font-size: 20px; font-weight: 600; margin-bottom: 30px; }
+
+        /* 6-TIER RESPONSIVE ARCHITECTURE */
+        @media screen and (orientation: landscape) {
+            body { padding: 10px; justify-content: center; }
+            .back-home { top: 10px; left: 10px; width: 36px; height: 36px; border-radius: 10px; }
+            .back-home svg { width: 18px; height: 18px; }
+
+            /* TIER 1: Ultra-Compact (Height < 345px) */
+            @media (max-height: 344px) {
+                :root { --container-p: 12px; --title-fs: 18px; --q-fs: 14px; --opt-p: 8px 12px; --btn-p: 10px; }
+                .quiz-container { max-width: 90%; border-radius: 15px; }
+                .quiz-header { margin-bottom: 10px; }
+                .question-box { padding: 12px; margin-bottom: 12px; }
+                .options-grid { gap: 8px; margin-bottom: 15px; }
+                .option-btn { font-size: 13px; border-radius: 8px; }
+                .next-btn { font-size: 14px; border-radius: 10px; }
+                .score-circle { width: 90px; height: 90px; font-size: 22px; margin-bottom: 15px; }
+                .result-msg { font-size: 16px; margin-bottom: 15px; }
+            }
+
+            /* TIER 2: Compact-Mobile (345-374px) */
+            @media (min-height: 345px) and (max-height: 374px) {
+                :root { --container-p: 15px; --title-fs: 22px; --q-fs: 15px; --opt-p: 10px 15px; --btn-p: 12px; }
+                .options-grid { gap: 10px; margin-bottom: 20px; }
+            }
+
+            /* TIER 3: Standard-Mobile (375-399px) */
+            @media (min-height: 375px) and (max-height: 399px) {
+                :root { --container-p: 20px; --title-fs: 24px; --q-fs: 16px; --opt-p: 12px 18px; --btn-p: 14px; }
+            }
+
+            /* TIER 4: Large-Mobile (400-499px) */
+            @media (min-height: 400px) and (max-height: 499px) {
+                :root { --container-p: 25px; --title-fs: 26px; --q-fs: 18px; }
+            }
+
+            /* TIER 5: Small-Tablet (500-699px) */
+            @media (min-height: 500px) and (max-height: 699px) {
+                :root { --container-p: 35px; --quiz-max-w: 550px; }
+            }
+
+            /* TIER 6: Large-Tablet (700px+) */
+            @media (min-height: 700px) {
+                :root { --container-p: 40px; --quiz-max-w: 600px; }
+            }
+        }
+
+        .branding {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Center branding in nav */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            position: relative;
+        }
+        .nav-center-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            pointer-events: none;
+        }
+
+        .branding-icon {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .branding-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+    </style>
+
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+</head>
+
+<body>
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="javascript:history.back()" class="back-btn" title="Back">
+                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            </a>
+        </div>
+        <div class="nav-center-brand">
+            <div class="branding-icon">
+                <img src="assets/images/logo.png" alt="Logo">
+            </div>
+            <span class="branding-text">Pro coding</span>
+        </div>
+        <div class="nav-right"></div>
+    </nav>
+
+    <div class="quiz-container">
+        <!-- Quiz Content -->
+        <div id="quiz-content">
+            <div class="quiz-header">
+                <div class="quiz-title">Quiz Time!</div>
+                <div class="quiz-progress">Question <span id="current-q">1</span> of 5</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question-text" id="question-text">
+                    What does HTML stand for?
+                </div>
+            </div>
+
+            <div class="options-grid" id="options-container">
+                <!-- Options injected by JS -->
+            </div>
+
+            <button class="next-btn" onclick="nextQuestion()">NEXT QUESTION</button>
+        </div>
+
+        <!-- Results View -->
+        <div id="results-view" class="results-view">
+            <div class="quiz-title">Quiz Completed!</div>
+            <div class="score-circle">
+                <span id="final-score">0</span>%
+            </div>
+            <div class="result-msg" id="result-msg">Great job! Keep learning.</div>
+            <button class="next-btn" onclick="location.reload()">TRY AGAIN</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "What does HTML stand for?", options: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyperlink Text Management", "Home Tool Markup Language"], correct: 0 },
+            { q: "Which property is used to change the background color?", options: ["color", "bgcolor", "background-color", "bg-color"], correct: 2 },
+            { q: "Inside which HTML element do we put the JavaScript?", options: ["<js>", "<scripting>", "<script>", "<javascript>"], correct: 2 },
+            { q: "How do you select an element with id 'demo' in CSS?", options: [".demo", "#demo", "demo", "*demo"], correct: 1 },
+            { q: "Which HTML tag is used to define an internal style sheet?", options: ["<style>", "<script>", "<css>", "<design>"], correct: 0 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedOption = -1;
+
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const currentQSpan = document.getElementById('current-q');
+        const quizContent = document.getElementById('quiz-content');
+        const resultsView = document.getElementById('results-view');
+        const finalScoreSpan = document.getElementById('final-score');
+        const resultMsg = document.getElementById('result-msg');
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            questionText.textContent = q.q;
+            currentQSpan.textContent = currentQuestion + 1;
+            selectedOption = -1;
+            optionsContainer.innerHTML = '';
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.onclick = () => selectOption(btn, index);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectOption(btn, index) {
+            const buttons = optionsContainer.getElementsByClassName('option-btn');
+            for (let b of buttons) b.classList.remove('selected');
+            btn.classList.add('selected');
+            selectedOption = index;
+        }
+
+        function nextQuestion() {
+            if (selectedOption === -1) { alert("Please select an option!"); return; }
+            if (selectedOption === questions[currentQuestion].correct) score++;
+            currentQuestion++;
+            if (currentQuestion < questions.length) loadQuestion();
+            else showResults();
+        }
+
+        function showResults() {
+            quizContent.style.display = 'none';
+            resultsView.style.display = 'block';
+            const percentage = Math.round((score / questions.length) * 100);
+            finalScoreSpan.textContent = percentage;
+            if (percentage >= 80) resultMsg.textContent = "Outstanding! You're a pro!";
+            else if (percentage >= 60) resultMsg.textContent = "Good job! Keep practicing.";
+            else resultMsg.textContent = "Don't give up! Try again.";
+        }
+
+        loadQuestion();
+    </script>
+    <script src="assets/js/global-theme.js"></script>
+    <script src="assets/js/theme.js"></script>
+</body>
+
+</html>
+

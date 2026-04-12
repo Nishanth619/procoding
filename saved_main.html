@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <script src="assets/js/theme-critical.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Saved Content - Pro Coding</title>
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Default Theme synced with index.html */
+            --theme-color: #667eea;
+            --theme-bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+            
+            --folder-bg: var(--dynamic-nav-bg, rgba(255, 255, 255, 0.15));
+            --folder-border: var(--dynamic-nav-border, rgba(255, 255, 255, 0.2));
+            --folder-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100dvh;
+            background: var(--bg-primary);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: var(--dynamic-text-primary);
+            overflow-x: hidden;
+            transition: background 0.5s ease;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 30px;
+            background: var(--dynamic-nav-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--dynamic-nav-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        /* Centered branding */
+        .nav-center-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            pointer-events: none;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-btn {
+            width: 42px;
+            height: 42px;
+            background: var(--dynamic-nav-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--dynamic-nav-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn:hover {
+            background: var(--dynamic-nav-hover);
+            transform: translateY(-3px);
+        }
+
+        .back-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--dynamic-text-primary);
+        }
+
+        .branding {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .branding-icon {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .branding-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .branding-text {
+            color: var(--dynamic-text-primary);
+            font-size: 18px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--dynamic-nav-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--dynamic-nav-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-icon:hover {
+            transform: translateY(-3px);
+            background: var(--dynamic-nav-hover);
+        }
+
+        .nav-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--dynamic-text-primary);
+        }
+        /* Content Area */
+        .content-container {
+            padding: 5px 30px 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            color: var(--dynamic-text-primary);
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            letter-spacing: -1.5px;
+            text-align: left;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Section Layout */
+        .dashboard-section {
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 0 5px;
+        }
+
+        .section-title {
+            color: var(--dynamic-text-primary);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            opacity: 0.95;
+        }
+
+        /* Horizontal Scroll Container */
+        .scroll-wrapper {
+            position: relative;
+            margin: 0 -30px;
+            padding: 5px 30px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .scroll-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cards-row {
+            display: flex;
+            gap: 25px;
+            padding-bottom: 15px;
+        }
+
+        /* Folder Card Styling */
+        .folder-card {
+            flex: 0 0 auto;
+            width: 280px;
+            background: var(--folder-bg);
+            border: 1px solid var(--folder-border);
+            border-radius: 24px;
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--folder-shadow);
+        }
+
+        .folder-card:hover {
+            transform: translateY(-8px);
+            background: var(--dynamic-nav-hover, rgba(255, 255, 255, 0.25));
+            border-color: var(--theme-color);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+        }
+
+        .folder-icon-wrapper {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .folder-card:hover .folder-icon-wrapper {
+            background: var(--theme-color);
+            transform: scale(1.05);
+        }
+
+        .folder-icon-wrapper img {
+            width: 95%;
+            height: 95%;
+            object-fit: contain;
+        }
+
+        .folder-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .item-count {
+            font-size: 14px;
+            color: var(--dynamic-text-secondary);
+        }
+
+        /* Gallery Overlay Refinement */
+        #gallery-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            overflow-y: auto; /* Explicitly Vertical Scrollable */
+            padding-bottom: 50px;
+        }
+
+        .overlay-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 25px 30px 15px;
+            background: transparent;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 10px 30px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .screenshot-card {
+            background: var(--folder-bg);
+            border: 1px solid var(--folder-border);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot-thumb {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .screenshot-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .screenshot-info {
+            padding: 15px 20px 20px;
+        }
+
+        .screenshot-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--dynamic-text-primary);
+        }
+
+        .screenshot-meta {
+            font-size: 13px;
+            color: var(--dynamic-text-secondary);
+            margin-bottom: 12px;
+            display: flex;
+            gap: 15px;
+            font-weight: 500;
+        }
+
+        .screenshot-desc {
+            font-size: 14px;
+            color: var(--dynamic-text-secondary);
+            line-height: 1.5;
+            opacity: 0.8;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* ============================================ */
+        /* 6-TIER RESPONSIVE SYSTEM (Landscape-First)   */
+        /* ============================================ */
+
+        /* TIER 1: Ultra-Compact (Height < 320px) */
+        @media screen and (max-height: 319px) {
+            .top-nav { padding: 4px 15px 0; }
+            .branding-icon { width: 24px !important; height: 24px !important; }
+            .branding-text { display: none; }
+            .page-title { font-size: 14px; margin-bottom: 2px; }
+            .dashboard-section { margin-bottom: 8px; }
+            .section-header { margin-bottom: 4px; }
+            .section-title { font-size: 13px; }
+            .folder-card { width: 140px; padding: 8px; border-radius: 8px; }
+            .folder-icon-wrapper { width: 55px; height: 55px; border-radius: 6px; margin-bottom: 4px; }
+            .folder-name { font-size: 11px; }
+            .item-count { font-size: 9px; }
+            .scroll-wrapper { padding: 2px 30px; }
+
+            /* Gallery Refinements (4 IMAGES PER ROW) */
+            .screenshots-grid { gap: 8px; padding: 5px 15px 20px; }
+            .screenshot-card { border-radius: 8px; }
+            .screenshot-info { padding: 5px 8px 8px; }
+            .screenshot-title { font-size: 10px; margin-bottom: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .screenshot-meta { font-size: 8px; margin-bottom: 4px; gap: 5px; }
+            .screenshot-desc { display: none; }
+            #gallery-title { font-size: 16px; margin-bottom: 4px; }
+        }
+
+        /* TIER 2: Compact Mobile (320-359px height) */
+        @media screen and (min-height: 320px) and (max-height: 359px) {
+            .top-nav { padding: 6px 20px 2px; }
+            .branding-icon { width: 28px !important; height: 28px !important; }
+            .branding-text { font-size: 13px; }
+            .page-title { font-size: 16px; margin-bottom: 5px; }
+            .dashboard-section { margin-bottom: 12px; }
+            .section-header { margin-bottom: 6px; }
+            .section-title { font-size: 15px; }
+            .folder-card { width: 160px; padding: 12px 10px; border-radius: 10px; }
+            .folder-icon-wrapper { width: 75px; height: 75px; margin-bottom: 6px; }
+            .folder-name { font-size: 13px; }
+            .scroll-wrapper { padding: 4px 30px; }
+
+            /* Gallery Refinements (4 IMAGES PER ROW) */
+            .screenshots-grid { gap: 10px; padding: 8px 20px 25px; }
+            .screenshot-card { border-radius: 10px; }
+            .screenshot-info { padding: 8px 10px 10px; }
+            .screenshot-title { font-size: 12px; }
+            .screenshot-meta { font-size: 9px; margin-bottom: 6px; }
+            .screenshot-desc { font-size: 10px; -webkit-line-clamp: 1; line-clamp: 1; }
+            #gallery-title { font-size: 20px; margin-bottom: 8px; }
+        }
+
+        /* TIER 3: Standard Mobile (360-399px height) */
+        @media screen and (min-height: 360px) and (max-height: 399px) {
+            .top-nav { padding: 10px 25px 5px; }
+            .branding-icon { width: 36px !important; height: 36px !important; }
+            .branding-text { font-size: 16px; }
+            .page-title { font-size: 22px; margin-bottom: 12px; }
+            .dashboard-section { margin-bottom: 20px; }
+            .folder-card { width: 190px; padding: 20px 15px; }
+            .folder-icon-wrapper { width: 100px; height: 100px; }
+            .section-header { margin-bottom: 12px; }
+            .section-title { font-size: 18px; }
+
+            /* Gallery Refinements (4 IMAGES PER ROW) */
+            .screenshots-grid { gap: 12px; padding: 10px 25px 30px; }
+            .screenshot-info { padding: 10px 14px 14px; }
+            .screenshot-title { font-size: 14px; }
+            .screenshot-meta { font-size: 10px; }
+            .screenshot-desc { font-size: 11px; -webkit-line-clamp: 2; line-clamp: 2; }
+        }
+
+        /* TIER 4: Large Mobile (400-499px height) */
+        @media screen and (min-height: 400px) and (max-height: 499px) {
+            .top-nav { padding: 15px 30px 10px; }
+            .branding-icon { width: 44px !important; height: 44px !important; }
+            .page-title { font-size: 28px; margin-bottom: 20px; }
+            .dashboard-section { margin-bottom: 30px; }
+            .folder-card { width: 240px; padding: 30px 25px; }
+            .folder-icon-wrapper { width: 140px; height: 140px; margin-bottom: 15px; }
+
+            /* Gallery Refinements (4 IMAGES PER ROW) */
+            .screenshots-grid { gap: 15px; }
+            .screenshot-info { padding: 12px 18px 18px; }
+            .screenshot-title { font-size: 15px; }
+        }
+
+        /* TIER 5: Tablets (500-699px height) */
+        @media screen and (min-height: 500px) and (max-height: 699px) {
+            .top-nav { padding: 18px 30px 12px; }
+            .branding-icon { width: 48px !important; height: 48px !important; }
+            .page-title { font-size: 32px; margin-bottom: 25px; }
+            .dashboard-section { margin-bottom: 35px; }
+            .folder-card { width: 260px; padding: 35px 25px; }
+            .folder-icon-wrapper { width: 160px; height: 160px; }
+        }
+
+        /* TIER 6: Large Displays (700px+ height) */
+        @media screen and (min-height: 700px) {
+            .top-nav { padding: 25px 40px 15px; }
+            .branding-icon { width: 52px !important; height: 52px !important; }
+            .branding-text { font-size: 24px; }
+            .page-title { font-size: 42px; margin-bottom: 30px; }
+            .dashboard-section { margin-bottom: 40px; }
+            .folder-card { width: 320px; padding: 45px 35px; border-radius: 32px; }
+            .folder-icon-wrapper { width: 180px; height: 180px; border-radius: 28px; }
+            .folder-name { font-size: 26px; }
+        }
+
+        /* Global scrollbar hiding for webview cleanliness */
+        * {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        *::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="javascript:history.back()" class="back-btn" title="Back">
+                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            </a>
+        </div>
+        <div class="nav-center-brand">
+            <div class="branding-icon">
+                <img src="assets/images/logo.png" alt="Logo">
+            </div>
+            <span class="branding-text">Pro coding</span>
+        </div>
+        <div class="nav-icons">
+            <!-- Gallery Icon -->
+            <div class="nav-icon" title="View Gallery" onclick="window.location.href='saved.html'">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                </svg>
+            </div>
+            <!-- Settings Icon -->
+            <div class="nav-icon" title="Settings" onclick="window.location.href='settings.html'">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+                </svg>
+            </div>
+            <!-- Info Icon -->
+            <div class="nav-icon" title="Info" onclick="window.location.href='info.html'">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content-container">
+        <h1 class="page-title">Saved Content</h1>
+        
+        <!-- Courses Section -->
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2 class="section-title">Courses</h2>
+            </div>
+            <div class="scroll-wrapper">
+                <div id="courses-row" class="cards-row">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Languages Section -->
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2 class="section-title">Languages</h2>
+            </div>
+            <div class="scroll-wrapper">
+                <div id="languages-row" class="cards-row">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Overlay (Hidden by default) -->
+    <div id="gallery-overlay">
+        <div class="overlay-nav">
+            <div class="nav-left">
+                <div class="back-btn" onclick="closeGallery()" title="Back">
+                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                </div>
+                <div class="branding">
+                    <span class="branding-text">Pro coding</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-container" style="padding-top: 10px;">
+            <h1 id="gallery-title" class="page-title">Gallery</h1>
+            <div id="gallery-grid" class="screenshots-grid">
+                <!-- Screenshots injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/global-theme.js"></script>
+    <script>
+        const data = {
+            courses: [
+                { id: 'web', name: 'Web Dev', count: 8, icon: 'website.png' },
+                { id: 'unity', name: 'Unity', count: 4, icon: 'unity.png' },
+                { id: 'flutter', name: 'Flutter', count: 6, icon: 'andriod.png' },
+                { id: 'games', name: 'HTML5 Games', count: 3, icon: 'html.png' },
+                { id: 'react', name: 'React Native', count: 5, icon: 'andriod.png' },
+                { id: 'node', name: 'Node.js Backend', count: 7, icon: 'website.png' },
+                { id: 'sql', name: 'SQL Database', count: 4, icon: 'website.png' },
+                { id: 'animation_2d', name: '2D Animation', count: 4, icon: '2d_animation.png' },
+                { id: 'animation_3d', name: '3D Animation', count: 7, icon: '3d_animation.png' },
+                { id: 'printing_3d', name: '3D Printing', count: 2, icon: '3d_printing.png' },
+                { id: 'interior_design', name: 'Interior Design', count: 5, icon: 'interior_design1.png' },
+                { id: 'ui_ux', name: 'UI/UX Design', count: 9, icon: 'extras.png' },
+                { id: 'marketing', name: 'Digital Marketing', count: 3, icon: 'extras.png' },
+                { id: 'seo', name: 'SEO course', count: 6, icon: 'extras.png' }
+            ],
+            languages: [
+                { id: 'python', name: 'Python', count: 5, icon: 'python.png' },
+                { id: 'java', name: 'Java', count: 3, icon: 'html.png' },
+                { id: 'cpp', name: 'C++', count: 2, icon: 'html.png' },
+                { id: 'js', name: 'JavaScript', count: 4, icon: 'html.png' },
+                { id: 'php', name: 'PHP', count: 3, icon: 'html.png' },
+                { id: 'csharp', name: 'C#', count: 6, icon: 'unity.png' },
+                { id: 'swift', name: 'Swift', count: 4, icon: 'andriod.png' },
+                { id: 'go', name: 'Go Language', count: 2, icon: 'python.png' }
+            ]
+        };
+
+        const placeholderImages = [
+            'assets/images/bg home sc reen.png',
+            'assets/images/roadmap_new.png',
+            'assets/images/homepagebg.png'
+        ];
+
+        function initDashboard() {
+            Object.keys(data).forEach(category => {
+                const row = document.getElementById(`${category}-row`);
+                row.innerHTML = data[category].map(item => `
+                    <div class="folder-card" onclick="window.location.href='saved.html'">
+                        <div class="folder-icon-wrapper">
+                            <img src="assets/images/${item.icon}" alt="${item.name}">
+                        </div>
+                        <div class="folder-name">${item.name}</div>
+                        <div class="item-count">${item.count} items</div>
+                    </div>
+                `).join('');
+            });
+        }
+
+        function openGallery(id, name) {
+            const overlay = document.getElementById('gallery-overlay');
+            const grid = document.getElementById('gallery-grid');
+            const title = document.getElementById('gallery-title');
+
+            title.innerText = name;
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            const descriptions = [
+                "Captured key architectural patterns and component structure.",
+                "Summary of the core logic and state management flows.",
+                "Visual reference for the optimized UI layout and styles.",
+                "Important milestone achieved: core features fully implemented.",
+                "Technical notes on performance tuning and asset loading.",
+                "Draft conceptual design for the upcoming feature module."
+            ];
+
+            const now = new Date();
+
+            // Increased count to ensure vertical scrolling is visible
+            grid.innerHTML = Array.from({length: 12}).map((_, i) => {
+                const date = new Date(now);
+                date.setDate(now.getDate() - i); // Different days
+                const dateStr = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+                const timeStr = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+                const desc = descriptions[i % descriptions.length];
+
+                return `
+                <div class="screenshot-card">
+                    <div class="screenshot-thumb">
+                        <img src="${placeholderImages[i % 3]}" alt="Screenshot ${i+1}">
+                    </div>
+                    <div class="screenshot-info">
+                        <div class="screenshot-title">${name} Session ${i+1}</div>
+                        <div class="screenshot-meta">
+                            <span>${dateStr}</span>
+                            <span>${timeStr}</span>
+                        </div>
+                        <div class="screenshot-desc">${desc}</div>
+                    </div>
+                </div>
+            `;}).join('');
+        }
+
+        function closeGallery() {
+            const overlay = document.getElementById('gallery-overlay');
+            overlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onload = initDashboard;
+
+        if (typeof initTheme === 'function') initTheme();
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,2277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="assets/js/theme-critical.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Candy Coding Path</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/theme.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        cyan: {
+                            50: '#ecfeff',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            950: '#083344',
+                        },
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Default Theme */
+            --theme-color: #667eea;
+            --theme-bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+
+            /* Dynamic Contrast Variables (Ported from Landscaper) */
+            --dynamic-text-primary: #ffffff;
+            --dynamic-text-secondary: rgba(255, 255, 255, 0.85);
+            --dynamic-icon-fill: #ffffff;
+            --dynamic-nav-bg: rgba(255, 255, 255, 0.15);
+            --dynamic-nav-border: rgba(255, 255, 255, 0.2);
+            --dynamic-nav-hover: rgba(255, 255, 255, 0.25);
+            --dynamic-search-bg: rgba(255, 255, 255, 0.15);
+            --dynamic-search-border: rgba(255, 255, 255, 0.2);
+            --dynamic-btn-text: #ffffff;
+            --dynamic-btn-border: transparent;
+            --dynamic-btn-glow: none;
+
+            /* Roadmap Variables */
+            --grid-line: rgba(0, 210, 255, 0.07);
+            --orange-energy: #ff8c00;
+            --cyan-energy: #00d2ff;
+            --node-bg: rgba(16, 22, 32, 0.85);
+            --node-border: rgba(255, 140, 0, 0.3);
+            --energy-glow: 0 0 15px rgba(255, 140, 0, 0.4);
+            --pulse-glow: 0 0 20px rgba(0, 210, 255, 0.3);
+
+            /* HUD Adaptable Backgrounds */
+            --hud-bg: rgba(0, 0, 0, 0.3);
+            --hud-icon-bg: rgba(0, 0, 0, 0.6);
+            --hud-dot-bg: #020408;
+            --hud-border: rgba(255, 255, 255, 0.1);
+            --right-panel-bg: rgba(10, 14, 20, 0.4);
+        }
+
+        [data-theme=dark] {
+            --hud-bg: rgba(30, 35, 55, 0.85);
+            --hud-icon-bg: rgba(15, 20, 35, 0.95);
+            --hud-dot-bg: #ffffff;
+            --hud-border: rgba(255, 255, 255, 0.2);
+            --right-panel-bg: rgba(20, 25, 40, 0.4);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary, var(--theme-bg-gradient));
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Main layout: 100dvh + safe-area-insets applied via theme.css @supports */
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden !important;
+        }
+
+        .main-container {
+            display: flex; width: 100vw; height: 100dvh; flex-direction: row;
+            overflow: hidden; box-sizing: border-box; padding: 0; gap: 0;
+        }
+
+        /* height: 100% fills the safe-area-padded main-container, not full 100dvh */
+        .left-section {
+            width: 70%; height: 100%; margin: 0; overflow-y: auto; overflow-x: hidden;
+            position: relative; background: transparent;
+            border-right: 1.5px solid rgba(0,180,220,0.2);
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.2);
+            box-sizing: border-box; border-radius: 0; display: block;
+        }
+
+        .right-section {
+            width: 30%; height: 100%; display: flex; flex-direction: column;
+            gap: 8px; padding: 8px;
+            overflow-y: auto !important; overflow-x: hidden;
+            justify-content: flex-start; align-items: stretch; margin: 0;
+            box-sizing: border-box; background: rgba(10,14,20,0.4);
+            -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+        }
+
+        .branding-icon {
+            width: 48px; height: 48px; background: white; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+
+        .branding-icon img { width: 100%; height: 100%; object-fit: contain; }
+
+        .card {
+            width: 100%; max-width: none; flex: 1; min-height: 80px; display: flex;
+            flex-direction: column; justify-content: center; align-items: center;
+            padding: clamp(10px, 3vh, 25px); margin: 0; box-sizing: border-box; position: relative;
+        }
+
+        .card-icon {
+            width: clamp(30px, 8vh, 45px);
+            height: clamp(30px, 8vh, 45px);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .card-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .card-title {
+            font-size: clamp(14px, 3.5vh, 18px);
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .card-subtitle {
+            font-size: clamp(10px, 2.5vh, 12px);
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        /* Scaling Tiers based on HEIGHT (Landscape View) */
+        .responsive-scale-wrapper {
+            transform-origin: top center;
+            transition: transform 0.3s ease, margin 0.3s ease;
+            width: 800px;
+            max-width: none;
+            margin-left: calc(50% - 400px);
+            position: relative;
+        }
+
+        /* Base Height Scaling */
+        @media screen and (max-height: 450px) {
+            .responsive-scale-wrapper {
+                transform: scale(0.5);
+                margin-bottom: -500px;
+            }
+        }
+
+        @media screen and (min-height: 451px) and (max-height: 700px) {
+            .responsive-scale-wrapper {
+                transform: scale(0.7);
+                margin-bottom: -300px;
+            }
+        }
+
+        @media screen and (min-height: 701px) and (max-height: 900px) {
+            .responsive-scale-wrapper {
+                transform: scale(0.85);
+                margin-bottom: -150px;
+            }
+        }
+
+        @media screen and (min-height: 901px) {
+            .responsive-scale-wrapper {
+                transform: scale(1);
+                margin-bottom: 0px;
+            }
+
+            .card {
+                padding: 30px;
+                max-width: 450px;
+            }
+
+            .card-icon {
+                width: 70px;
+                height: 70px;
+            }
+
+            .card-title {
+                font-size: 22px;
+            }
+
+            .card-subtitle {
+                font-size: 16px;
+            }
+        }
+
+        /* Short landscape — Oppo Reno 10 and similar (~480px height) */
+        @media screen and (max-height: 500px) {
+            .right-section {
+                gap: 6px !important;
+                padding: 6px !important;
+            }
+
+            .card {
+                min-height: 60px !important;
+                padding: 6px !important;
+            }
+
+            .card-icon {
+                width: 22px !important;
+                height: 22px !important;
+                margin-bottom: 2px !important;
+            }
+
+            .card-title {
+                font-size: 11px !important;
+                letter-spacing: 0.5px !important;
+            }
+
+            .card-subtitle {
+                font-size: 9px !important;
+            }
+        }
+
+        /* Very short landscape — iPhone SE and similar (~375px height) */
+        @media screen and (max-height: 420px) {
+            .right-section {
+                gap: 4px !important;
+                padding: 5px !important;
+            }
+
+            .card {
+                min-height: 50px !important;
+                padding: 5px !important;
+            }
+
+            .card-icon {
+                width: 18px !important;
+                height: 18px !important;
+                margin-bottom: 1px !important;
+            }
+
+            .card-title {
+                font-size: 10px !important;
+                letter-spacing: 0px !important;
+            }
+
+            .card-subtitle {
+                display: none !important;
+            }
+        }
+
+        /* Strict Width Constraints to Prevent Cropping */
+        /* Small phones landscape (568–667px) */
+        @media screen and (max-width: 667px) {
+            .responsive-scale-wrapper {
+                transform: scale(0.50) !important;
+                margin-bottom: -500px !important;
+            }
+        }
+
+        /* Mid phones landscape (668–844px) */
+        @media screen and (min-width: 668px) and (max-width: 844px) {
+            .responsive-scale-wrapper {
+                transform: scale(0.65) !important;
+                margin-bottom: -350px !important;
+            }
+        }
+
+        /* Large phones landscape (845–932px) */
+        @media screen and (min-width: 845px) and (max-width: 932px) {
+            .responsive-scale-wrapper {
+                transform: scale(0.80) !important;
+                margin-bottom: -180px !important;
+            }
+        }
+
+        /* Small tablets landscape (933–1024px) */
+        @media screen and (min-width: 933px) and (max-width: 1024px) {
+            .responsive-scale-wrapper {
+                transform: scale(0.88) !important;
+                margin-bottom: -100px !important;
+            }
+        }
+
+        /* Standard tablets and up (1025px+) — full size, no scaling */
+        @media screen and (min-width: 1025px) {
+            .responsive-scale-wrapper {
+                transform: scale(1.0) !important;
+                margin-bottom: 0px !important;
+            }
+        }
+
+        /* Keep side brackets hidden on smaller screens */
+        @media screen and (max-width: 768px) {
+            .node-cert .side-bracket {
+                display: none !important;
+            }
+        }
+
+        .road-container {
+            position: relative;
+            width: 100%;
+            min-height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 0 40px 0;
+        }
+
+        /* Logic Pathway Styles */
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .connector-pulse::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        /* Progress Path Transition */
+        #progress-path-fill {
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* NEW ROADMAP STYLES */
+        .tree-container {
+            position: relative;
+            width: 800px;
+            margin: 0 auto;
+            padding: 0;
+            display: block;
+        }
+
+        /* S-CURVE ENERGY PATH STYLES */
+        .path-aura {
+            stroke-width: 24;
+            filter: blur(15px);
+            opacity: 0.4;
+        }
+
+        .path-glow {
+            stroke-width: 10;
+            filter: blur(4px);
+            opacity: 0.8;
+        }
+
+        .path-core {
+            stroke-width: 3;
+            stroke: #fff;
+            filter: blur(0.5px);
+        }
+
+        .filament {
+            stroke-width: 1;
+            stroke-dasharray: 4;
+            opacity: 0.5;
+        }
+
+        .energy-path-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .level-row {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            z-index: 2;
+            transition: all 0.4s ease;
+            --energy-color: var(--cyan-energy);
+        }
+
+        .row-basic {
+            top: 158px;
+            left: 160px;
+            transform: translate(-50%, -50%);
+            --energy-color: #ff3131;
+        }
+
+        .row-intermediate {
+            top: 420px;
+            left: 480px;
+            transform: translate(-50%, -50%);
+            --energy-color: #39ff14;
+        }
+
+        .row-advance {
+            top: 683px;
+            left: 160px;
+            transform: translate(-50%, -50%);
+            --energy-color: #6b03fc;
+        }
+
+        .row-cert-container {
+            position: absolute;
+            top: 945px;
+            left: 480px;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            z-index: 2;
+            --energy-color: #ffd700;
+        }
+
+        /* Quiz nodes placed at SVG mid-points */
+        .quiz-container-1 {
+            top: 289px;
+            left: 320px;
+            transform: translate(-50%, -50%);
+        }
+
+        .quiz-container-2 {
+            top: 551px;
+            left: 320px;
+            transform: translate(-50%, -50%);
+        }
+
+        .quiz-container-3 {
+            top: 814px;
+            left: 320px;
+            transform: translate(-50%, -50%);
+        }
+
+        .node-quiz {
+            display: none !important;
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: var(--energy-color);
+            opacity: 0.7;
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 3;
+            transition: all 0.3s ease;
+        }
+
+        .node-quiz:hover {
+            transform: scale(1.1);
+            opacity: 1;
+            box-shadow: 0 0 20px var(--energy-color);
+        }
+
+        .connector-left,
+        .connector-right,
+        .connector-to-cert {
+            display: none !important;
+        }
+
+        /* Node Anatomy - Level Node (8-Point Framing) */
+        .node-main {
+            width: 260px;
+            height: 80px;
+            background: transparent;
+            border: 2px solid var(--energy-color);
+            border-radius: 15px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Color Variants for Nodes */
+        .node-basic {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)), rgba(255, 49, 49, var(--node-glass-opacity, 0.7));
+            border: 2px solid #ff3131;
+            --energy-color: #ff3131;
+            box-shadow: inset 0 0 20px rgba(255, 49, 49, 0.2);
+            --node-content-color: #ffffff;
+            --node-text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .node-intermediate {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)), rgba(57, 255, 20, var(--node-glass-opacity, 0.7));
+            border: 2px solid #39ff14;
+            --energy-color: #39ff14;
+            box-shadow: inset 0 0 20px rgba(57, 255, 20, 0.2);
+            --node-content-color: #1a1a1a;
+            --node-text-shadow: none;
+        }
+
+        .node-advance {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)), rgba(107, 3, 252, var(--node-glass-opacity, 0.7));
+            border: 2px solid #6b03fc;
+            --energy-color: #6b03fc;
+            box-shadow: inset 0 0 20px rgba(107, 3, 252, 0.2);
+            --node-content-color: #ffffff;
+            --node-text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .node-cert-variant:hover {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05)), rgba(2, 86, 155, calc(var(--node-glass-opacity, 0.7) + 0.1));
+            border-color: #02569b;
+        }
+
+        .node-main svg {
+            width: 32px;
+            height: 32px;
+            color: var(--node-content-color, #ffffff);
+            fill: currentColor;
+            filter: drop-shadow(0 0 8px var(--energy-color));
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            animation: icon-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes icon-pulse {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 8px var(--energy-color));
+                opacity: 0.8;
+            }
+
+            50% {
+                filter: drop-shadow(0 0 15px var(--energy-color));
+                opacity: 1;
+            }
+        }
+
+        .node-main:hover svg {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 12px var(--energy-color));
+            animation-play-state: paused;
+        }
+
+        .node-main h2 {
+            font-weight: 300;
+            font-size: 2rem;
+            letter-spacing: 1px;
+            color: var(--node-content-color, #ffffff);
+            text-shadow: var(--node-text-shadow, 0 0 10px rgba(255, 255, 255, 0.1));
+            font-family: 'Outfit', sans-serif;
+            transition: color 0.3s ease;
+        }
+
+        /* HUD Brackets - 8 Point System */
+        .corner {
+            position: absolute;
+            width: 40px;
+            height: 30px;
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+
+        .corner-tl {
+            top: -10px;
+            left: -10px;
+            border-top: 4px solid var(--energy-color, var(--orange-energy));
+            border-left: 4px solid var(--energy-color, var(--orange-energy));
+            filter: drop-shadow(-2px -2px 8px var(--energy-color, var(--orange-energy)));
+        }
+
+        .corner-tr {
+            top: -10px;
+            right: -10px;
+            border-top: 4px solid var(--energy-color, var(--orange-energy));
+            border-right: 4px solid var(--energy-color, var(--orange-energy));
+            filter: drop-shadow(2px -2px 8px var(--energy-color, var(--orange-energy)));
+        }
+
+        .corner-bl {
+            bottom: -10px;
+            left: -10px;
+            border-bottom: 4px solid var(--energy-color, var(--orange-energy));
+            border-left: 4px solid var(--energy-color, var(--orange-energy));
+            filter: drop-shadow(-2px 2px 8px var(--energy-color, var(--orange-energy)));
+        }
+
+        .corner-br {
+            bottom: -10px;
+            right: -10px;
+            border-bottom: 4px solid var(--energy-color, var(--orange-energy));
+            border-right: 4px solid var(--energy-color, var(--orange-energy));
+            filter: drop-shadow(2px 2px 8px var(--energy-color, var(--orange-energy)));
+        }
+
+        /* Center Side Tabs (The "8-point" additions) */
+        .node-main::before {
+            content: '';
+            position: absolute;
+            background: var(--energy-color, var(--orange-energy));
+            box-shadow: 0 0 12px var(--energy-color, var(--orange-energy));
+            z-index: 3;
+            width: 60px;
+            height: 3px;
+            top: -1.5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Bottom Tab - HUD Style */
+        .bottom-tab {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            bottom: -1.5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--energy-color, var(--orange-energy));
+            box-shadow: 0 0 12px var(--energy-color, var(--orange-energy));
+            z-index: 3;
+        }
+
+        /* Updated Side Notch Brackets - Restricted to Certificate only */
+        .node-cert .side-bracket {
+            position: absolute;
+            width: 40px;
+            height: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 2px solid var(--energy-color);
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 10px var(--energy-color);
+            z-index: 3;
+            display: block !important;
+        }
+
+        .node-main .side-bracket {
+            display: none !important;
+        }
+
+        .side-bracket-l {
+            left: -20px;
+            border-right: none;
+        }
+
+        .side-bracket-r {
+            right: -20px;
+            border-left: none;
+        }
+
+        /* Universal Inner HUD Border - Restricted to Certificate only */
+        .node-cert::after {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .node-main::after {
+            display: none !important;
+        }
+
+        .node-main:hover .corner {
+            width: 50px;
+            height: 40px;
+            filter: brightness(1.3) drop-shadow(0 0 15px var(--energy-color));
+        }
+
+        /* Quiz Diamonds (Double-Bordered) */
+        .node-quiz {
+            width: 60px;
+            height: 60px;
+            background: var(--energy-color);
+            opacity: 0.7;
+            border: 2px solid white;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px var(--energy-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .node-quiz::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .node-quiz:hover {
+            transform: scale(1.15);
+            opacity: 0.9;
+            box-shadow: 0 0 25px var(--energy-color);
+        }
+
+        .node-quiz span {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--dynamic-text-primary, #ffffff);
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            transition: color 0.3s ease;
+        }
+
+        .node-cert {
+            width: 340px;
+            height: 100px;
+            border-radius: 15px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            cursor: pointer;
+            z-index: 2;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)), rgba(255, 215, 0, var(--node-glass-opacity, 0.7));
+            border: 2px solid var(--dynamic-btn-border, #ffd700);
+            --energy-color: #ffd700;
+            --node-content-color: var(--dynamic-btn-text, #1a1a1a);
+            --node-text-shadow: none;
+            box-shadow: var(--dynamic-btn-glow, 0 0 20px rgba(255, 215, 0, 0.2)), inset 0 0 15px rgba(255, 215, 0, 0.1);
+            animation: nodePulse 3s infinite ease-in-out;
+        }
+
+        @keyframes nodePulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(var(--pulse-color, 255, 255, 255), 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(var(--pulse-color, 255, 255, 255), 0.4);
+            }
+        }
+
+        .node-basic {
+            --pulse-color: 255, 49, 49;
+            animation: nodePulse 4s infinite ease-in-out;
+        }
+
+        .node-intermediate {
+            --pulse-color: 57, 255, 20;
+            animation: nodePulse 4s infinite ease-in-out 1s;
+        }
+
+        .node-advance {
+            --pulse-color: 107, 3, 252;
+            animation: nodePulse 4s infinite ease-in-out 2s;
+        }
+
+        .node-cert {
+            --pulse-color: 255, 215, 0;
+            animation: nodePulse 4s infinite ease-in-out 3s;
+        }
+
+        .node-cert::after {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .node-cert svg {
+            width: 54px;
+            height: 54px;
+            color: var(--node-content-color, #ffd700);
+            fill: currentColor;
+            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5));
+        }
+
+        .node-cert h2 {
+            font-size: 2.2rem;
+            letter-spacing: 3px;
+            color: var(--node-content-color, #ffffff);
+            text-shadow: var(--node-text-shadow, 0 0 15px rgba(255, 215, 0, 0.2));
+        }
+
+        .node-cert .side-bracket {
+            display: block !important;
+            width: 40px;
+            height: 25px;
+            border: 2px solid #ffd700;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 6px;
+        }
+
+        .node-cert .side-bracket-l {
+            left: -20px;
+            border-right: none;
+        }
+
+        .node-cert .side-bracket-r {
+            right: -20px;
+            border-left: none;
+        }
+
+        .node-cert:hover {
+            transform: scale(1.05);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1)), rgba(255, 215, 0, 0.95);
+            border-color: #ffffff;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.7);
+        }
+
+        .node-cert span {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: var(--dynamic-contrast-text, #ffffff);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            font-family: 'Outfit', sans-serif;
+            transition: color 0.3s ease;
+        }
+
+        .node-cert .corner {
+            width: 18px;
+            height: 12px;
+            border-width: 2px;
+            filter: none;
+        }
+
+        .node-cert .corner-tl {
+            top: -4px;
+            left: -4px;
+        }
+
+        .node-cert .corner-tr {
+            top: -4px;
+            right: -4px;
+        }
+
+        .node-cert .corner-bl {
+            bottom: -4px;
+            left: -4px;
+        }
+
+        .node-cert .corner-br {
+            bottom: -4px;
+            right: -4px;
+        }
+
+        .connector-to-cert {
+            width: 60px;
+            height: 5px;
+            background: #ffd700;
+            box-shadow: 0 0 15px #ffd700;
+            z-index: 1;
+        }
+
+        /* Custom scrollbar styling */
+        .left-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .left-section::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+        }
+
+        .left-section::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 4px;
+        }
+
+        .left-section::-webkit-scrollbar-thumb:hover {
+            background: var(--scrollbar-thumb-hover);
+        }
+
+        /* Right Section - Cards (30%) */
+        .right-section {
+            width: 30%;
+            min-width: 150px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 12px;
+            justify-content: flex-start;
+            background: var(--right-panel-bg);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            position: relative;
+        }
+
+        /* Force bottom padding in flex scroll container */
+        .right-section::after {
+            content: '';
+            display: block;
+            min-height: 1px;
+            flex-shrink: 0;
+        }
+
+        /* Floating Theme Fab in Right Section */
+        .floating-theme-fab {
+            position: absolute;
+            top: clamp(6px, 1.5vh, 15px);
+            right: clamp(6px, 1.5vh, 15px);
+            width: clamp(28px, 5vh, 36px);
+            height: clamp(28px, 5vh, 36px);
+            background: var(--dynamic-nav-bg, rgba(255, 255, 255, 0.1));
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--dynamic-nav-border, rgba(255, 255, 255, 0.2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .floating-theme-fab:hover {
+            background: var(--dynamic-nav-hover, rgba(255, 255, 255, 0.2));
+            transform: scale(1.1);
+        }
+
+        .floating-theme-fab svg {
+            width: clamp(14px, 3vh, 20px);
+            height: clamp(14px, 3vh, 20px);
+            fill: var(--dynamic-text-primary, white);
+        }
+
+        /* Card Base Styles */
+        .card {
+            flex: 1 1 0;
+            min-height: 0;
+            /* Crucial for preventing flex overflow */
+            border-radius: clamp(12px, 3vh, 24px);
+            padding: clamp(8px, 2vh, 25px);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Installation Card - Orange/Gold Theme */
+        .installation-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.01)), rgba(255, 140, 0, var(--node-glass-opacity, 0.7));
+            --energy-color: var(--orange-energy);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 140, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .installation-card:hover {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05)), rgba(255, 140, 0, calc(var(--node-glass-opacity, 0.7) + 0.1));
+            border-color: rgba(255, 140, 0, 0.6);
+        }
+
+        /* Mini Project Card - Cyan/Blue Theme */
+        .mini-projects-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.01)), rgba(0, 198, 251, var(--node-glass-opacity, 0.7));
+            --energy-color: #00c6fb;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 198, 251, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .mini-projects-card:hover {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05)), rgba(0, 198, 251, calc(var(--node-glass-opacity, 0.7) + 0.1));
+            border-color: rgba(0, 198, 251, 0.6);
+        }
+
+        /* Saved Card - Purple/Violet Theme */
+        .saved-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.01)), rgba(217, 70, 184, var(--node-glass-opacity, 0.7));
+            --energy-color: #d946b8;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(217, 70, 184, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .saved-card:hover {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05)), rgba(217, 70, 184, calc(var(--node-glass-opacity, 0.7) + 0.1));
+            border-color: rgba(217, 70, 184, 0.6);
+        }
+
+        /* Unified Corner Styling for Cards and Nodes */
+        .card .corner {
+            width: clamp(15px, 4vh, 30px);
+            height: clamp(10px, 3vh, 20px);
+        }
+
+        .card:hover .corner {
+            width: clamp(20px, 5vh, 45px);
+            height: clamp(15px, 4vh, 35px);
+            filter: brightness(1.3) drop-shadow(0 0 15px var(--energy-color));
+        }
+
+        /* HUD Center Tabs for Cards */
+        .card::before {
+            content: '';
+            position: absolute;
+            background: var(--energy-color);
+            box-shadow: 0 0 4px var(--energy-color);
+            z-index: 3;
+            width: 40%;
+            height: 3px;
+            top: -1.5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            background: var(--energy-color);
+            box-shadow: 0 0 4px var(--energy-color);
+            z-index: 3;
+            width: 40%;
+            height: 3px;
+            bottom: -1.5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Icon Styles Upgrade */
+        .card-icon {
+            width: clamp(24px, 6vh, 50px);
+            height: clamp(24px, 6vh, 50px);
+            margin-bottom: clamp(4px, 1.5vh, 15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1);
+        }
+
+        .card-icon svg {
+            width: 100%;
+            height: 100%;
+            color: var(--dynamic-text-primary, #ffffff);
+            fill: currentColor;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon svg {
+            filter: drop-shadow(0 0 20px var(--energy-color));
+        }
+
+        /* Card Typography Upgrade */
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(12px, 3vh, 24px);
+            font-weight: 300;
+            letter-spacing: clamp(1px, 0.3vw, 3px);
+            color: var(--dynamic-text-primary);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            margin-bottom: clamp(2px, 0.5vh, 6px);
+            transition: color 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .card-subtitle {
+            font-size: clamp(9px, 2vh, 14px);
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: var(--dynamic-text-secondary);
+            transition: color 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        /* Side Brackets and Tabs for Cards */
+        .card .side-bracket {
+            height: clamp(20px, 5vh, 40px);
+        }
+
+        .card .bottom-tab,
+        .card::before {
+            width: 80px;
+        }
+
+        .saved-card .card-subtitle {
+            color: rgba(232, 216, 240, 0.65);
+        }
+
+        /* Landscape Enforcer for Mobile Portrait */
+        #landscape-prompt {
+            display: none;
+        }
+
+        @media screen and (orientation: portrait),
+        screen and (max-aspect-ratio: 1/1) {
+            #landscape-prompt {
+                display: flex !important;
+            }
+
+            .main-container {
+                display: none !important;
+            }
+
+            body {
+                background: #020617 !important;
+            }
+        }
+
+        #popover-indicators {
+            align-items: center;
+        }
+
+        .popover-dot-hit {
+            appearance: none;
+            border: none;
+            background: transparent;
+            padding: 0;
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            cursor: pointer;
+        }
+
+        .popover-slide-dot {
+            width: 8px;
+            height: 8px;
+            min-width: 8px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.4);
+            display: block;
+            pointer-events: none;
+            transition: transform 0.25s ease, background-color 0.25s ease, opacity 0.25s ease;
+        }
+
+        .popover-dot-hit:hover .popover-slide-dot {
+            background: rgba(255, 255, 255, 0.65);
+        }
+
+        .popover-dot-hit.is-active .popover-slide-dot {
+            background: #ffffff;
+            transform: scale(1.35);
+        }
+
+        /* Modal Landscape Height Responsiveness */
+        @media screen and (max-height: 600px) {
+            #inline-preview-popover {
+                width: 220px !important;
+            }
+
+            #inline-preview-popover .h-\[120px\] {
+                height: 100px !important;
+            }
+        }
+
+        @media screen and (max-height: 450px) {
+
+            /* Inline Popover Shrink for Mobile Landscape */
+            #inline-preview-popover {
+                width: 200px !important;
+            }
+
+            #inline-preview-popover .p-3 {
+                padding: 10px !important;
+                gap: 8px !important;
+            }
+
+            #inline-preview-popover .h-\[120px\] {
+                height: 80px !important;
+            }
+
+            #popover-slide-desc {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                min-height: 28px !important;
+                font-size: 10px !important;
+                line-height: 1.3 !important;
+                margin-bottom: -4px !important;
+            }
+
+            #popover-start-btn {
+                padding-top: 6px !important;
+                padding-bottom: 6px !important;
+                font-size: 10px !important;
+            }
+        }
+
+        @media screen and (max-height: 400px) {
+            #inline-preview-popover {
+                width: 200px !important;
+            }
+
+            #inline-preview-popover .p-3 {
+                padding: 10px !important;
+                gap: 8px !important;
+            }
+
+            #inline-preview-popover .h-\[120px\] {
+                height: 80px !important;
+            }
+
+            #popover-slide-title {
+                font-size: 13px !important;
+                margin-bottom: 3px !important;
+                line-height: 1.2 !important;
+            }
+
+            #popover-slide-desc {
+                display: -webkit-box !important;
+                -webkit-line-clamp: 2 !important;
+                line-clamp: 2 !important;
+                -webkit-box-orient: vertical !important;
+                overflow: hidden !important;
+                min-height: 24px !important;
+                font-size: 10px !important;
+                line-height: 1.2 !important;
+                margin-bottom: 2px !important;
+            }
+
+            #popover-indicators {
+                bottom: 4px !important;
+            }
+
+            #popover-start-btn {
+                padding-top: 6px !important;
+                padding-bottom: 6px !important;
+                font-size: 11px !important;
+            }
+        }
+
+        @media screen and (max-height: 350px) {
+
+            /* Ultra-Short Inline Popover */
+            #inline-preview-popover {
+                width: 180px !important;
+            }
+
+            #inline-preview-popover .p-3 {
+                padding: 8px !important;
+                gap: 6px !important;
+            }
+
+            #inline-preview-popover .h-\[120px\] {
+                height: 60px !important;
+            }
+
+            #popover-slide-title {
+                font-size: 11px !important;
+                margin-bottom: 2px !important;
+                line-height: 1.2 !important;
+            }
+
+            #popover-slide-desc {
+                display: -webkit-box !important;
+                -webkit-line-clamp: 2 !important;
+                line-clamp: 2 !important;
+                -webkit-box-orient: vertical !important;
+                overflow: hidden !important;
+                min-height: 20px !important;
+                font-size: 9px !important;
+                line-height: 1.1 !important;
+                margin-bottom: 2px !important;
+            }
+
+            #popover-start-btn {
+                padding-top: 5px !important;
+                padding-bottom: 5px !important;
+                font-size: 10px !important;
+            }
+
+            .popover-slide-dot {
+                width: 6px !important;
+                height: 6px !important;
+                min-width: 6px !important;
+            }
+        }
+
+        /* Focus Highlight CSS */
+        body.preview-active .node-wrapper:not(.focused-node) {
+            opacity: 0.2;
+            filter: grayscale(80%) blur(2px);
+            pointer-events: none;
+        }
+
+        body.preview-active .right-section {
+            opacity: 0.2;
+            filter: grayscale(80%) blur(2px);
+            pointer-events: none;
+        }
+
+        body.preview-active>.main-container>.left-section svg {
+            opacity: 0.2;
+            filter: grayscale(80%);
+            transition: all 0.4s ease;
+        }
+
+        .node-wrapper {
+            transition: all 0.4s ease;
+        }
+
+        .focused-node {
+            z-index: 50 !important;
+        }
+
+        .focused-node .rounded-2xl {
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.25) !important;
+            border-color: rgba(255, 255, 255, 0.8) !important;
+            transform: scale(1.05);
+            transition: all 0.4s ease;
+        }
+    </style>
+
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+</head>
+
+<body class="text-white selection:bg-cyan-500/30 font-sans backdrop-blur-sm">
+    <!-- Navigation Back Button -->
+    <a href="index.html"
+        style="background: var(--dynamic-nav-bg); border-color: var(--dynamic-nav-border); color: var(--dynamic-text-primary);"
+        class="fixed top-5 left-5 z-[100000] w-12 h-12 flex items-center justify-center backdrop-blur-md border rounded-xl hover:bg-white/20 hover:-translate-x-1 transition-all duration-300 shadow-lg cursor-pointer">
+        <svg viewBox="0 0 24 24" class="w-6 h-6 fill-none stroke-current" style="stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+    </a>
+
+    <!-- Mobile Portrait Landscape Prompt -->
+    <div id="landscape-prompt"
+        class="fixed inset-0 z-[99999] bg-slate-950 flex flex-col items-center justify-center text-white">
+        <svg class="w-16 h-16 mb-6 animate-pulse text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+            </path>
+        </svg>
+        <h2 class="text-2xl font-bold font-sans text-center px-4">Rotate Your Device</h2>
+        <p class="text-slate-400 mt-2 text-center px-6">This interactive roadmap is built exclusively for landscape
+            viewing.</p>
+    </div>
+
+    <div class="main-container">
+        <!-- Left Section - Candy Road Background -->
+        <div class="left-section">
+
+            <!-- Scaling Wrapper -->
+            <div class="responsive-scale-wrapper w-[800px] flex flex-col items-center relative py-12">
+
+
+
+                <!-- Connection Cable SVG -->
+                <svg class="absolute left-1/2 top-0 -translate-x-1/2 w-[400px] h-[950px] pointer-events-none z-0 block"
+                    viewBox="0 0 400 950" overflow="visible">
+                    <defs>
+                        <linearGradient id="progressGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" stop-color="#6366f1" stop-opacity="1" /> <!-- Indigo -->
+                            <stop offset="30%" stop-color="#22d3ee" stop-opacity="1" /> <!-- Cyan -->
+                            <stop offset="60%" stop-color="#f97316" stop-opacity="1" /> <!-- Orange -->
+                            <stop offset="85%" stop-color="#ef4444" stop-opacity="1" /> <!-- Red -->
+                            <stop offset="100%" stop-color="#fbbf24" stop-opacity="1" /> <!-- Gold -->
+                        </linearGradient>
+
+                        <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                            <feMerge>
+                                <feMergeNode in="coloredBlur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <!-- 1. Background Track -->
+                    <path
+                        d="M 200 152 C 200 226, 160 226, 160 300 C 160 376, 240 376, 240 452 C 240 528, 160 528, 160 604 C 160 690, 200 690, 200 776"
+                        fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="12" stroke-linecap="round"
+                        stroke-linejoin="round" class="" />
+
+                    <!-- 2. Rail Lines -->
+                    <path
+                        d="M 200 152 C 200 226, 160 226, 160 300 C 160 376, 240 376, 240 452 C 240 528, 160 528, 160 604 C 160 690, 200 690, 200 776"
+                        fill="none" stroke="#334155" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"
+                        class="opacity-50" />
+
+                    <!-- 3. Active Progress FILL -->
+                    <path id="progress-path-fill"
+                        d="M 200 776 C 200 690, 160 690, 160 604 C 160 528, 240 528, 240 452 C 240 376, 160 376, 160 300 C 160 226, 200 226, 200 152"
+                        fill="none" stroke="url(#progressGradient)" stroke-width="8" stroke-linecap="round"
+                        stroke-linejoin="round" filter="url(#neonGlow)" class="opacity-80" />
+
+                    <!-- 4. Center Groove -->
+                    <path
+                        d="M 200 152 C 200 226, 160 226, 160 300 C 160 376, 240 376, 240 452 C 240 528, 160 528, 160 604 C 160 690, 200 690, 200 776"
+                        fill="none" stroke="#020408" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="opacity-80" />
+
+                    <!-- Pulse Orb - Updated path -->
+                    <circle r="4" fill="#fff" opacity="0.9" filter="url(#neonGlow)">
+                        <animateMotion dur="6s" repeatCount="indefinite"
+                            path="M 200 776 C 200 690, 160 690, 160 604 C 160 528, 240 528, 240 452 C 240 376, 160 376, 160 300 C 160 226, 200 226, 200 152" />
+                    </circle>
+                </svg>
+
+                <div class="relative z-10 flex flex-col items-center gap-16 w-full max-w-2xl">
+
+                    <!-- 1. Certificate -->
+                    <div id="btn-cert" onclick="navigateWithProgress('certificate-upload.html', 100)"
+                        class="node-wrapper w-full flex justify-center order-1 mb-10">
+                        <div
+                            class="relative group z-10 transition-transform duration-300 hover:-translate-y-1 w-full max-w-lg cursor-pointer">
+                            <!-- Tag -->
+                            <div
+                                class="absolute -top-3 right-8 px-3 py-1 text-[10px] font-mono uppercase tracking-widest bg-[var(--hud-icon-bg)] border border-amber-500/30 text-amber-200 z-20 rounded-md shadow-lg">
+                                FINAL_STAGE</div>
+
+                            <!-- Card -->
+                            <div
+                                class="relative overflow-hidden rounded-2xl border border-amber-500/40 bg-[var(--hud-bg)] p-6 backdrop-blur-xl shadow-[0_0_30px_rgba(245,158,11,0.05)] group-hover:border-amber-400 group-hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all duration-300">
+                                <!-- Spotlight Gradient -->
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-transparent to-transparent opacity-60">
+                                </div>
+
+                                <div class="relative z-10 flex items-center justify-between">
+                                    <div class="flex items-center gap-6">
+                                        <!-- Icon Box -->
+                                        <div
+                                            class="flex h-14 w-14 items-center justify-center rounded-xl bg-[var(--hud-icon-bg)] border border-amber-500/20 shadow-[inset_0_0_15px_rgba(245,158,11,0.1)]">
+                                            <i data-lucide="trophy" class="w-7 h-7 text-amber-400"></i>
+                                        </div>
+                                        <div>
+                                            <h2 class="text-3xl font-bold tracking-wide text-amber-50">CERTIFICATE</h2>
+                                            <!-- Decorative Line -->
+                                            <div class="mt-2 flex items-center gap-1.5 opacity-80">
+                                                <div class="h-1.5 w-12 rounded-full bg-amber-500"></div>
+                                                <div class="h-1.5 w-1.5 rounded-full bg-amber-500/50"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <i data-lucide="chevron-right"
+                                        class="w-6 h-6 text-white/50 group-hover:text-amber-200 transition-colors"></i>
+                                </div>
+                            </div>
+
+                            <!-- Vertical Bottom Connector -->
+                            <div
+                                class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 z-20 flex items-center justify-center text-amber-500 connector-pulse">
+                                <div class="w-3 h-3 bg-[var(--hud-dot-bg)] border-2 border-current rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Advanced -->
+                    <div id="btn-adv" onclick="togglePreviewPanel(event, this, 'advanced')"
+                        class="node-wrapper relative group z-10 -translate-x-[190px] w-[300px] order-2 cursor-pointer transition-transform duration-300 hover:-translate-y-1">
+                        <div
+                            class="absolute -top-3 right-6 px-3 py-1 text-[10px] font-mono uppercase tracking-widest bg-[var(--hud-icon-bg)] border border-red-500/30 text-red-200 z-20 rounded-md">
+                            LEVEL_SEQUENCE</div>
+
+                        <div
+                            class="relative overflow-hidden rounded-2xl border border-red-500/40 bg-[var(--hud-bg)] p-5 backdrop-blur-xl shadow-[0_0_20px_rgba(239,68,68,0.05)] group-hover:border-red-400 group-hover:shadow-[0_0_25px_rgba(239,68,68,0.3)] transition-all">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-red-500/10 via-transparent to-transparent opacity-60">
+                            </div>
+                            <div class="relative z-10 flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--hud-icon-bg)] border border-red-500/20 shadow-[inset_0_0_10px_rgba(239,68,68,0.1)]">
+                                        <i data-lucide="flame" class="w-6 h-6 text-red-500"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-xl font-bold tracking-wide text-red-50">ADVANCED</h2>
+                                        <!-- Decorative Line -->
+                                        <div class="mt-2 flex items-center gap-1.5 opacity-80">
+                                            <div class="h-1 w-12 rounded-full bg-red-500"></div>
+                                            <div class="h-1 w-1 rounded-full bg-red-500/50"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right"
+                                    class="w-5 h-5 text-white/50 group-hover:text-red-200 transition-colors"></i>
+                            </div>
+                        </div>
+
+                        <!-- Right Connector -->
+                        <div
+                            class="absolute top-1/2 -translate-y-1/2 -right-3 w-6 h-6 z-20 flex items-center justify-center text-red-500 connector-pulse">
+                            <div class="w-2.5 h-2.5 bg-[var(--hud-dot-bg)] border-2 border-current rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Intermediate -->
+                    <div id="btn-int" onclick="togglePreviewPanel(event, this, 'intermediate')"
+                        class="node-wrapper relative group z-10 translate-x-[190px] w-[300px] order-3 cursor-pointer transition-transform duration-300 hover:-translate-y-1">
+                        <div
+                            class="absolute -top-3 right-6 px-3 py-1 text-[10px] font-mono uppercase tracking-widest bg-[var(--hud-icon-bg)] border border-orange-500/30 text-orange-200 z-20 rounded-md">
+                            LEVEL_SEQUENCE</div>
+
+                        <div
+                            class="relative overflow-hidden rounded-2xl border border-orange-500/40 bg-[var(--hud-bg)] p-5 backdrop-blur-xl shadow-[0_0_20px_rgba(249,115,22,0.05)] group-hover:border-orange-400 group-hover:shadow-[0_0_25px_rgba(249,115,22,0.3)] transition-all">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-transparent to-transparent opacity-60">
+                            </div>
+                            <div class="relative z-10 flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--hud-icon-bg)] border border-orange-500/20 shadow-[inset_0_0_10px_rgba(249,115,22,0.1)]">
+                                        <i data-lucide="layers" class="w-6 h-6 text-orange-400"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-xl font-bold tracking-wide text-orange-50">INTERMEDIATE</h2>
+                                        <!-- Decorative Line -->
+                                        <div class="mt-2 flex items-center gap-1.5 opacity-80">
+                                            <div class="h-1 w-12 rounded-full bg-orange-500"></div>
+                                            <div class="h-1 w-1 rounded-full bg-orange-500/50"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right"
+                                    class="w-5 h-5 text-white/50 group-hover:text-orange-200 transition-colors"></i>
+                            </div>
+                        </div>
+
+                        <!-- Left Connector -->
+                        <div
+                            class="absolute top-1/2 -translate-y-1/2 -left-3 w-6 h-6 z-20 flex items-center justify-center text-orange-500 connector-pulse">
+                            <div class="w-2.5 h-2.5 bg-[var(--hud-dot-bg)] border-2 border-current rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Basic -->
+                    <div id="btn-basic" onclick="togglePreviewPanel(event, this, 'beginner')"
+                        class="node-wrapper relative group z-10 -translate-x-[190px] w-[300px] order-4 cursor-pointer transition-transform duration-300 hover:-translate-y-1">
+                        <div
+                            class="absolute -top-3 right-6 px-3 py-1 text-[10px] font-mono uppercase tracking-widest bg-[var(--hud-icon-bg)] border border-cyan-500/30 text-cyan-200 z-20 rounded-md">
+                            LEVEL_SEQUENCE</div>
+
+                        <div
+                            class="relative overflow-hidden rounded-2xl border border-cyan-500/40 bg-[var(--hud-bg)] p-5 backdrop-blur-xl shadow-[0_0_20px_rgba(34,211,238,0.05)] group-hover:border-cyan-400 group-hover:shadow-[0_0_25px_rgba(34,211,238,0.3)] transition-all">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-transparent opacity-60">
+                            </div>
+                            <div class="relative z-10 flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--hud-icon-bg)] border border-cyan-500/20 shadow-[inset_0_0_10px_rgba(34,211,238,0.1)]">
+                                        <i data-lucide="zap" class="w-6 h-6 text-cyan-400"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-xl font-bold tracking-wide text-cyan-50">BEGINNER</h2>
+                                        <!-- Decorative Line -->
+                                        <div class="mt-2 flex items-center gap-1.5 opacity-80">
+                                            <div class="h-1 w-12 rounded-full bg-cyan-400"></div>
+                                            <div class="h-1 w-1 rounded-full bg-cyan-400/50"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right"
+                                    class="w-5 h-5 text-white/50 group-hover:text-cyan-200 transition-colors"></i>
+                            </div>
+                        </div>
+
+                        <!-- Right Connector -->
+                        <div
+                            class="absolute top-1/2 -translate-y-1/2 -right-3 w-6 h-6 z-20 flex items-center justify-center text-cyan-500 connector-pulse">
+                            <div class="w-2.5 h-2.5 bg-[var(--hud-dot-bg)] border-2 border-current rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Mini Project -->
+                    <div id="btn-mini" onclick="togglePreviewPanel(event, this, 'mini')"
+                        class="node-wrapper relative group z-10 -translate-x-0 w-[300px] order-5 mt-16 pb-8 cursor-pointer transition-transform duration-300 hover:-translate-y-1">
+                        <div
+                            class="absolute -top-3 right-6 px-3 py-1 text-[10px] font-mono uppercase tracking-widest bg-[var(--hud-icon-bg)] border border-indigo-500/30 text-indigo-200 z-20 rounded-md">
+                            INIT_BUILD</div>
+
+                        <div
+                            class="relative overflow-hidden rounded-2xl border border-indigo-500/40 bg-[var(--hud-bg)] p-5 backdrop-blur-xl shadow-[0_0_20px_rgba(99,102,241,0.05)] group-hover:border-indigo-400 group-hover:shadow-[0_0_25px_rgba(99,102,241,0.3)] transition-all">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-transparent to-transparent opacity-60">
+                            </div>
+                            <div class="relative z-10 flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--hud-icon-bg)] border border-indigo-500/20 shadow-[inset_0_0_10px_rgba(99,102,241,0.1)]">
+                                        <i data-lucide="rocket" class="w-6 h-6 text-indigo-400"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-xl font-bold tracking-wide text-indigo-50">MINI PROJECT</h2>
+                                        <!-- Decorative Line -->
+                                        <div class="mt-2 flex items-center gap-1.5 opacity-80">
+                                            <div class="h-1 w-12 rounded-full bg-indigo-500"></div>
+                                            <div class="h-1 w-1 rounded-full bg-indigo-500/50"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right"
+                                    class="w-5 h-5 text-white/50 group-hover:text-indigo-200 transition-colors"></i>
+                            </div>
+                        </div>
+
+                        <!-- Top Connector -->
+                        <div
+                            class="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 z-20 flex items-center justify-center text-indigo-500 connector-pulse">
+                            <div class="w-2.5 h-2.5 bg-[var(--hud-dot-bg)] border-2 border-current rounded-full"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Section - Cards -->
+        <div class="right-section">
+
+            <!-- Installation Card -->
+            <div class="card installation-card" onclick="navigateWithProgress('tutorial.html', 0)">
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-tr"></div>
+                <div class="corner corner-bl"></div>
+                <div class="corner corner-br"></div>
+                <div class="side-bracket side-bracket-l"></div>
+                <div class="side-bracket side-bracket-r"></div>
+                <div class="bottom-tab"></div>
+
+                <div class="card-icon">
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm0 36c-8.82 0-16-7.18-16-16S15.18 8 24 8s16 7.18 16 16-7.18 16-16 16z" />
+                        <path d="M25 12h-2v12h12v-2h-10V12z" />
+                    </svg>
+                </div>
+
+                <div class="card-title">INSTALLATION</div>
+                <div class="card-subtitle">Setup Guide</div>
+            </div>
+
+            <!-- Mini Project Card -->
+            <div class="card mini-projects-card" onclick="navigateWithProgress('bytes.html', 10)">
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-tr"></div>
+                <div class="corner corner-bl"></div>
+                <div class="corner corner-br"></div>
+                <div class="side-bracket side-bracket-l"></div>
+                <div class="side-bracket side-bracket-r"></div>
+                <div class="bottom-tab"></div>
+
+                <div class="card-icon">
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M24 4C12.954 4 4 12.954 4 24s8.954 20 20 20c1.1 0 2-.9 2-2v-3c0-.73-.39-1.4-1.02-1.76-.63-.37-1.06-1.04-1.06-1.82 0-1.1.9-2 2-2h3.44c4.64 0 8.64-3.96 8.64-8.84 0-7.73-6.72-14.58-14-14.58zM12 24c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm6-8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm12 0c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm6 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
+                    </svg>
+                </div>
+
+                <div class="card-title">BYTES</div>
+                <div class="card-subtitle">Build & Learn</div>
+            </div>
+
+            <!-- Saved Card -->
+            <div class="card saved-card" onclick="navigateWithProgress('saved-individual.html', 0)">
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-tr"></div>
+                <div class="corner corner-bl"></div>
+                <div class="corner corner-br"></div>
+                <div class="side-bracket side-bracket-l"></div>
+                <div class="side-bracket side-bracket-r"></div>
+                <div class="bottom-tab"></div>
+
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+                    </svg>
+                </div>
+
+                <div class="card-title">SAVED</div>
+                <div class="card-subtitle">Your Collection</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inline Popover Template (Moved to body dynamically via JS) -->
+    <div id="inline-preview-popover"
+        class="hidden fixed w-[300px] max-h-[96vh] bg-slate-900 border border-slate-700 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] z-[999999] transform transition-all duration-300 opacity-0 pointer-events-none flex flex-col overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:hidden"
+        onclick="event.stopPropagation()">
+
+        <!-- Connecting Arrow -->
+        <div id="popover-arrow"
+            class="absolute -top-2 w-4 h-4 bg-slate-900 border-t border-l border-slate-700 z-10 rounded-sm"
+            style="left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
+
+        <!-- Abstract background glow -->
+        <div id="popover-glow"
+            class="absolute -top-10 -left-10 w-32 h-32 blur-2xl opacity-20 rounded-full pointer-events-none z-0 overflow-hidden">
+        </div>
+
+        <!-- Close Button Overlay -->
+        <div class="absolute top-1.5 right-1.5 z-[100]">
+            <button onclick="closePopover(event)"
+                class="text-white/60 hover:text-white bg-black/40 hover:bg-black/60 border border-white/10 backdrop-blur-md p-1 rounded-full transition-all transform hover:scale-110 active:scale-95 shadow-lg">
+                <i data-lucide="x" class="w-3 h-3"></i>
+            </button>
+        </div>
+
+        <!-- Body: Slider & Info (Portrait / Square Layout) -->
+        <div class="p-3 flex flex-col gap-3 relative z-10 rounded-2xl overflow-hidden items-stretch">
+
+            <!-- Image Slider Container (Top) -->
+            <div
+                class="w-full h-[160px] rounded-xl overflow-hidden relative border border-slate-700 shadow-[0_0_15px_rgba(0,0,0,0.6)] group flex-shrink-0">
+                <div id="popover-track"
+                    class="flex transition-transform duration-500 ease-in-out h-full w-full relative z-0">
+                    <!-- Slides injected via JS -->
+                </div>
+
+                <!-- Slider Overlay Gradient -->
+                <div id="popover-image-overlay"
+                    class="absolute inset-0 mix-blend-overlay opacity-40 pointer-events-none z-10"></div>
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80 pointer-events-none z-10">
+                </div>
+
+                <!-- Navigation Arrows -->
+                <button onclick="prevSlide(event)"
+                    class="absolute left-1 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/90 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm transform hover:scale-110 active:scale-95 border border-white/10">
+                    <i data-lucide="chevron-left" class="w-3 h-3"></i>
+                </button>
+                <button onclick="nextSlide(event)"
+                    class="absolute right-1 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/90 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm transform hover:scale-110 active:scale-95 border border-white/10">
+                    <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                </button>
+
+                <!-- Indicators -->
+                <div id="popover-indicators" class="absolute bottom-1.5 left-1/2 -translate-x-1/2 flex gap-1 z-20">
+                    <!-- Dots injected via JS -->
+                </div>
+            </div>
+
+            <!-- Content Container (Bottom) -->
+            <div class="flex flex-col justify-between">
+                <div class="text-center mb-2">
+                    <h4 id="popover-slide-title"
+                        class="text-[17px] font-bold text-white mb-1.5 font-sans tracking-wide transition-all duration-300">
+                        Slide Title</h4>
+                    <p id="popover-slide-desc"
+                        class="text-slate-300 text-[13px] leading-relaxed transition-all duration-300 line-clamp-3 min-h-[50px]">
+                        Slide Description goes here.</p>
+                </div>
+
+                <!-- Footer Button -->
+                <button id="popover-start-btn"
+                    class="w-full py-2.5 text-[13px] font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-1.5 transform hover:scale-[1.02] active:scale-[0.98]">
+                    Start Course <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/global-theme.js"></script>
+    <script>
+        // Click effects for roadmap nodes
+        document.querySelectorAll('.node-main, .node-quiz, .node-cert').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.style.transform = 'scale(0.95)';
+                el.style.boxShadow = '0 0 30px #fff';
+            });
+            el.addEventListener('mouseup', () => {
+                el.style.transform = 'scale(1.02)';
+                el.style.boxShadow = '';
+                setTimeout(() => {
+                    el.style.transform = '';
+                }, 100);
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = '';
+                el.style.boxShadow = '';
+            });
+        });
+    </script>
+    <script>
+        // Progress Bar Logic
+        const progressPathFill = document.getElementById('progress-path-fill');
+        if (progressPathFill) {
+            const pathLength = progressPathFill.getTotalLength();
+
+            progressPathFill.style.strokeDasharray = pathLength;
+            progressPathFill.style.strokeDashoffset = pathLength;
+
+            window.setProgress = function (percent) {
+                const offset = pathLength - (percent / 100 * pathLength);
+                progressPathFill.style.strokeDashoffset = offset;
+            }
+
+            setTimeout(() => {
+                window.setProgress(0);
+            }, 500);
+        }
+
+        // Custom Navigate Logic to let user see progress animation
+        window.navigateWithProgress = function (url, percent) {
+            if (window.setProgress) {
+                window.setProgress(percent);
+            }
+            // Delay navigation slightly so the UI progress path animation runs
+            setTimeout(() => {
+                window.location.href = url;
+            }, 600);
+        };
+
+        // Close popover if user scrolls the map to keep it synced
+        document.querySelector('.left-section').addEventListener('scroll', () => {
+            if (activePopoverNode) {
+                closePopover();
+            }
+        });
+
+        // Close popover if user clicks anywhere outside the node and popover
+        document.addEventListener('click', (event) => {
+            const popover = document.getElementById('inline-preview-popover');
+            if (activePopoverNode && popover) {
+                // If the click is not inside the popover and not inside the active node, close it
+                if (!popover.contains(event.target) && !activePopoverNode.contains(event.target)) {
+                    closePopover();
+                }
+            }
+        });
+
+        // Lesson Preview Inline Popover & Slider Logic
+        let activePopoverNode = null;
+        let currentSlide = 0;
+        let currentSlidesData = [];
+        let slideInterval;
+
+        const moduleData = {
+            mini: {
+                title: "Mini Project",
+                icon: "rocket",
+                url: "bytes.html",
+                percent: 10,
+                hex: "#6366f1",
+                colors: {
+                    glow: "bg-indigo-500",
+                    btn: "bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_0_15px_rgba(79,70,229,0.4)]"
+                },
+                slides: [
+                    {
+                        image: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=600&auto=format&fit=crop",
+                        title: "Semantic Structure",
+                        description: "Master modern HTML5 tags to build accessible, SEO-friendly layouts right from the start."
+                    },
+                    {
+                        image: "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?q=80&w=600&auto=format&fit=crop",
+                        title: "Styling & Layout",
+                        description: "Use CSS Flexbox and Grid to design stunning, responsive interfaces that adapt to any screen."
+                    },
+                    {
+                        image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=600&auto=format&fit=crop",
+                        title: "Interactive UI",
+                        description: "Add your first lines of JavaScript to bring static pages to life with user interactions."
+                    }
+                ]
+            },
+            beginner: {
+                title: "Beginner",
+                icon: "zap",
+                url: "category.html?level=beginner",
+                percent: 38,
+                hex: "#06b6d4",
+                colors: {
+                    glow: "bg-cyan-500",
+                    btn: "bg-cyan-500 hover:bg-cyan-400 text-slate-900 shadow-[0_0_15px_rgba(34,211,238,0.4)]"
+                },
+                slides: [
+                    {
+                        image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=600&auto=format&fit=crop",
+                        title: "Core Logic",
+                        description: "Master the fundamental building blocks of programming, focusing on variables, data types, and operators."
+                    },
+                    {
+                        image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=600&auto=format&fit=crop",
+                        title: "Control Flow",
+                        description: "Learn to make decisions in your code using if/else statements and efficient loop iterations."
+                    },
+                    {
+                        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&auto=format&fit=crop",
+                        title: "Functions & Scope",
+                        description: "Write reusable blocks of code and understand lexical scope to prevent bugs in your applications."
+                    }
+                ]
+            },
+            intermediate: {
+                title: "Intermediate",
+                icon: "layers",
+                url: "category.html?level=intermediate",
+                percent: 63,
+                hex: "#f97316",
+                colors: {
+                    glow: "bg-orange-500",
+                    btn: "bg-orange-500 hover:bg-orange-400 text-slate-900 shadow-[0_0_15px_rgba(249,115,22,0.4)]"
+                },
+                slides: [
+                    {
+                        image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?q=80&w=600&auto=format&fit=crop",
+                        title: "Data Structures",
+                        description: "Dive deep into complex Arrays and Objects, mastering high-order array manipulation methods."
+                    },
+                    {
+                        image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=600&auto=format&fit=crop",
+                        title: "DOM & Events",
+                        description: "Programmatically modify the web page structure and handle complex user interactions securely."
+                    },
+                    {
+                        image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=600&auto=format&fit=crop",
+                        title: "APIs & Async JS",
+                        description: "Connect your applications to external servers using the Fetch API and handle asynchronous callbacks."
+                    }
+                ]
+            },
+            advanced: {
+                title: "Advanced",
+                icon: "flame",
+                url: "category.html?level=advance",
+                percent: 85,
+                hex: "#ef4444",
+                colors: {
+                    glow: "bg-red-500",
+                    btn: "bg-red-600 hover:bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)]"
+                },
+                slides: [
+                    {
+                        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600&auto=format&fit=crop",
+                        title: "Promises & Async/Await",
+                        description: "Write clean, non-blocking code utilizing modern JavaScript asynchronous architecture."
+                    },
+                    {
+                        image: "https://images.unsplash.com/photo-1627398240309-08ca0a1cb002?q=80&w=600&auto=format&fit=crop",
+                        title: "Object Oriented JS",
+                        description: "Structure scalable applications using ES6 Classes, inheritance, and encapsulation."
+                    },
+                    {
+                        image: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=600&auto=format&fit=crop",
+                        title: "Modern Build Tools",
+                        description: "Manage large codebases through Modules, Webpack, and understand the core of modern JS frameworks."
+                    }
+                ]
+            }
+        };
+
+        let currentPopoverDirection = 'down';
+
+        window.togglePreviewPanel = function (event, element, moduleId) {
+            // Prevent triggering if user clicks inside the popover itself
+            if (event.target.closest('#inline-preview-popover')) return;
+
+            const popover = document.getElementById('inline-preview-popover');
+
+            // If clicking the same node that's already open, close it
+            if (activePopoverNode === element && !popover.classList.contains('hidden')) {
+                closePopover(event);
+                return;
+            }
+
+            const data = moduleData[moduleId];
+            if (!data) return;
+
+            // NEW: Append to body to completely escape Z-index stacking collisions and cropping
+            document.body.appendChild(popover);
+            activePopoverNode = element;
+
+            // --- Ã°Å¸â€ºÂ Ã¯Â¸Â 1. INJECT DATA FIRST Ã°Å¸â€ºÂ Ã¯Â¸Â ---
+            // We need the data injected so the popover sizes correctly based on text (if flex)
+            currentSlidesData = data.slides;
+            currentSlide = 0;
+
+            const track = document.getElementById('popover-track');
+            const indicators = document.getElementById('popover-indicators');
+
+            // Generate Images in Track
+            track.innerHTML = currentSlidesData.map(slide => `
+                <img src="${slide.image}" alt="${slide.title}" class="w-full h-full flex-shrink-0 object-cover pointer-events-none" />
+            `).join('');
+
+            // Generate Interactive Dots
+            indicators.innerHTML = currentSlidesData.map((_, idx) => `
+                <button type="button" onclick="goToSlide(event, ${idx})" aria-label="Go to slide ${idx + 1}" aria-current="${idx === 0 ? 'true' : 'false'}" class="popover-dot-hit${idx === 0 ? ' is-active' : ''}">
+                    <span class="popover-slide-dot"></span>
+                </button>
+            `).join('');
+
+            // Setup Start Button
+            const startBtn = document.getElementById('popover-start-btn');
+            startBtn.className = `w-full py-2.5 text-[13px] font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-1.5 transform hover:scale-[1.02] active:scale-[0.98] ${data.colors.btn}`;
+            startBtn.onclick = (e) => {
+                e.stopPropagation(); // Stop click from re-triggering the node
+                closePopover();
+                navigateWithProgress('tutorial.html', data.percent);
+            };
+
+            // Trigger first slide render (updates title/desc)
+            renderSlide(0);
+            resetSlideInterval();
+
+            // Apply glow theme colors
+            document.getElementById('popover-glow').className = `absolute -top-10 -left-10 w-40 h-40 blur-3xl opacity-20 rounded-full pointer-events-none z-0 ${data.colors.glow}`;
+            document.getElementById('popover-image-overlay').className = `absolute inset-0 mix-blend-overlay opacity-40 z-10 pointer-events-none ${data.colors.glow}`;
+
+            // --- Ã°Å¸â€œÂ 2. MEASURE & POSITION Ã°Å¸â€œÂ ---
+
+            // Remove hidden to allow browser to calculate actual CSS dimensions (opacity is still 0 so it's invisible)
+            popover.classList.remove('hidden');
+
+            const rect = element.getBoundingClientRect();
+
+            // Measure actual responsive dimensions dictated by CSS media queries!
+            const popoverWidth = popover.offsetWidth || 300;
+            const popoverHeight = popover.offsetHeight || 340;
+            const padding = 20; // Safe padding from screen edges
+
+            let leftPos;
+            let targetTop = rect.top + (rect.height / 2);
+            let finalTop = targetTop - (popoverHeight / 2);
+            let arrowOffset = 0;
+            const arrow = document.getElementById('popover-arrow');
+
+            // 1. Smart Horizontal Positioning: Try Right first, then Left
+            if (rect.right + popoverWidth + padding <= window.innerWidth) {
+                // Place on Right
+                currentPopoverDirection = 'right';
+                leftPos = rect.right + 25;
+                arrow.className = 'absolute top-1/2 -left-2 w-4 h-4 bg-slate-900 border-b border-l border-slate-700 z-10 rounded-sm';
+            } else if (rect.left - popoverWidth - padding >= 0) {
+                // Place on Left
+                currentPopoverDirection = 'left';
+                leftPos = rect.left - popoverWidth - 25;
+                arrow.className = 'absolute top-1/2 -right-2 w-4 h-4 bg-slate-900 border-t border-r border-slate-700 z-10 rounded-sm';
+            } else {
+                // Fallback: If neither fits perfectly, place it wherever there is more space
+                if (window.innerWidth - rect.right > rect.left) {
+                    currentPopoverDirection = 'right';
+                    leftPos = window.innerWidth - popoverWidth - padding;
+                    arrow.className = 'absolute top-1/2 -left-2 w-4 h-4 bg-slate-900 border-b border-l border-slate-700 z-10 rounded-sm';
+                } else {
+                    currentPopoverDirection = 'left';
+                    leftPos = padding;
+                    arrow.className = 'absolute top-1/2 -right-2 w-4 h-4 bg-slate-900 border-t border-r border-slate-700 z-10 rounded-sm';
+                }
+            }
+
+            // 2. Smart Vertical Positioning: Prevent clipping on top and bottom edges
+            let minTop = padding;
+            let maxTop = window.innerHeight - popoverHeight - padding;
+
+            if (finalTop < minTop) {
+                arrowOffset = targetTop - (minTop + (popoverHeight / 2));
+                finalTop = minTop;
+            } else if (finalTop > maxTop) {
+                arrowOffset = targetTop - (maxTop + (popoverHeight / 2));
+                finalTop = maxTop;
+            }
+
+            // Clamp the arrow offset gracefully so it stays within the popover box borders
+            const maxArrowOffset = (popoverHeight / 2) - 25;
+            arrowOffset = Math.max(-maxArrowOffset, Math.min(maxArrowOffset, arrowOffset));
+
+            // Apply calculated coordinates safely
+            popover.style.transform = 'scale(0.95)';
+            popover.style.top = finalTop + 'px';
+            popover.style.left = leftPos + 'px';
+
+            // Ensure arrow dynamically points to exact center of clicked node
+            arrow.style.top = `calc(50% + ${arrowOffset}px)`;
+            arrow.style.left = ''; // Clear inline left style from original template if any
+            arrow.style.transform = `translateY(-50%) rotate(45deg)`;
+
+            // Initialize injected icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            // --- Ã¢Å“Â¨ HIGHLIGHT MODE & ANIMATE IN Ã¢Å“Â¨ ---
+            document.body.classList.add('preview-active');
+            element.classList.add('focused-node');
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    popover.classList.remove('opacity-0', 'pointer-events-none');
+                    popover.style.transform = 'scale(1)';
+                    popover.classList.add('opacity-100', 'pointer-events-auto');
+                });
+            });
+        };
+
+        // --- Slide Show Logic ---
+        window.renderSlide = function (index) {
+            const track = document.getElementById('popover-track');
+            track.style.transform = `translateX(-${index * 100}%)`;
+
+            const slide = currentSlidesData[index];
+            const titleEl = document.getElementById('popover-slide-title');
+            const descEl = document.getElementById('popover-slide-desc');
+
+            // Fast text fade effect
+            titleEl.style.opacity = '0';
+            descEl.style.opacity = '0';
+
+            setTimeout(() => {
+                titleEl.textContent = slide.title;
+                descEl.textContent = slide.description;
+                titleEl.style.opacity = '1';
+                descEl.style.opacity = '1';
+            }, 150);
+
+            // Update Dot Indicators Active State
+            document.querySelectorAll('.popover-dot-hit').forEach((dot, i) => {
+                const isActive = i === index;
+                dot.classList.toggle('is-active', isActive);
+                dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+            });
+        };
+
+        window.nextSlide = function (event) {
+            if (event) event.stopPropagation(); // Prevent re-triggering the node click
+            if (!currentSlidesData.length) return;
+            currentSlide = (currentSlide + 1) % currentSlidesData.length;
+            renderSlide(currentSlide);
+            resetSlideInterval();
+        };
+
+        window.prevSlide = function (event) {
+            if (event) event.stopPropagation(); // Prevent re-triggering the node click
+            if (!currentSlidesData.length) return;
+            currentSlide = (currentSlide - 1 + currentSlidesData.length) % currentSlidesData.length;
+            renderSlide(currentSlide);
+            resetSlideInterval();
+        };
+
+        window.goToSlide = function (event, index) {
+            if (event) event.stopPropagation(); // Prevent re-triggering the node click
+            currentSlide = index;
+            renderSlide(currentSlide);
+            resetSlideInterval();
+        };
+
+        function resetSlideInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(window.nextSlide, 4000); // Auto advances every 4 seconds
+        }
+
+        window.closePopover = function (event) {
+            if (event) event.stopPropagation();
+            clearInterval(slideInterval); // Stop auto-slider to prevent memory leaks
+
+            const popover = document.getElementById('inline-preview-popover');
+            if (!popover) return;
+
+            popover.classList.remove('opacity-100', 'pointer-events-auto');
+
+            // Revert scale to match direction
+            popover.style.transform = 'scale(0.95)';
+
+            popover.classList.add('opacity-0', 'pointer-events-none');
+
+            // Remove Highlight Mode
+            document.body.classList.remove('preview-active');
+            if (activePopoverNode) {
+                activePopoverNode.classList.remove('focused-node');
+            }
+
+            setTimeout(() => {
+                popover.classList.add('hidden');
+                activePopoverNode = null;
+            }, 300); // Matches transition duration
+        };
+    </script>
+    <script>
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    </script>
+</body>
+
+</html>
+
+

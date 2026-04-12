@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="assets/js/theme-critical.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Tutorial - Pro Coding</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --theme-color: #667eea;
+            --theme-bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            min-height: 100dvh;
+            background: var(--bg-primary);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        /* Centered branding - absolutely positioned */
+        .nav-center-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            pointer-events: none;
+        }
+
+        .branding-icon {
+            width: 38px;
+            height: 38px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .branding-icon img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        .branding-text {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--dynamic-text-primary);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--nav-icon-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--nav-icon-border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--nav-icon-hover);
+            transform: translateX(-3px);
+        }
+
+        .back-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--dynamic-text-primary);
+        }
+
+        .voice-assist {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--nav-icon-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--nav-icon-border);
+            border-radius: 30px;
+            padding: 8px 20px;
+        }
+
+        .voice-assist-label {
+            color: var(--dynamic-text-primary);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Voice toggle switch */
+        .voice-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+            margin-left: 5px;
+            margin-top: -2px;
+        }
+        .voice-switch input { opacity: 0; width: 0; height: 0; pointer-events: none; }
+        .voice-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255,255,255,0.2);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .voice-slider:before {
+            position: absolute;
+            content: "🔈";
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s cubic-bezier(0.4, 0.0, 0.2, 1);
+            border-radius: 50%;
+            color: black;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .voice-switch input:checked + .voice-slider {
+            background-color: #4facfe;
+        }
+        .voice-switch input:checked + .voice-slider:before {
+            transform: translateX(22px);
+            content: "🔊";
+        }
+
+        .branding-icon {
+            width: 48px;
+            height: 48px;
+            background: transparent;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .branding-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--nav-icon-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--nav-icon-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-icon:hover {
+            background: var(--nav-icon-hover);
+            transform: translateY(-2px);
+        }
+
+        .nav-icon svg {
+            width: 26px;
+            height: 26px;
+            fill: var(--dynamic-text-primary);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            display: flex;
+            gap: 25px;
+            flex: 1;
+        }
+
+        /* Left - Tutorial Image/Content */
+        .tutorial-display {
+            flex: 1;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tutorial-display img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tutorial-placeholder {
+            color: var(--dynamic-text-secondary);
+            font-size: 18px;
+            text-align: center;
+            padding: 40px;
+        }
+
+        /* Red Arrow Indicator */
+        .arrow-indicator {
+            position: absolute;
+            bottom: 15%;
+            left: 15%;
+            transform: rotate(-15deg);
+        }
+
+        .arrow-indicator svg {
+            width: 60px;
+            height: 60px;
+            fill: #ff4444;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Right Panel */
+        .right-panel {
+            width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Instruction Card */
+        .instruction-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .instruction-icon {
+            width: 80px;
+            height: 80px;
+        }
+
+        .instruction-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--dynamic-text-primary);
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .instruction-text {
+            color: var(--dynamic-text-primary);
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-button {
+            background: var(--btn-primary-bg, var(--theme-color));
+            backdrop-filter: blur(15px);
+            border: none;
+            border-radius: 15px;
+            padding: 18px 30px;
+            color: var(--dynamic-btn-text, #ffffff);
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: var(--shadow-soft, 0 4px 15px rgba(0,0,0,0.1));
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium, 0 8px 25px rgba(0,0,0,0.15));
+        }
+
+        .nav-button:active {
+            transform: translateY(-1px);
+        }
+
+        .nav-button svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--dynamic-btn-text, #ffffff);
+        }
+
+        .nav-button.previous {
+            background: var(--dynamic-nav-bg);
+            border: 2px solid var(--dynamic-nav-border);
+            color: var(--dynamic-text-primary);
+        }
+
+        .nav-button.previous svg {
+            fill: var(--dynamic-text-primary);
+        }
+
+
+
+        .branding {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--branding-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 8px 20px;
+        }
+
+        .branding-icon {
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .branding-icon span {
+            color: white;
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        .branding-text {
+            color: var(--dynamic-text-primary);
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* ===== PORTRAIT RESPONSIVENESS ===== */
+        @media screen and (max-width: 768px) and (orientation: portrait) {
+            .top-nav { padding: 10px; margin-bottom: 10px; }
+            .back-btn, .nav-icon { width: 36px; height: 36px; border-radius: 8px; }
+            .back-btn svg, .nav-icon svg { width: 20px; height: 20px; }
+            
+            .voice-assist { padding: 6px 14px; gap: 10px; }
+            .voice-assist-label { font-size: 15px; }
+    
+            .nav-icons { gap: 10px; }
+            .branding-icon { width: 36px; height: 36px; }
+            .branding-text { font-size: 15px; }
+            
+            .main-content { flex-direction: column; }
+            .right-panel { width: 100%; flex-direction: row; }
+        }
+
+        @media screen and (max-width: 480px) and (orientation: portrait) {
+            .nav-left { gap: 10px; }
+            .back-btn, .nav-icon { width: 32px; height: 32px; }
+            .back-btn svg, .nav-icon svg { width: 16px; height: 16px; }
+            
+            .voice-assist { padding: 4px 10px; gap: 6px; }
+            .voice-assist-label { font-size: 13px; display: none; /* Hide text on very small screens to save space */ }
+                
+            .nav-icons { gap: 8px; }
+        }
+
+        /* ===== 6-TIER LANDSCAPE SYSTEM ===== */
+        @media screen and (orientation: landscape) {
+            body { overflow: hidden !important; height: 100dvh !important; padding: 10px 20px !important; }
+            
+            /* Unified Responsive Navigation */
+            .top-nav { display: flex !important; align-items: center !important; margin-bottom: 10px !important; }
+            
+            /* TIER 1-4: Mobile Heights (< 500px) */
+            @media (max-height: 499px) {
+                :root { --header-h: 44px; }
+                .top-nav { height: 44px !important; padding: 0 10px !important; margin-bottom: 5px !important; }
+                .nav-left { gap: 8px !important; min-width: 0 !important; }
+                .back-btn { width: 34px !important; height: 34px !important; border-radius: 8px !important; }
+                .back-btn svg { width: 18px !important; height: 18px !important; }
+                .voice-assist { padding: 4px 10px !important; gap: 6px !important; }
+                .voice-assist-label { font-size: 13px !important; display: inline-block !important; }
+                        .nav-icon { width: 34px !important; height: 34px !important; border-radius: 8px !important; }
+                .nav-icon svg { width: 18px !important; height: 18px !important; }
+                .branding-icon { width: 32px !important; height: 32px !important; }
+                .branding-text { display: none !important; }
+                .branding { padding: 4px 8px !important; }
+
+                .main-content { gap: 15px !important; }
+                .right-panel { width: 220px !important; gap: 10px !important; }
+                .instruction-card { padding: 15px !important; gap: 10px !important; }
+                .instruction-icon { width: 40px !important; height: 40px !important; }
+                .instruction-text { font-size: 16px !important; }
+                .nav-button { padding: 12px 20px !important; font-size: 14px !important; border-radius: 10px !important; }
+                
+                .bottom-bar { margin-top: 5px !important; }
+                .bottom-icon { width: 34px !important; height: 34px !important; }
+                .bottom-icon svg { width: 18px !important; height: 18px !important; }
+                .arrow-indicator { bottom: 5% !important; left: 5% !important; transform: scale(0.6) rotate(-15deg) !important; }
+            }
+
+            /* TIER 1: Ultra-Compact (< 344px) */
+            @media (max-height: 344px) {
+                .main-content { gap: 10px !important; }
+                .instruction-text { font-size: 14px !important; }
+                .instruction-icon { width: 32px !important; height: 32px !important; }
+                .nav-button { padding: 10px 15px !important; font-size: 13px !important; }
+                .bottom-bar { display: none !important; } /* Hide bottom bar on Tier 1 to save space */
+            }
+
+            /* TIER 2-3: Compact/Standard Mobile (345px - 399px) */
+            @media (min-height: 345px) and (max-height: 399px) {
+                .right-panel { width: 250px !important; }
+                .instruction-text { font-size: 18px !important; }
+                .instruction-icon { width: 50px !important; height: 50px !important; }
+            }
+
+            /* TIER 5: Small Tablet (500px - 699px) */
+            @media (min-height: 500px) and (max-height: 699px) {
+                :root { --header-h: 60px; }
+                .top-nav { height: 60px !important; padding: 0 15px !important; }
+                .back-btn, .nav-icon { width: 44px !important; height: 44px !important; border-radius: 12px !important; }
+                .voice-assist { padding: 6px 16px !important; gap: 10px !important; }
+                .voice-assist-label { font-size: 15px !important; }
+                        .branding-icon { width: 38px !important; height: 38px !important; }
+                .branding-text { font-size: 18px !important; }
+                .right-panel { width: 300px !important; }
+                .instruction-text { font-size: 20px !important; }
+                .bottom-icon { width: 44px !important; height: 44px !important; }
+            }
+
+            /* TIER 6: Large Tablet / Desktop (700px+) */
+            @media (min-height: 700px) {
+                :root { --header-h: 70px; }
+                .top-nav { height: 70px !important; padding: 0 25px !important; }
+                .back-btn, .nav-icon { width: 54px !important; height: 54px !important; border-radius: 15px !important; }
+                .branding-icon { width: 48px !important; height: 48px !important; }
+                .branding-text { font-size: 20px !important; }
+                .right-panel { width: 350px !important; }
+                .instruction-text { font-size: 24px !important; }
+                .bottom-icon { width: 54px !important; height: 54px !important; }
+            }
+        }
+        /* Information Modal */
+        .info-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .info-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .info-modal-content {
+            background: var(--glass-bg, rgba(20, 25, 40, 0.85));
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.15));
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            color: var(--dynamic-text-primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .info-modal-overlay.active .info-modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .info-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 12px;
+        }
+
+        .info-modal-title {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .close-modal-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--dynamic-text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .info-modal-body {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Modal Responsiveness */
+        @media screen and (max-width: 768px) {
+            .info-modal-content {
+                padding: 20px;
+                width: 92%;
+            }
+            .info-modal-title { font-size: 18px; }
+            .info-modal-body { font-size: 15px; }
+        }
+
+        /* Landscape constraints (6-tier equivalence) */
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            .info-modal-content {
+                padding: 15px 20px;
+                max-height: 85vh;
+                overflow-y: auto;
+                max-width: 450px;
+                border-radius: 12px;
+            }
+            .info-modal-header {
+                margin-bottom: 10px;
+                padding-bottom: 8px;
+            }
+            .info-modal-title { font-size: 16px; }
+            .info-modal-body { 
+                font-size: 13px; 
+                line-height: 1.4;
+            }
+            .close-modal-btn svg {
+                width: 20px !important;
+                height: 20px !important;
+            }
+        }
+        /* Hide dynamically injected theme toggle as per user request */
+        .theme-toggle {
+            display: none !important;
+        }
+    </style>
+
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+</head>
+
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="javascript:history.back()" class="back-btn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                </svg>
+            </a>
+            <div class="voice-assist">
+                <span class="voice-assist-label">Voice Assist</span>
+                <label class="voice-switch">
+                    <input type="checkbox" id="voice-assist-toggle" checked>
+                    <span class="voice-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="nav-center-brand">
+            <div class="branding-icon">
+                <img src="assets/images/logo.png" alt="Logo">
+            </div>
+            <span class="branding-text">Pro coding</span>
+        </div>
+
+        <div class="nav-icons">
+            <!-- Settings Icon -->
+            <div class="nav-icon" title="Settings" onclick="window.location.href='settings.html'">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+                </svg>
+            </div>
+            <!-- Wifi Icon -->
+            <div class="nav-icon" title="Network">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+                </svg>
+            </div>
+            <!-- Saved Icon -->
+            <div class="nav-icon" title="Saved" onclick="window.location.href='saved_main.html'">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+                </svg>
+            </div>
+            <!-- Help/Chat Icon -->
+            <div class="nav-icon" title="Chat Assistant" onclick="window.location.href='chatbot.html'">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 2H4c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h12l4 4V4c0-1.11-.89-2-2-2zM12.83 14h-1.67v-1.67h1.67V14zm1.5-5.33c-.28.42-.58.73-.89 1.05-.13.13-.25.26-.36.38-.28.31-.41.6-.41 1.07h-1.67c0-.98.35-1.57.87-2.12.11-.12.23-.25.35-.37.33-.33.56-.56.76-.87.2-.3.3-.65.3-1.05 0-.91-.76-1.66-1.67-1.66s-1.67.75-1.67 1.66H8.5c0-1.84 1.5-3.33 3.33-3.33s3.33 1.49 3.33 3.33c0 .73-.18 1.39-.5 1.96z" />
+                </svg>
+            </div>
+            <!-- Info / Description Icon -->
+            <div class="nav-icon" title="Information" onclick="openInfoModal()">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Information Modal -->
+    <div class="info-modal-overlay" id="info-modal" onclick="closeInfoModal()">
+        <div class="info-modal-content" onclick="event.stopPropagation()">
+            <div class="info-modal-header">
+                <div class="info-modal-title">Description</div>
+                <button class="close-modal-btn" onclick="closeInfoModal()">
+                    <svg viewBox="0 0 24 24" style="width: 24px; height: 24px; fill: currentColor;">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="info-modal-body" id="info-modal-text">
+                This is the detailed description of the current tutorial step. 
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Tutorial Display Area -->
+        <div class="tutorial-display">
+            <div class="tutorial-placeholder">
+                <p>ðŸ“¸ Tutorial screenshot or video will be displayed here</p>
+                <p style="margin-top: 15px; font-size: 14px; opacity: 0.7;">Add your IDE screenshot image to show the
+                    tutorial step</p>
+            </div>
+            <!-- Red Arrow Indicator -->
+            <div class="arrow-indicator">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <!-- Instruction Card -->
+            <div class="instruction-card">
+                <div class="instruction-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13 1.07V9h7c0-4.08-3.05-7.44-7-7.93zM4 15c0 4.42 3.58 8 8 8s8-3.58 8-8v-4H4v4zm7-13.93C7.05 1.56 4 4.92 4 9h7V1.07z" />
+                    </svg>
+                </div>
+                <div class="instruction-text">Select this by click and drag</div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="nav-buttons">
+                <button class="nav-button next">
+                    NEXT
+                </button>
+                <button class="nav-button previous">
+                    PREVIOUS
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        // Modal Logic
+        function openInfoModal() {
+            document.getElementById('info-modal').classList.add('active');
+        }
+
+        function closeInfoModal() {
+            document.getElementById('info-modal').classList.remove('active');
+        }
+
+        // Voice assist logic is now handled inline on the container
+
+        // Button click handlers (can be customized)
+        document.querySelector('.nav-button.next').addEventListener('click', function () {
+            console.log('Next tutorial step');
+        });
+
+        document.querySelector('.nav-button.previous').addEventListener('click', function () {
+            console.log('Previous tutorial step');
+        });
+    </script>
+    <script src="assets/js/global-theme.js"></script>
+    <script src="assets/js/theme.js"></script>
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="assets/js/theme-critical.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Python Course - Pro Coding</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/theme.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            /* Dynamic Contrast Variables (Overwritten by JS) */
+            --dynamic-text-primary: var(--text-primary);
+            --dynamic-text-secondary: var(--text-secondary);
+            --dynamic-nav-bg: var(--branding-bg);
+            --dynamic-nav-border: var(--nav-icon-border);
+            --dynamic-nav-hover: var(--nav-icon-hover);
+
+            /* Scaling Variables */
+            --header-h: 64px;
+            --track-pt: 40px;
+            --node-w: 340px;
+            --control-w: 400px;
+            --final-w: 900px;
+            --dot-size: 24px;
+            --card-p: 24px;
+            --title-fs: 20px;
+            --item-fs: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            min-height: 100dvh; /* dynamic viewport on mobile */
+            background: var(--bg-primary);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            overflow: hidden; /* keep this */
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s ease;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            height: var(--header-h);
+            background: var(--dynamic-nav-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--dynamic-nav-border);
+            flex-shrink: 0;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        /* Centered branding */
+        .nav-center-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .branding {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .branding-icon {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .branding-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .branding-text {
+            color: var(--dynamic-text-primary);
+            font-size: 18px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .course-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-left: 20px;
+            color: var(--dynamic-text-secondary);
+            font-size: 14px;
+        }
+
+        .progress-val {
+            color: #a78bfa;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        .back-btn {
+            width: 42px;
+            height: 42px;
+            background: var(--dynamic-nav-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--dynamic-nav-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .back-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--dynamic-text-primary);
+        }
+
+        .back-btn:hover {
+            background: var(--dynamic-nav-hover);
+            transform: translateX(-3px);
+        }
+
+        /* Main Content Scroll Container */
+        .main-container {
+            flex: 1;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-x: contain;
+            touch-action: pan-x; /* pan-x ONLY â€” not pan-y, which fights overflow-y:hidden */
+            min-height: 0;
+            height: calc(100dvh - var(--header-h)); /* explicit height, not 100% */
+            width: 100%;
+        }
+
+        .main-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .track-wrapper {
+            display: flex;
+            padding: var(--track-pt) 50px;
+            min-width: max-content;
+            gap: 50px;
+            height: 100%;
+            align-items: flex-start;
+        }
+
+        .timeline-track {
+            display: flex;
+            gap: 40px;
+            position: relative;
+        }
+
+        /* Background Connecting Line */
+        .timeline-line {
+            position: absolute;
+            top: 11px;
+            left: 24px;
+            right: 24px;
+            height: 3px;
+            background: var(--scrollbar-track);
+            border-radius: 10px;
+            z-index: 0;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 11px;
+            left: 24px;
+            width: 22%;
+            height: 3px;
+            background: var(--dynamic-text-primary);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            z-index: 1;
+        }
+
+        /* Course Nodes */
+        .course-node {
+            position: relative;
+            padding-top: 40px;
+            flex-shrink: 0;
+        }
+
+        .course-node.final-node {
+            width: 400px !important;
+        }
+
+        .node-dot {
+            position: absolute;
+            top: 0;
+            left: 24px;
+            width: var(--dot-size);
+            height: var(--dot-size);
+            border-radius: 50%;
+            border: 4px solid #18191a;
+            background: #a78bfa;
+            z-index: 10;
+            box-shadow: 0 0 15px rgba(167, 139, 250, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .node-dot.completed {
+            background: #34d399;
+            box-shadow: 0 0 15px rgba(52, 211, 153, 0.5);
+        }
+
+        .node-dot.locked {
+            background: var(--scrollbar-thumb);
+            cursor: not-allowed;
+        }
+
+        .node-dot.pulse::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: inherit;
+            animation: pulse-ring 2s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: var(--card-p);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: var(--shadow-medium);
+            width: 100%;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--glass-border-strong);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--glass-bg-strong);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--glass-border);
+            color: var(--dynamic-text-primary);
+        }
+
+        .status-badge {
+            background: var(--glass-bg-strong);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.active {
+            background: rgba(52, 211, 153, 0.2);
+            color: #34d399;
+        }
+
+        .node-title {
+            font-size: var(--title-fs);
+            font-weight: 700;
+            color: var(--dynamic-text-primary);
+            margin-bottom: 12px;
+        }
+
+        /* Lesson Items */
+        .lesson-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .lesson-item:hover {
+            background: var(--glass-bg-strong);
+        }
+
+        .lesson-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: var(--item-fs);
+            color: var(--dynamic-text-secondary);
+            font-weight: 500;
+        }
+
+        .play-btn {
+            background: var(--btn-secondary-bg);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            background: var(--btn-primary-bg);
+            border-color: transparent;
+            transform: scale(1.05);
+        }
+
+        /* Mini Project Scroller */
+        .project-scroll {
+            max-height: 250px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-right: 8px;
+        }
+
+        .project-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .project-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .project-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 12px;
+            scroll-snap-align: start;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            background: var(--glass-bg-strong);
+            border-color: var(--glass-border-strong);
+            transform: translateY(-2px);
+        }
+
+        /* 6-TIER RESPONSIVE ARCHITECTURE */
+        @media screen and (orientation: landscape) {
+            :root {
+                --header-h: 48px;
+                --track-pt: 20px;
+            }
+
+            .top-nav { padding: 0 15px; }
+            .branding-icon { width: 28px; height: 28px; font-size: 12px; }
+            .branding-text { font-size: 14px; display: block; white-space: nowrap; color: var(--dynamic-text-primary); }
+            .course-info { display: none; }
+            .back-btn { width: 32px; height: 32px; border-radius: 8px; }
+            .back-btn svg { width: 18px; height: 18px; }
+
+            /* Default scale for landscape nodes */
+            .course-node { width: 280px !important; padding-top: 25px !important; }
+            .node-dot { top: -5px !important; }
+            .content-card { padding: 12px 15px !important; border-radius: 16px; }
+            .icon-box { width: 32px; height: 32px; margin-bottom: 10px !important; }
+            .icon-box lucide-icon { width: 18px !important; height: 18px !important; }
+            .node-title { font-size: 15px !important; margin-bottom: 6px; }
+            .lesson-list { gap: 4px; margin-top: 8px; padding-top: 8px; }
+            .lesson-item { padding: 5px 10px; }
+            .lesson-meta { font-size: 11px; }
+            .play-btn { padding: 3px 8px; font-size: 10px; }
+            .card-header { margin-bottom: 10px !important; }
+
+            /* TIER 1: Ultra-Compact (Height < 345px) */
+            @media (max-height: 344px) {
+                .track-wrapper { padding: 10px 20px; gap: 30px; }
+                .course-node { width: 240px !important; padding-top: 30px; }
+                .node-dot { width: 18px; height: 18px; left: 18px; }
+                .timeline-line, .timeline-progress { top: 8px; left: 18px; }
+                .content-card { padding: 10px !important; }
+                .lesson-list { gap: 4px; margin-top: 6px; padding-top: 6px; }
+                .lesson-item { padding: 4px 6px; }
+                .lesson-meta span:last-child { display: none; }
+                .project-scroll { max-height: 120px; }
+                .node-title { font-size: 14px !important; }
+            }
+
+            /* TIER 2: Compact-Mobile (345-374px) */
+            @media (min-height: 345px) and (max-height: 374px) {
+                .track-wrapper { padding: 15px 30px; gap: 35px; }
+                .course-node { width: 260px !important; }
+                .project-scroll { max-height: 150px; }
+            }
+
+            /* TIER 3: Standard-Mobile (375-399px) */
+            @media (min-height: 375px) and (max-height: 399px) {
+                .course-node { width: 280px !important; }
+                .project-scroll { max-height: 160px; }
+            }
+
+            /* TIER 4: Large-Mobile (400-499px) */
+            @media (min-height: 400px) and (max-height: 499px) {
+                .course-node { width: 320px !important; }
+                .project-scroll { max-height: 180px; }
+            }
+
+            /* TIER 5: Small-Tablet (500-699px) */
+            @media (min-height: 500px) and (max-height: 699px) {
+                :root { --header-h: 60px; }
+                .course-info { display: flex; }
+                .course-node { width: 380px !important; }
+                .node-title { font-size: 20px !important; }
+                .project-scroll { max-height: 300px; }
+            }
+
+            /* TIER 6: Large-Tablet (700px+) */
+            @media (min-height: 700px) {
+                :root { --header-h: 70px; --track-pt: 60px; }
+                .course-info { display: flex; }
+                .course-node { width: 450px !important; }
+                .node-title { font-size: 24px !important; }
+            }
+        }
+
+        @media screen and (orientation: portrait) {
+            body { overflow-x: hidden; overflow-y: hidden; min-height: 100vh; }
+            .top-nav { padding: 0 16px; }
+            .branding-icon { width: 34px; height: 34px; }
+            .branding-text { font-size: 15px; }
+            .course-info { display: none; }
+            .back-btn { width: 36px; height: 36px; border-radius: 10px; }
+            .back-btn svg { width: 20px; height: 20px; }
+            .main-container { overflow-x: auto; overflow-y: hidden; min-height: 0; height: auto; }
+            .track-wrapper {
+                flex-direction: row;
+                padding: 28px 18px 36px;
+                min-width: max-content;
+                gap: 28px;
+                height: 100%;
+                align-items: flex-start;
+            }
+            .timeline-track { flex-direction: row; gap: 28px; width: max-content; }
+            .timeline-line {
+                top: 10px;
+                left: 20px;
+                right: 20px;
+                bottom: auto;
+                width: auto;
+                height: 3px;
+            }
+            .timeline-progress {
+                top: 10px;
+                left: 20px;
+                right: auto;
+                width: 25%;
+                height: 3px;
+            }
+            .course-node {
+                width: min(82vw, 300px) !important;
+                padding-top: 32px;
+                padding-left: 0;
+            }
+            .course-node.final-node {
+                width: min(88vw, 340px) !important;
+            }
+            .node-dot {
+                top: 0;
+                left: 20px;
+                width: 22px;
+                height: 22px;
+            }
+            .content-card { padding: 16px 18px !important; }
+            .icon-box { width: 38px; height: 38px; }
+            .node-title { font-size: 18px !important; }
+            .lesson-list { gap: 8px; margin-top: 12px; padding-top: 12px; }
+            .lesson-item { padding: 8px 10px; }
+            .lesson-meta { font-size: 12px; }
+            .play-btn { padding: 4px 10px; font-size: 11px; }
+            .project-scroll { max-height: 210px; }
+
+            @media (max-width: 390px) {
+                .top-nav { padding: 0 12px; }
+                .track-wrapper { padding: 24px 14px 30px; gap: 22px; }
+                .timeline-track { gap: 22px; }
+                .course-node { width: min(84vw, 274px) !important; }
+                .course-node.final-node { width: min(90vw, 310px) !important; }
+                .node-dot { left: 18px; width: 20px; height: 20px; }
+                .timeline-line, .timeline-progress { left: 18px; }
+                .content-card { padding: 14px 16px !important; }
+                .node-title { font-size: 16px !important; }
+                .project-scroll { max-height: 180px; }
+            }
+        }
+
+        /* Hide the injected theme toggle on this page */
+        .theme-toggle {
+            display: none !important;
+        }
+    </style>
+
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+</head>
+
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="javascript:history.back()" class="back-btn" title="Back">
+                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            </a>
+        </div>
+        <div class="nav-center-brand">
+            <div class="branding-icon">
+                <img src="assets/images/logo.png" alt="Logo">
+            </div>
+            <span class="branding-text">Pro coding</span>
+        </div>
+        <div class="nav-right">
+            <div class="course-info">
+                <span class="progress-val">25%</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="main-container" id="scroll-area">
+        <div class="track-wrapper">
+            <div class="timeline-track">
+                <div class="timeline-line"></div>
+                <div class="timeline-progress"></div>
+
+                <!-- Node 1: Installation -->
+                <div class="course-node">
+                    <div class="node-dot completed">
+                        <i data-lucide="check" style="width:12px;height:12px;color:#18191a"></i>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="icon-box" style="color:#34d399"><i data-lucide="download-cloud"></i></div>
+                            <span class="status-badge">COMPLETED</span>
+                        </div>
+                        <h3 class="node-title">Installation</h3>
+                        <p style="font-size:12px;color:var(--dynamic-text-secondary)">Set up your environment and your first Python script.</p>
+                        <div class="lesson-list">
+                            <div class="lesson-item">
+                                <div class="lesson-meta"><i data-lucide="play-circle"></i><span>Python Setup</span></div>
+                                <button class="play-btn">Review</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW Node: Hello World -->
+                <div class="course-node">
+                    <div class="node-dot completed">
+                        <i data-lucide="check" style="width:12px;height:12px;color:#18191a"></i>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="icon-box" style="color:#60a5fa"><i data-lucide="terminal"></i></div>
+                            <span class="status-badge">COMPLETED</span>
+                        </div>
+                        <h3 class="node-title">Hello World</h3>
+                        <p style="font-size:12px;color:var(--dynamic-text-secondary)">Your very first step into the world of Python programming.</p>
+                        <div class="lesson-list">
+                            <div class="lesson-item">
+                                <div class="lesson-meta"><i data-lucide="code"></i><span>Write & Run</span></div>
+                                <button class="play-btn">Review</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Node 2: Control Flow -->
+                <div class="course-node">
+                    <div class="node-dot pulse"></div>
+                    <div class="content-card" style="border-color:rgba(167,139,250,0.4)">
+                        <div class="card-header">
+                            <div class="icon-box" style="color:#a78bfa"><i data-lucide="git-branch"></i></div>
+                            <span class="status-badge active">IN PROGRESS</span>
+                        </div>
+                        <h3 class="node-title">Control Statements</h3>
+                        <div class="lesson-list">
+                            <div class="lesson-item">
+                                <div class="lesson-meta"><i data-lucide="check-circle-2" style="color:#34d399"></i><span>Booleans</span></div>
+                                <button class="play-btn">Review</button>
+                            </div>
+                            <div class="lesson-item" style="background:rgba(139,92,246,0.1)">
+                                <div class="lesson-meta"><i data-lucide="play-circle" style="color:#a78bfa"></i><span style="font-weight:700">If/Else Logic</span></div>
+                                <button class="play-btn">Play</button>
+                            </div>
+                            <div class="lesson-item">
+                                <div class="lesson-meta"><i data-lucide="play-circle"></i><span>While Loops</span></div>
+                                <button class="play-btn">Play</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Node 3: Mini Project -->
+                <div class="course-node">
+                    <div class="node-dot"><i data-lucide="zap" style="width:10px;height:10px;color:#18191a"></i></div>
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="icon-box" style="color:#fbbf24"><i data-lucide="layers"></i></div>
+                        </div>
+                        <h3 class="node-title">Mini Project</h3>
+                        <div class="project-scroll">
+                            <div class="project-card">
+                                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                                    <i data-lucide="calculator" style="width:16px;color:#fbbf24"></i>
+                                    <h4 style="font-size:13px;color:var(--dynamic-text-primary)">CLI Calculator</h4>
+                                </div>
+                                <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--dynamic-text-secondary)">
+                                    <span>15 MIN</span>
+                                    <i data-lucide="arrow-right" style="width:12px"></i>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                                    <i data-lucide="file-question" style="width:16px;color:#fbbf24"></i>
+                                    <h4 style="font-size:13px;color:var(--dynamic-text-primary)">Quiz Game</h4>
+                                </div>
+                                <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--dynamic-text-secondary)">
+                                    <span>25 MIN</span>
+                                    <i data-lucide="arrow-right" style="width:12px"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW Node: Advanced Project -->
+                <div class="course-node">
+                    <div class="node-dot locked"><i data-lucide="lock" style="width:10px;height:10px"></i></div>
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="icon-box" style="color:#ec4899"><i data-lucide="rocket"></i></div>
+                            <span class="status-badge">LOCKED</span>
+                        </div>
+                        <h3 class="node-title">Advanced Project</h3>
+                        <p style="font-size:12px;color:var(--dynamic-text-secondary)">Build a full-scale application with data persistence.</p>
+                        <div class="lesson-list">
+                            <div class="lesson-item">
+                                <div class="lesson-meta"><i data-lucide="database"></i><span>Weather App API</span></div>
+                                <button class="play-btn" style="opacity: 0.5; cursor: not-allowed;">Locked</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final Node: Certificate -->
+                <div class="course-node final-node">
+                    <div class="node-dot locked"><i data-lucide="lock" style="width:10px;height:10px"></i></div>
+                    <div class="content-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:15px;background:var(--glass-bg-strong)">
+                        <div style="width:60px;height:60px;border-radius:50%;background:var(--glass-bg);display:flex;align-items:center;justify-content:center;border:1px solid var(--glass-border)">
+                            <i data-lucide="award" style="width:30px;height:30px;opacity:0.3"></i>
+                        </div>
+                        <h3 style="font-size:18px;color:var(--dynamic-text-secondary);font-weight:800">Python Mastery Certificate</h3>
+                        <div style="font-size:10px;padding:4px 12px;border:1px solid var(--dynamic-nav-border);border-radius:20px;color:var(--dynamic-text-secondary)">LOCKED</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const scrollArea = document.getElementById('scroll-area');
+
+        // 1. MOUSE WHEEL â€” translate vertical wheel to horizontal scroll
+        scrollArea.addEventListener('wheel', function (e) {
+            if (e.target.closest('.project-scroll')) return;
+            if (e.deltaY !== 0 && e.deltaX === 0) {
+                e.preventDefault();
+                scrollArea.scrollLeft += e.deltaY;
+            }
+        }, { passive: false });
+
+        // 2. MOUSE DRAG (Desktop)
+        let isDown = false, startX, scrollLeft;
+
+        scrollArea.addEventListener('mousedown', (e) => {
+            if (e.target.closest('.project-scroll')) return;
+            isDown = true;
+            scrollArea.style.cursor = 'grabbing';
+            startX = e.pageX - scrollArea.offsetLeft;
+            scrollLeft = scrollArea.scrollLeft;
+        });
+        scrollArea.addEventListener('mouseleave', () => { isDown = false; scrollArea.style.cursor = 'default'; });
+        scrollArea.addEventListener('mouseup', () => { isDown = false; scrollArea.style.cursor = 'default'; });
+        scrollArea.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - scrollArea.offsetLeft;
+            scrollArea.scrollLeft = scrollLeft - (x - startX) * 1.5;
+        });
+
+        // 3. TOUCH DRAG (Mobile) â€” the critical missing piece
+        let touchStartX = 0, touchScrollLeft = 0;
+
+        scrollArea.addEventListener('touchstart', (e) => {
+            if (e.target.closest('.project-scroll')) return;
+            touchStartX = e.touches[0].clientX;
+            touchScrollLeft = scrollArea.scrollLeft;
+        }, { passive: true });
+
+        scrollArea.addEventListener('touchmove', (e) => {
+            if (e.target.closest('.project-scroll')) return;
+            const dx = touchStartX - e.touches[0].clientX;
+            scrollArea.scrollLeft = touchScrollLeft + dx;
+        }, { passive: true });
+    </script>
+
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/global-theme.js"></script>
+</body>
+
+</html>
+

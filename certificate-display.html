@@ -1,0 +1,886 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <script src="assets/js/theme-critical.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Your Certificate - Pro Coding</title>
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cert-cyan: #06b6d4;
+            --cert-purple: #8b5cf6;
+            --cert-gold: #f59e0b;
+            --cert-green: #22c55e;
+            --dynamic-text-primary: var(--text-primary);
+            --dynamic-text-secondary: var(--text-secondary);
+            --dynamic-nav-bg: var(--nav-icon-bg);
+            --dynamic-nav-border: var(--nav-icon-border);
+            --dynamic-nav-hover: var(--nav-icon-hover);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            min-height: 100dvh;
+            background: var(--bg-primary);
+            color: var(--dynamic-text-primary);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* â”€â”€â”€ TOP NAV â”€â”€â”€ */
+        .top-nav {
+            padding: 10px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--dynamic-nav-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--dynamic-nav-border);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .nav-center-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .nav-left { display: flex !important; align-items: center !important; gap: 12px; }
+        .nav-right { display: flex; align-items: center; gap: 10px; }
+
+        .back-btn {
+            width: 38px; height: 38px;
+            background: var(--dynamic-nav-bg);
+            border: 1px solid var(--dynamic-nav-border);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .back-btn:hover { background: var(--dynamic-nav-hover); transform: translateX(-2px); }
+        .back-btn svg { width: 20px; height: 20px; fill: var(--dynamic-text-primary); }
+
+        .branding { display: flex; align-items: center; gap: 10px; }
+        .branding-icon {
+            width: 36px; height: 36px;
+            background: white; border-radius: 9px;
+            display: flex; align-items: center; justify-content: center;
+            padding: 5px; overflow: hidden;
+        }
+        .branding-icon img { width: 100%; height: 100%; object-fit: contain; }
+        .branding-text { font-size: 17px; font-weight: 700; color: var(--dynamic-text-primary); }
+
+        /* Gold badge in nav */
+        .nav-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            background: rgba(245,158,11,0.12);
+            border: 1px solid rgba(245,158,11,0.35);
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--cert-gold);
+            letter-spacing: 0.4px;
+        }
+        .nav-badge svg { width: 13px; height: 13px; fill: var(--cert-gold); }
+
+        /* â”€â”€â”€ PAGE BODY â”€â”€â”€ */
+        .page-body {
+            flex: 1; display: flex; gap: 14px;
+            padding: 12px 18px;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        /* â”€â”€â”€ LEFT PANEL â”€â”€â”€ */
+        .left-panel {
+            width: 230px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 12px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-bottom: 20px;
+        }
+        .left-panel::-webkit-scrollbar { display: none; }
+
+        .panel-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--dynamic-text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 2px;
+        }
+
+        .panel-subtitle {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--dynamic-text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Stat items */
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 4px 6px;
+        }
+
+        .stat-icon {
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; margin-top: 1px;
+        }
+        .gold-card .stat-icon svg { fill: var(--cert-gold); width: 22px; height: 22px; }
+        .cyan-card .stat-icon svg { fill: var(--cert-cyan); width: 22px; height: 22px; }
+        .purple-card .stat-icon svg { fill: var(--cert-purple); width: 22px; height: 22px; }
+
+        .stat-details { flex: 1; }
+        .stat-label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--dynamic-text-secondary); letter-spacing: 0.5px; }
+        .stat-value { font-size: 13px; font-weight: 700; color: var(--dynamic-text-primary); margin-top: 3px; line-height: 1.3; }
+
+        .inline-btn-download {
+            background: linear-gradient(135deg, rgba(34,197,94,0.18), rgba(34,197,94,0.06));
+            border: 1.5px solid rgba(34,197,94,0.35);
+            color: var(--cert-green);
+        }
+        .inline-btn-download svg { fill: var(--cert-green); }
+        .inline-btn-download:hover {
+            background: linear-gradient(135deg, rgba(34,197,94,0.28), rgba(34,197,94,0.12));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34,197,94,0.2);
+        }
+
+        /* â”€â”€â”€ RIGHT PANEL â”€â”€â”€ */
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        /* Preview box */
+        .preview-box {
+            flex: 1;
+            border: 2px solid var(--cert-gold);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: rgba(245,158,11,0.03);
+            min-height: 0;
+        }
+
+        .preview-box-header {
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 9px;
+            border-bottom: 1px solid rgba(245,158,11,0.2);
+            color: var(--dynamic-text-primary);
+            flex-shrink: 0;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .preview-box-header svg { width: 14px; height: 14px; fill: var(--cert-gold); }
+
+        .preview-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        /* â”€â”€â”€ THE CERTIFICATE â”€â”€â”€ */
+        .certificate {
+            width: 100%;
+            max-width: 520px;
+            max-height: 100%;
+            aspect-ratio: 1.414 / 1; /* A4 landscape ratio */
+            background: linear-gradient(145deg, #0d0820, #14112a, #1a1040);
+            border-radius: 14px;
+            border: 2px solid rgba(245,158,11,0.4);
+            box-shadow:
+                0 0 0 1px rgba(245,158,11,0.1),
+                0 0 40px rgba(245,158,11,0.08),
+                0 20px 60px rgba(0,0,0,0.6),
+                inset 0 0 60px rgba(139,92,246,0.04);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 30px;
+            flex-shrink: 0;
+            animation: cert-entrance 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+
+        @keyframes cert-entrance {
+            0% { opacity: 0; transform: scale(0.88) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Corner ornaments */
+        .cert-corner {
+            position: absolute;
+            width: 36px; height: 36px;
+        }
+        .cert-corner-tl { top: 10px; left: 10px; }
+        .cert-corner-tr { top: 10px; right: 10px; transform: scaleX(-1); }
+        .cert-corner-bl { bottom: 10px; left: 10px; transform: scaleY(-1); }
+        .cert-corner-br { bottom: 10px; right: 10px; transform: scale(-1); }
+        .cert-corner svg { width: 100%; height: 100%; fill: none; stroke: rgba(245,158,11,0.5); stroke-width: 1.5; }
+
+        /* Background decorative ring */
+        .cert-ring {
+            position: absolute;
+            width: 240px; height: 240px;
+            border-radius: 50%;
+            border: 1px solid rgba(245,158,11,0.06);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .cert-ring-2 {
+            width: 180px; height: 180px;
+            border-color: rgba(139,92,246,0.06);
+        }
+
+        /* Shimmer lines */
+        .cert-shimmer {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(245,158,11,0.25), transparent);
+            top: 30%; left: 0;
+        }
+        .cert-shimmer-2 { top: 70%; }
+
+        /* Stars pattern */
+        .cert-star {
+            position: absolute;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: rgba(245,158,11,0.25);
+        }
+
+        /* Seal */
+        .cert-seal {
+            position: absolute;
+            bottom: 18px; right: 24px;
+            width: 54px; height: 54px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, rgba(245,158,11,0.25), rgba(245,158,11,0.05));
+            border: 1.5px solid rgba(245,158,11,0.5);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 1px;
+        }
+        .cert-seal svg { width: 20px; height: 20px; fill: rgba(245,158,11,0.85); }
+        .cert-seal-text { font-size: 6px; font-weight: 800; letter-spacing: 0.5px; color: rgba(245,158,11,0.85); text-transform: uppercase; }
+
+        /* Certificate text */
+        .cert-organization {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(245,158,11,0.7);
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .cert-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 700;
+            font-style: italic;
+            color: rgba(255,255,255,0.95);
+            text-align: center;
+            margin-bottom: 8px;
+            line-height: 1.2;
+            position: relative;
+        }
+
+        .cert-divider {
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(245,158,11,0.6), transparent);
+            margin: 0 auto 8px;
+        }
+
+        .cert-presented {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .cert-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--cert-gold);
+            text-align: center;
+            margin-bottom: 6px;
+            line-height: 1.1;
+            position: relative;
+            text-shadow: 0 0 30px rgba(245,158,11,0.3);
+        }
+
+        .cert-course-label {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 3px;
+            position: relative;
+        }
+
+        .cert-course {
+            font-size: 12px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.85);
+            text-align: center;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .cert-meta {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            position: relative;
+        }
+        .cert-meta-item {
+            text-align: center;
+        }
+        .cert-meta-label {
+            font-size: 7px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 2px;
+        }
+        .cert-meta-value {
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.75);
+        }
+        .cert-meta-divider {
+            width: 1px;
+            height: 28px;
+            background: rgba(245,158,11,0.2);
+        }
+
+        /* â”€â”€â”€ SHARE/ACTION ROW (Left Panel) â”€â”€â”€ */
+        .share-row {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin-top: auto;       /* pushes buttons to the bottom of the left panel */
+            padding-top: 12px;      /* spacing from stat cards above */
+            gap: 8px;
+            flex-shrink: 0;
+            width: 100%;
+        }
+
+        .share-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--dynamic-text-secondary);
+            flex: 1;
+        }
+        .share-label span { color: var(--cert-gold); font-weight: 800; }
+
+        .inline-share-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 11px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            transition: all 0.25s ease;
+        }
+        .inline-share-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+        .inline-btn-cert {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            border: none;
+            box-shadow: 0 3px 14px rgba(245,158,11,0.3);
+        }
+        .inline-btn-cert svg { fill: white; }
+        .inline-btn-cert:hover { transform: translateY(-1px); filter: brightness(1.1); box-shadow: 0 6px 22px rgba(245,158,11,0.4); }
+
+        .inline-btn-download {
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            color: white;
+            box-shadow: 0 3px 14px rgba(6,182,212,0.3);
+        }
+        .inline-btn-download svg { fill: white; }
+        .inline-btn-download:hover { transform: translateY(-1px); filter: brightness(1.1); box-shadow: 0 6px 22px rgba(6,182,212,0.4); }
+
+        /* â”€â”€â”€ LANDSCAPE SYSTEM â”€â”€â”€ */
+        @media screen and (orientation: landscape) {
+            html, body {
+                overflow: hidden !important;
+                height: 100dvh !important;
+                width: 100vw !important;
+            }
+
+            .landscape-scroller {
+                position: fixed !important;
+                top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+                width: 100% !important; height: 100dvh !important;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                -webkit-overflow-scrolling: touch;
+                background: var(--bg-primary) !important;
+                z-index: 1000 !important;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
+            .top-nav {
+                height: 44px !important;
+                padding: 0 15px !important;
+                position: relative !important;
+                width: 100% !important;
+                flex-shrink: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                z-index: 1010 !important;
+            }
+
+            .page-body {
+                flex: 1 !important;
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                width: 100% !important;
+                min-width: 0 !important;
+                height: calc(100% - 44px) !important;
+                padding: 10px 40px !important;
+                gap: 20px !important;
+                overflow: hidden !important;  /* clip only â€” left-panel handles its own scroll */
+            }
+
+            .left-panel {
+                width: 200px !important;
+                height: 100% !important;
+                flex-shrink: 0 !important;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                padding-bottom: 16px !important; /* space so last button isn't flush against edge */
+            }
+            .left-panel::-webkit-scrollbar { display: none !important; }
+
+            .right-panel {
+                flex: 1 !important;
+                height: 100% !important;
+            }
+
+            .branding-icon { width: 30px !important; height: 30px !important; }
+            .branding-text { font-size: 14px !important; }
+            .back-btn { width: 32px !important; height: 32px !important; }
+
+            /* TIER 1: Ultra-compact (<320px) */
+            @media (max-height: 319px) {
+                .top-nav { height: 36px !important; }
+                .branding-text { display: none !important; }
+                .page-body { height: calc(100% - 36px) !important; padding: 4px 8px !important; gap: 8px !important; }
+                .left-panel { width: 130px !important; gap: 4px !important; overflow-y: auto !important; padding-bottom: 8px !important; }
+                .share-row { margin-top: 8px !important; }  /* no room for auto margin â€” flow naturally */
+                .stat-card { padding: 3px 5px !important; gap: 5px !important; }
+                .stat-icon svg { width: 13px !important; height: 13px !important; }
+                .stat-label { font-size: 7px !important; }
+                .stat-value { font-size: 9px !important; line-height: 1.2 !important; }
+                .panel-title { font-size: 9px !important; }
+                .panel-subtitle { font-size: 8px !important; }
+                .inline-share-btn { padding: 6px 8px !important; font-size: 8px !important; border-radius: 7px !important; gap: 4px !important; }
+                .inline-share-btn svg { width: 12px !important; height: 12px !important; }
+                .certificate { padding: 10px 15px !important; border-radius: 8px !important; }
+            }
+
+            /* TIER 2: Compact (320-374px) */
+            @media (min-height: 320px) and (max-height: 374px) {
+                .top-nav { height: 40px !important; }
+                .branding-text { display: none !important; }
+                .left-panel { width: 158px !important; overflow-y: auto !important; padding-bottom: 8px !important; }
+                .page-body { height: calc(100% - 40px) !important; padding: 6px 12px !important; gap: 10px !important; }
+                .share-row { margin-top: 8px !important; }  /* no room for auto margin â€” flow naturally */
+                .stat-card { padding: 3px 5px !important; gap: 6px !important; }
+                .stat-icon svg { width: 15px !important; height: 15px !important; }
+                .stat-label { font-size: 8px !important; }
+                .stat-value { font-size: 10px !important; line-height: 1.2 !important; }
+                .panel-title { font-size: 10px !important; }
+                .panel-subtitle { font-size: 8px !important; line-height: 1.3 !important; }
+                .inline-share-btn { padding: 7px 10px !important; font-size: 10px !important; border-radius: 8px !important; gap: 5px !important; width: 100% !important; }
+                .inline-share-btn svg { width: 13px !important; height: 13px !important; }
+                .cert-name { font-size: 18px !important; }
+                .cert-headline { font-size: 13px !important; }
+            }
+
+            /* TIER 3: Standard (375-449px) */
+            @media (min-height: 375px) and (max-height: 449px) {
+                .top-nav { height: 48px !important; }
+                .left-panel { width: 190px !important; overflow-y: auto !important; padding-bottom: 20px !important; }
+                .page-body { height: calc(100% - 48px) !important; padding: 8px 18px !important; gap: 14px !important; }
+                .panel-title { font-size: 12px !important; }
+                .panel-subtitle { font-size: 10px !important; }
+                .stat-card { padding: 4px 6px !important; gap: 8px !important; }
+                .stat-icon svg { width: 18px !important; height: 18px !important; }
+                .gold-card .stat-icon svg, .cyan-card .stat-icon svg, .purple-card .stat-icon svg { width: 18px !important; height: 18px !important; }
+                .stat-label { font-size: 9px !important; }
+                .stat-value { font-size: 12px !important; }
+                .inline-share-btn { padding: 10px 14px !important; font-size: 11px !important; border-radius: 10px !important; gap: 6px !important; }
+                .inline-share-btn svg { width: 14px !important; height: 14px !important; }
+                .cert-name { font-size: 20px !important; }
+                .cert-headline { font-size: 14px !important; }
+            }
+
+            /* TIER 4: Large Mobile (450-499px) */
+            @media (min-height: 450px) and (max-height: 499px) {
+                .top-nav { height: 54px !important; }
+                .left-panel { width: 220px !important; overflow-y: auto !important; padding-bottom: 20px !important; }
+                .page-body { height: calc(100% - 54px) !important; padding: 12px 24px !important; gap: 18px !important; }
+                .panel-title { font-size: 13px !important; }
+                .panel-subtitle { font-size: 11px !important; }
+                .stat-card { padding: 4px 8px !important; gap: 8px !important; }
+                .stat-icon svg { width: 20px !important; height: 20px !important; }
+                .gold-card .stat-icon svg, .cyan-card .stat-icon svg, .purple-card .stat-icon svg { width: 20px !important; height: 20px !important; }
+                .stat-label { font-size: 9px !important; }
+                .stat-value { font-size: 13px !important; }
+                .inline-share-btn { padding: 11px 14px !important; font-size: 12px !important; border-radius: 10px !important; gap: 6px !important; }
+                .inline-share-btn svg { width: 15px !important; height: 15px !important; }
+                .cert-name { font-size: 24px !important; }
+            }
+
+            /* TIER 5: Small-Tablet / Laptop (500-699px) */
+            @media (min-height: 500px) and (max-height: 699px) {
+                .top-nav { height: 62px !important; padding: 0 40px !important; }
+                .branding-icon { width: 44px !important; height: 44px !important; }
+                .branding-text { font-size: 18px !important; }
+                .back-btn { width: 40px !important; height: 40px !important; }
+                .back-btn svg { width: 20px !important; height: 20px !important; }
+                .nav-badge { padding: 7px 14px !important; font-size: 13px !important; }
+                .page-body { height: calc(100% - 62px) !important; padding: 20px 50px !important; gap: 30px !important; }
+                .left-panel { width: 260px !important; gap: 14px !important; }
+                .panel-title { font-size: 16px !important; letter-spacing: 0.8px !important; }
+                .panel-subtitle { font-size: 13px !important; line-height: 1.6 !important; }
+                .stat-card { padding: 6px 8px !important; gap: 12px !important; }
+                .stat-icon svg { width: 24px !important; height: 24px !important; }
+                .gold-card .stat-icon svg, .cyan-card .stat-icon svg, .purple-card .stat-icon svg { width: 24px !important; height: 24px !important; }
+                .stat-label { font-size: 11px !important; letter-spacing: 0.6px !important; }
+                .stat-value { font-size: 16px !important; }
+                .preview-box-header { font-size: 15px !important; padding: 12px !important; }
+                .preview-box-header svg { width: 17px !important; height: 17px !important; }
+                .inline-share-btn { padding: 13px 18px !important; font-size: 14px !important; border-radius: 12px !important; gap: 8px !important; }
+                .inline-share-btn svg { width: 18px !important; height: 18px !important; }
+                .cert-name { font-size: 28px !important; }
+                .cert-headline { font-size: 18px !important; }
+            }
+
+            /* TIER 6: Desktop / Large Screen (700px+) */
+            @media (min-height: 700px) {
+                .top-nav { height: 75px !important; padding: 0 70px !important; }
+                .branding-icon { width: 54px !important; height: 54px !important; }
+                .branding-text { font-size: 24px !important; }
+                .back-btn { width: 48px !important; height: 48px !important; }
+                .back-btn svg { width: 24px !important; height: 24px !important; }
+                .nav-badge { padding: 9px 18px !important; font-size: 15px !important; }
+                .page-body { height: calc(100% - 75px) !important; padding: 30px 70px !important; gap: 50px !important; }
+                .left-panel { width: 310px !important; gap: 18px !important; }
+                .panel-title { font-size: 19px !important; letter-spacing: 1px !important; }
+                .panel-subtitle { font-size: 15px !important; line-height: 1.6 !important; }
+                .stat-card { padding: 8px 10px !important; gap: 16px !important; }
+                .stat-icon svg { width: 28px !important; height: 28px !important; }
+                .gold-card .stat-icon svg, .cyan-card .stat-icon svg, .purple-card .stat-icon svg { width: 28px !important; height: 28px !important; }
+                .stat-label { font-size: 12px !important; letter-spacing: 0.7px !important; }
+                .stat-value { font-size: 18px !important; }
+                .preview-box-header { font-size: 17px !important; padding: 14px !important; }
+                .preview-box-header svg { width: 19px !important; height: 19px !important; }
+                .inline-share-btn { padding: 16px 24px !important; font-size: 16px !important; border-radius: 14px !important; gap: 10px !important; }
+                .inline-share-btn svg { width: 22px !important; height: 22px !important; }
+                .cert-name { font-size: 36px !important; }
+                .cert-headline { font-size: 22px !important; }
+                .cert-course { font-size: 16px !important; }
+                .cert-organization { font-size: 11px !important; }
+                .cert-seal { width: 72px !important; height: 72px !important; bottom: 24px !important; right: 32px !important; }
+                .cert-seal svg { width: 28px !important; height: 28px !important; }
+                .certificate { max-width: 700px !important; padding: 28px 40px !important; }
+            }
+        }
+
+        .theme-toggle { display: none !important; }
+
+        /* â”€â”€â”€ TOAST â”€â”€â”€ */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: rgba(30,30,55,0.95);
+            border: 1px solid rgba(245,158,11,0.4);
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 9999;
+            transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275), opacity 0.35s ease;
+            opacity: 0;
+            backdrop-filter: blur(12px);
+            white-space: nowrap;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast svg { width: 16px; height: 16px; fill: var(--cert-gold); flex-shrink: 0; }
+
+        /* Confetti particle */
+        @keyframes confetti-fall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        .confetti-piece {
+            position: fixed;
+            width: 8px; height: 8px;
+            border-radius: 2px;
+            animation: confetti-fall linear forwards;
+            z-index: 9998;
+            pointer-events: none;
+        }
+    </style>
+
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+</head>
+<body>
+    <div class="landscape-scroller">
+        <!-- TOP NAVIGATION -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <a href="javascript:history.back()" class="back-btn" title="Go Back">
+                    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                </a>
+            </div>
+            <div class="nav-center-brand">
+                <div class="branding-icon">
+                    <img src="assets/images/logo.png" alt="Logo">
+                </div>
+                <span class="branding-text">Pro coding</span>
+            </div>
+            <div class="nav-right">
+                <div class="nav-badge">
+                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    VERIFIED
+                </div>
+            </div>
+        </nav>
+
+        <!-- PAGE BODY -->
+        <div class="page-body">
+
+            <!-- LEFT: Info + Share buttons -->
+            <div class="left-panel">
+                <div>
+                    <div class="panel-title">Your Certificate</div>
+                    <div class="panel-subtitle">Congratulations! Share your achievement with the world.</div>
+                </div>
+
+                <div class="stat-card gold-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-label">Status</div>
+                        <div class="stat-value">Verified âœ“</div>
+                    </div>
+                </div>
+
+                <div class="stat-card cyan-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-label">Course</div>
+                        <div class="stat-value" id="certCourseMini">Web Development</div>
+                    </div>
+                </div>
+
+                <div class="stat-card purple-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-label">Issued On</div>
+                        <div class="stat-value" id="certDateMini">Apr 1, 2026</div>
+                    </div>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="share-row">
+                    <button class="inline-share-btn inline-btn-cert" onclick="shareCertificate()">
+                        <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        <span>Share Certificate</span>
+                    </button>
+                    <button class="inline-share-btn inline-btn-download" onclick="downloadCertificate()">
+                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                        <span>Download</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- RIGHT: Certificate Preview -->
+            <div class="right-panel">
+                <!-- Preview Box -->
+                <div class="preview-box">
+                    <div class="preview-box-header">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        Certificate Preview
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="preview-area">
+
+                        <!-- Certificate Card -->
+                        <img src="assets/images/certificate_preview.png" class="certificate" id="certCard" alt="Certificate" onerror="this.src='assets/images/homepagebg.png'" style="width: 100%; max-width: 600px; height: auto; object-fit: contain; padding: 0; background: none; border: 2px solid rgba(245,158,11,0.4); box-shadow: 0 0 40px rgba(245,158,11,0.2), 0 20px 60px rgba(0,0,0,0.6);">
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <svg viewBox="0 0 24 24" id="toastIcon"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span id="toastMsg">Shared successfully!</span>
+    </div>
+
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/global-theme.js"></script>
+    <script>
+        // Dynamic date
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        document.getElementById('certDate').textContent = dateStr;
+        document.getElementById('certDateMini').textContent = dateStr;
+
+        // Random certificate ID for demo
+        const certId = 'PC-' + now.getFullYear() + '-' + String(Math.floor(Math.random() * 999) + 1).padStart(3, '0');
+        document.getElementById('certId').textContent = certId;
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function spawnConfetti() {
+            const colors = ['#f59e0b', '#8b5cf6', '#06b6d4', '#22c55e', '#f87171', '#ffffff'];
+            for (let i = 0; i < 22; i++) {
+                const p = document.createElement('div');
+                p.className = 'confetti-piece';
+                p.style.cssText = `
+                    left: ${Math.random() * 100}vw;
+                    top: -10px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    width: ${5 + Math.random() * 6}px;
+                    height: ${5 + Math.random() * 6}px;
+                    animation-duration: ${1.5 + Math.random() * 2}s;
+                    animation-delay: ${Math.random() * 0.5}s;
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+                `;
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 4000);
+            }
+        }
+
+        function shareCertificate() {
+            spawnConfetti();
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Pro Coding Certificate',
+                    text: 'I just completed a course on Pro Coding! Check out my certificate.',
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                // Copy to clipboard fallback
+                const shareText = 'I just earned my certificate from Pro Coding Academy! ðŸŽ‰ #ProCoding #WebDevelopment';
+                navigator.clipboard.writeText(shareText).then(() => {
+                    showToast('Certificate link copied to clipboard!');
+                }).catch(() => {
+                    showToast('Certificate shared!');
+                });
+            }
+        }
+
+        function shareApp() {
+            spawnConfetti();
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Pro Coding - Learn to Code',
+                    text: 'I am learning coding with Pro Coding app. Join me!',
+                    url: 'https://play.google.com/store'
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText('Check out Pro Coding app the best way to learn coding! ').then(() => {
+                    showToast('App link copied to clipboard!');
+                }).catch(() => {
+                    showToast('App link shared!');
+                });
+            }
+        }
+
+        function downloadCertificate() {
+            showToast('Certificate download started');
+        }
+
+        // Entrance confetti burst
+        setTimeout(spawnConfetti, 600);
+    </script>
+</body>
+</html>
+

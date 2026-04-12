@@ -1,0 +1,1162 @@
+/* ========================================
+   Pro Coding - Theme System
+   Dark/Light Mode Support
+   ======================================== */
+
+:root {
+    /* Mode indicator */
+    --mode: light;
+
+    /* ===== THEME COLORS (from existing system) ===== */
+    --theme-color: #667eea;
+    --theme-bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+
+    /* ===== LIGHT MODE (Default) ===== */
+
+    /* Backgrounds */
+    --bg-primary: var(--theme-bg-gradient);
+    --bg-static: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --glass-bg-strong: rgba(255, 255, 255, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.25);
+    --glass-border-strong: rgba(255, 255, 255, 0.4);
+    --dark-overlay: rgba(0, 0, 0, 0.2);
+    --dark-overlay-strong: rgba(0, 0, 0, 0.4);
+
+    /* Text */
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.85);
+    --text-muted: rgba(255, 255, 255, 0.6);
+    --text-on-light: #333333;
+    --text-on-light-secondary: #555555;
+
+    /* Cards & Components */
+    --card-bg: rgba(255, 255, 255, 0.15);
+    --card-bg-hover: rgba(255, 255, 255, 0.25);
+    --card-border: rgba(255, 255, 255, 0.25);
+
+    /* Code blocks */
+    --code-bg: rgba(30, 30, 40, 0.9);
+    --code-header-bg: rgba(255, 255, 255, 0.08);
+    --code-text: #e4e4e7;
+
+    /* Output box */
+    --output-bg: rgba(255, 255, 255, 0.95);
+    --output-text: #333333;
+
+    /* Inputs */
+    --input-bg: rgba(255, 255, 255, 0.15);
+    --input-border: rgba(255, 255, 255, 0.2);
+    --input-text: #ffffff;
+    --input-placeholder: rgba(255, 255, 255, 0.5);
+
+    /* Scrollbar */
+    --scrollbar-track: rgba(255, 255, 255, 0.1);
+    --scrollbar-thumb: rgba(255, 255, 255, 0.3);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.5);
+
+    /* Shadows */
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.15);
+    --shadow-medium: 0 15px 40px rgba(0, 0, 0, 0.2);
+    --shadow-strong: 0 20px 50px rgba(0, 0, 0, 0.3);
+
+    /* Branding */
+    --branding-bg: rgba(0, 0, 0, 0.4);
+
+    /* Navigation */
+    --nav-icon-bg: rgba(255, 255, 255, 0.15);
+    --nav-icon-border: rgba(255, 255, 255, 0.2);
+    --nav-icon-hover: rgba(255, 255, 255, 0.25);
+
+    /* Buttons */
+    --btn-primary-bg: var(--theme-color);
+    --btn-secondary-bg: rgba(255, 255, 255, 0.15);
+}
+
+/* ===== DARK MODE ===== */
+[data-theme="dark"] {
+    --mode: dark;
+
+    /* Backgrounds - Deep, sophisticated dark */
+    --bg-primary: linear-gradient(135deg, #0d0d14 0%, #1a1a2e 35%, #16213e 70%, #0f3460 100%);
+    --bg-static: linear-gradient(135deg, #0d0d14 0%, #1a1a2e 50%, #16213e 100%);
+    --glass-bg: rgba(25, 25, 45, 0.85);
+    --glass-bg-strong: rgba(35, 35, 60, 0.9);
+    --glass-border: rgba(100, 100, 150, 0.25);
+    --glass-border-strong: rgba(120, 120, 170, 0.35);
+    --dark-overlay: rgba(0, 0, 0, 0.5);
+    --dark-overlay-strong: rgba(0, 0, 0, 0.7);
+
+    /* Text - Light colors for dark background */
+    --text-primary: #e4e4e7;
+    --text-secondary: rgba(228, 228, 231, 0.85);
+    --text-muted: rgba(228, 228, 231, 0.55);
+    --text-on-light: #e4e4e7;
+    --text-on-light-secondary: #a1a1aa;
+
+    /* Cards & Components */
+    --card-bg: rgba(30, 30, 55, 0.8);
+    --card-bg-hover: rgba(45, 45, 75, 0.85);
+    --card-border: rgba(100, 100, 150, 0.3);
+
+    /* Code blocks - Darker in dark mode */
+    --code-bg: rgba(15, 15, 25, 0.95);
+    --code-header-bg: rgba(40, 40, 70, 0.5);
+    --code-text: #d4d4d8;
+
+    /* Output box - Dark version */
+    --output-bg: rgba(25, 25, 40, 0.95);
+    --output-text: #e4e4e7;
+
+    /* Inputs */
+    --input-bg: rgba(30, 30, 55, 0.8);
+    --input-border: rgba(100, 100, 150, 0.3);
+    --input-text: #e4e4e7;
+    --input-placeholder: rgba(228, 228, 231, 0.4);
+
+    /* Scrollbar */
+    --scrollbar-track: rgba(30, 30, 55, 0.5);
+    --scrollbar-thumb: rgba(100, 100, 150, 0.5);
+    --scrollbar-thumb-hover: rgba(120, 120, 170, 0.6);
+
+    /* Shadows - Darker and more pronounced */
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-medium: 0 15px 40px rgba(0, 0, 0, 0.5);
+    --shadow-strong: 0 20px 50px rgba(0, 0, 0, 0.6);
+
+    /* Branding */
+    --branding-bg: rgba(20, 20, 40, 0.8);
+
+    /* Navigation */
+    --nav-icon-bg: rgba(40, 40, 70, 0.7);
+    --nav-icon-border: rgba(100, 100, 150, 0.3);
+    --nav-icon-hover: rgba(60, 60, 90, 0.8);
+
+    /* Buttons */
+    --btn-primary-bg: var(--theme-color);
+    --btn-secondary-bg: rgba(50, 50, 80, 0.7);
+}
+
+/* ===== GLOBAL BRANDING ===== */
+.branding {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    text-decoration: none !important;
+}
+
+.branding-icon {
+    width: 48px !important;
+    height: 48px !important;
+    background: white !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    flex-shrink: 0 !important;
+}
+
+.branding-icon img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+.branding-text {
+    color: var(--dynamic-text-primary) !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.5px !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    white-space: nowrap !important;
+}
+
+/* Landscape and Mobile Overrides for Branding */
+@media screen and (max-height: 500px), screen and (max-width: 600px) {
+    .branding-icon {
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 8px !important;
+    }
+    .branding-text {
+        font-size: 15px !important;
+    }
+}
+
+/* ===== GLOBAL ADAPTIVE BACK BUTTON ===== */
+body .back-btn,
+body nav .back-btn {
+    background: var(--btn-primary-bg, var(--theme-color)) !important;
+    border: 1px solid var(--dynamic-btn-border, transparent) !important;
+    box-shadow: var(--dynamic-btn-glow, none) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+body .back-btn:hover,
+body nav .back-btn:hover {
+    filter: brightness(1.15) !important;
+    transform: translateY(-2px) scale(1.05) !important;
+}
+
+body .back-btn svg,
+body nav .back-btn svg {
+    fill: var(--dynamic-btn-text, #ffffff) !important;
+    stroke: none !important;
+    transition: all 0.3s ease !important;
+}
+
+/* ===== STATIC GRADIENT BACKGROUND (all modes) ===== */
+body {
+    background: var(--bg-primary) !important;
+    background-size: 100% 100% !important;
+    animation: none !important;
+}
+
+[data-theme="dark"] body {
+    background: var(--bg-primary) !important;
+    background-size: 100% 100% !important;
+}
+
+/* ===== THEME TOGGLE BUTTON - ENHANCED ===== */
+.theme-toggle {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, var(--nav-icon-bg), var(--glass-bg-strong));
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--nav-icon-border);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Animated glow ring */
+.theme-toggle::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b, #fcd34d);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+.theme-toggle:hover::before {
+    opacity: 0.6;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(251, 191, 36, 0.3);
+    border-color: rgba(251, 191, 36, 0.5);
+}
+
+.theme-toggle:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+.theme-toggle svg {
+    width: 26px;
+    height: 26px;
+    fill: var(--text-primary);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Sun icon (shown in dark mode) */
+.theme-toggle .icon-sun {
+    position: absolute;
+    opacity: 0;
+    transform: rotate(-180deg) scale(0);
+    color: #fbbf24;
+}
+
+/* Moon icon (shown in light mode) */
+.theme-toggle .icon-moon {
+    position: absolute;
+    opacity: 1;
+    transform: rotate(0) scale(1);
+}
+
+/* Dark mode toggle appearance */
+[data-theme="dark"] .theme-toggle {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(59, 130, 246, 0.2));
+    border-color: rgba(139, 92, 246, 0.4);
+}
+
+[data-theme="dark"] .theme-toggle::before {
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6, #06b6d4);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+    border-color: rgba(139, 92, 246, 0.6);
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+    fill: #fbbf24;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+    opacity: 0;
+    transform: rotate(180deg) scale(0);
+}
+
+/* ===== DARK MODE ACCENT GLOWS ===== */
+[data-theme="dark"] .card:hover,
+[data-theme="dark"] .byte-card:hover,
+[data-theme="dark"] .content-card:hover {
+    box-shadow: 0 15px 40px rgba(139, 92, 246, 0.15),
+        0 5px 20px rgba(59, 130, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.3);
+}
+
+[data-theme="dark"] .start-btn,
+[data-theme="dark"] .try-btn {
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35);
+}
+
+[data-theme="dark"] .start-btn:hover,
+[data-theme="dark"] .try-btn:hover {
+    box-shadow: 0 10px 30px rgba(5, 150, 105, 0.45);
+}
+
+/* Dark mode branding glow */
+[data-theme="dark"] .branding {
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+/* Dark mode links/highlights */
+[data-theme="dark"] .description strong,
+[data-theme="dark"] strong {
+    color: #a78bfa;
+}
+
+/* ===== SMOOTH TRANSITIONS ===== */
+body,
+.card,
+.byte-card,
+.course-card,
+.quiz-container,
+.chat-container,
+.content-card,
+.instruction-card,
+.nav-icon,
+.back-btn,
+.branding,
+input,
+button {
+    transition: background-color 0.4s ease,
+        background 0.4s ease,
+        border-color 0.4s ease,
+        color 0.3s ease,
+        box-shadow 0.4s ease,
+        transform 0.3s ease;
+}
+
+/* ========================================
+   LANDSCAPE MOBILE WEBVIEW OPTIMIZATIONS
+   ======================================== */
+
+/* WebView base optimizations */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    touch-action: manipulation;
+}
+
+body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Disable browser-specific behaviors */
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Allow text selection in content areas (code, descriptions) */
+.code-content,
+.description,
+.output-box,
+pre,
+code {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+/* ===== LANDSCAPE MOBILE - Compact Layout ===== */
+/* Target landscape mobile devices (height <= 500px indicates landscape phone) */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+
+    /* Reduce body padding for more content space */
+    body {
+        padding: 8px !important;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    /* Compact navigation */
+    .top-nav {
+        padding: 20px 10px 10px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .back-btn {
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 8px !important;
+    }
+
+    .back-btn svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .branding {
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+
+    .branding-icon span {
+        font-size: 12px !important;
+    }
+
+
+    .branding-text {
+        font-size: 13px !important;
+    }
+
+    .nav-icon,
+    .theme-toggle,
+    .theme-fab {
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 8px !important;
+    }
+
+    .theme-toggle::before {
+        display: none !important;
+    }
+
+    .nav-icon svg,
+    .theme-toggle svg,
+    .theme-fab svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .nav-icons {
+        gap: 8px !important;
+    }
+
+    /* Page titles compact */
+    .page-title {
+        margin-bottom: 10px !important;
+    }
+
+    .page-title h1 {
+        font-size: 20px !important;
+        letter-spacing: 1px !important;
+    }
+
+    .page-title p {
+        font-size: 12px !important;
+        margin-top: 4px !important;
+    }
+
+    /* Cards compact */
+    .card {
+        padding: 15px 20px !important;
+        border-radius: 12px !important;
+    }
+
+    .card-icon {
+        width: 32px !important;
+        height: 32px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .card-title {
+        font-size: 16px !important;
+        letter-spacing: 1px !important;
+    }
+
+    .card-subtitle {
+        font-size: 11px !important;
+    }
+
+    .corner-deco {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    /* Content cards compact */
+    .content-card {
+        padding: 15px !important;
+        border-radius: 14px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .lesson-title {
+        font-size: 20px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .lesson-subtitle {
+        font-size: 13px !important;
+        margin-bottom: 12px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .description {
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        margin-bottom: 12px !important;
+    }
+
+    /* Code blocks compact */
+    .code-section {
+        margin-bottom: 12px !important;
+    }
+
+    .code-label {
+        font-size: 14px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .code-label svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .code-header {
+        padding: 6px 12px !important;
+    }
+
+    .code-filename {
+        font-size: 11px !important;
+    }
+
+    .copy-btn {
+        padding: 4px 10px !important;
+        font-size: 10px !important;
+    }
+
+    .copy-btn svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .code-content {
+        padding: 12px !important;
+    }
+
+    .code-content pre {
+        font-size: 12px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Output section compact */
+    .output-section {
+        margin-bottom: 12px !important;
+    }
+
+    .output-label {
+        font-size: 14px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .output-box {
+        padding: 15px !important;
+        min-height: 50px !important;
+    }
+
+    .output-box .demo-text {
+        font-size: 18px !important;
+    }
+
+    /* Buttons compact */
+    .try-btn,
+    .start-btn {
+        padding: 10px 20px !important;
+        font-size: 13px !important;
+        border-radius: 8px !important;
+    }
+
+    .try-btn svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .nav-buttons {
+        gap: 10px !important;
+    }
+
+    .nav-btn {
+        padding: 10px 15px !important;
+        font-size: 12px !important;
+        border-radius: 8px !important;
+    }
+
+    .nav-btn svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .nav-button {
+        padding: 12px 20px !important;
+        font-size: 14px !important;
+        border-radius: 10px !important;
+        letter-spacing: 1px !important;
+    }
+
+    /* Instruction card compact */
+    .instruction-card {
+        padding: 15px !important;
+        gap: 12px !important;
+    }
+
+    .instruction-icon {
+        width: 50px !important;
+        height: 50px !important;
+    }
+
+    .instruction-text {
+        font-size: 16px !important;
+    }
+
+    /* Tutorial display */
+    .tutorial-display {
+        border-radius: 14px !important;
+    }
+
+    .tutorial-placeholder {
+        padding: 20px !important;
+        font-size: 14px !important;
+    }
+
+    .arrow-indicator svg {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    /* Voice assist compact */
+    .voice-assist {
+        padding: 5px 12px !important;
+        border-radius: 20px !important;
+        gap: 8px !important;
+    }
+
+    .voice-assist-label {
+        font-size: 12px !important;
+    }
+
+    .toggle-switch {
+        width: 36px !important;
+        height: 20px !important;
+        border-radius: 10px !important;
+    }
+
+    .toggle-switch::after {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .toggle-switch.active::after {
+        left: 18px !important;
+    }
+
+    /* Bottom bar compact */
+    .bottom-bar {
+        margin-top: 8px !important;
+        padding: 0 5px !important;
+    }
+
+    .bottom-icon {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .bottom-icon svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    .bottom-icons {
+        gap: 10px !important;
+    }
+
+    /* Sidebar compact */
+    .sidebar {
+        padding: 8px 6px !important;
+        border-radius: 0 10px 10px 0 !important;
+    }
+
+    .sidebar-icon {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 6px !important;
+    }
+
+    .sidebar-icon svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .sidebar-label {
+        font-size: 9px !important;
+    }
+
+    /* Byte cards compact */
+    .byte-card {
+        flex: 0 0 240px !important;
+        min-width: 240px !important;
+        height: auto !important;
+        min-height: 200px !important;
+        padding: 15px !important;
+    }
+
+    .card-header {
+        font-size: 14px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .card-content {
+        padding: 12px !important;
+        margin-bottom: 12px !important;
+        border-radius: 10px !important;
+    }
+
+    .text-content {
+        font-size: 16px !important;
+    }
+
+    .image-content svg {
+        width: 50px !important;
+        height: 50px !important;
+    }
+
+    .toggle-circle {
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    .toggle-label {
+        font-size: 13px !important;
+    }
+
+    .apk-description {
+        font-size: 11px !important;
+    }
+
+    /* Cards wrapper */
+    .cards-wrapper {
+        padding: 10px 0 !important;
+    }
+
+    .cards-container {
+        padding: 10px 15px !important;
+        gap: 15px !important;
+    }
+
+    /* Scroll hint compact */
+    .scroll-hint svg {
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    /* Next bytes sidebar compact */
+    .sidebar-title {
+        font-size: 14px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .sidebar-title svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .next-byte-card {
+        padding: 10px !important;
+        gap: 10px !important;
+    }
+
+    .byte-thumbnail {
+        width: 55px !important;
+        height: 40px !important;
+    }
+
+    .byte-thumbnail svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    .byte-info h4 {
+        font-size: 12px !important;
+    }
+
+    .byte-info span {
+        font-size: 10px !important;
+    }
+
+    .byte-number {
+        font-size: 8px !important;
+        padding: 2px 6px !important;
+    }
+
+
+}
+
+/* ===== LANDSCAPE MOBILE - Index page specific ===== */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+
+    /* Ensure main container fills screen properly */
+    .main-container {
+        height: 100vh !important;
+        overflow: hidden !important;
+    }
+
+    /* Left section scrollable area */
+    .left-section {
+        height: calc(100% - 10px) !important;
+        margin: 5px !important;
+        border-radius: 14px !important;
+    }
+
+    /* Right section cards */
+    .right-section {
+        gap: 8px !important;
+        padding: 5px 8px !important;
+    }
+
+    /* Roadmap buttons - touch-friendly sizing */
+    .roadmap-btn {
+        min-height: 30px !important;
+    }
+}
+
+/* ===== LANDSCAPE MOBILE - Tutorial page specific ===== */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .main-content {
+        gap: 12px !important;
+    }
+
+    .right-panel {
+        width: 200px !important;
+        gap: 10px !important;
+    }
+}
+
+/* ===== LANDSCAPE MOBILE - Bytes tutorial page specific ===== */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .page-wrapper {
+        gap: 12px !important;
+    }
+
+    .sidebar.bytes-sidebar {
+        width: 220px !important;
+    }
+
+    .next-bytes-list {
+        gap: 8px !important;
+    }
+}
+
+/* ===== TOUCH OPTIMIZATION ===== */
+/* Ensure touch targets are at least 44px for accessibility */
+@media (pointer: coarse) {
+
+    button,
+    a.back-btn,
+    .nav-icon,
+    .theme-toggle,
+    .theme-fab,
+    .branding-icon,
+    .bottom-icon,
+    .sidebar-icon,
+    .roadmap-btn,
+    .nav-btn,
+    .nav-button,
+    .start-btn,
+    .try-btn,
+    .copy-btn,
+    .byte-card,
+    .next-byte-card,
+    .toggle-switch {
+        min-height: 32px !important;
+        cursor: pointer;
+    }
+}
+
+/* ===== WEBVIEW SCROLLBAR OPTIMIZATION ===== */
+/* Hide scrollbars on mobile WebView for cleaner look */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+
+    .left-section::-webkit-scrollbar,
+    .cards-container::-webkit-scrollbar {
+        height: 4px !important;
+        width: 4px !important;
+    }
+
+    .left-section::-webkit-scrollbar-thumb,
+    .cards-container::-webkit-scrollbar-thumb {
+        border-radius: 2px !important;
+    }
+}
+
+/* ===== PREVENT DOUBLE-TAP ZOOM ===== */
+* {
+    touch-action: manipulation;
+}
+
+/* ===== FIX 100VH ON MOBILE ===== */
+@supports (-webkit-touch-callout: none) {
+    body {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+
+    /* Reduce animation complexity on mobile */
+    @keyframes gradientShift {
+
+        0%,
+        100% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+    }
+
+    /* Simplify backdrop blur on lower-end devices */
+    @supports not (backdrop-filter: blur(10px)) {
+
+        .glass-bg,
+        .card,
+        .byte-card,
+        .content-card,
+        .instruction-card,
+        .nav-icon,
+        .back-btn {
+            background: rgba(0, 0, 0, 0.6) !important;
+        }
+    }
+}
+
+/* ===== LANDSCAPE MOBILE - Quiz page specific ===== */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .quiz-container {
+        max-width: 100% !important;
+        padding: 15px 20px !important;
+        border-radius: 16px !important;
+    }
+
+    .quiz-header {
+        margin-bottom: 12px !important;
+    }
+
+    .quiz-title {
+        font-size: 22px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .quiz-progress {
+        font-size: 13px !important;
+    }
+
+    .question-box {
+        padding: 15px !important;
+        margin-bottom: 12px !important;
+        border-radius: 12px !important;
+    }
+
+    .question-text {
+        font-size: 16px !important;
+    }
+
+    .options-grid {
+        gap: 8px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .option-btn {
+        padding: 10px 14px !important;
+        font-size: 14px !important;
+        border-radius: 10px !important;
+    }
+
+    .next-btn {
+        padding: 12px !important;
+        font-size: 14px !important;
+        border-radius: 10px !important;
+    }
+
+    .back-home {
+        width: 35px !important;
+        height: 35px !important;
+        top: 10px !important;
+        left: 10px !important;
+        border-radius: 8px !important;
+    }
+
+    .back-home svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .score-circle {
+        width: 100px !important;
+        height: 100px !important;
+        font-size: 26px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .result-msg {
+        font-size: 18px !important;
+        margin-bottom: 15px !important;
+    }
+}
+
+/* ===== LANDSCAPE MOBILE - Chatbot page specific ===== */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .chat-container {
+        border-radius: 14px !important;
+    }
+
+    .chat-header {
+        padding: 10px 15px !important;
+        gap: 10px !important;
+    }
+
+    .chat-title {
+        font-size: 16px !important;
+    }
+
+    .chat-messages {
+        padding: 10px 15px !important;
+        gap: 10px !important;
+    }
+
+    .message {
+        padding: 10px 14px !important;
+        font-size: 14px !important;
+        border-radius: 14px !important;
+    }
+
+    .chat-input-area {
+        padding: 10px 15px !important;
+        gap: 10px !important;
+    }
+
+    .chat-input {
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+    }
+
+    .send-btn {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .send-btn svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+
+/* ============================================================
+   GLOBAL FORCE-LANDSCAPE MODE
+   All pages always render in landscape orientation.
+   When device is in portrait, we rotate the html element
+   -90deg so it appears as landscape.
+   ============================================================ */
+@media screen and (orientation: portrait) {
+    html {
+        transform: rotate(-90deg);
+        transform-origin: left top;
+        /* Swap width/height: html width = viewport height, html height = viewport width */
+        width: 100vh;
+        height: 100vw;
+        overflow-x: hidden;
+        overflow-y: auto;
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+}
+
+/* ============================================================
+   UNIVERSAL SAFE AREA FIX
+   Prevents content cropping on devices with notches, status bars,
+   and home indicators (e.g., iPhone, Pixel, modern tablets).
+   ============================================================ */
+@supports (padding: env(safe-area-inset-top)) {
+    
+    /* 1. Reset body padding for pages with dedicated layout wrappers
+       to avoid double-padding. */
+    body:has(.landscape-scroller),
+    body:has(.main-container) {
+        padding: 0 !important;
+    }
+
+    /* 2. Global Safe Area for all pages (BODY level)
+       Targeting body ensures that pages without wrappers (index, tutorial, etc.)
+       are protected. We use max(14px, ...) to maintain a premium look even
+       on devices WITHOUT notches. */
+    body {
+        padding-top:    max(14px, env(safe-area-inset-top,    0px)) !important;
+        padding-bottom: max(14px, env(safe-area-inset-bottom, 0px)) !important;
+        padding-left:   max(14px, env(safe-area-inset-left,   0px)) !important;
+        padding-right:  max(14px, env(safe-area-inset-right,  0px)) !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 3. Handle specific layout wrappers
+       These take priority if they exist. */
+    .landscape-scroller, 
+    .main-container {
+        padding-top:    env(safe-area-inset-top,    0px) !important;
+        padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+        padding-left:   env(safe-area-inset-left,   0px) !important;
+        padding-right:  env(safe-area-inset-right,  0px) !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 4. Fix roadmap sections to respect their padded parent */
+    .main-container .left-section,
+    .main-container .right-section {
+        height: 100% !important;
+    }
+
+    /* 5. Ensure top-navs don't double-pad if parent has padding */
+    .top-nav {
+        margin-top: 0 !important;
+    }
+}
+

@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="assets/js/theme-critical.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Courses - Pro Coding</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css"/>
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <style>
+        :root {
+            /* Default Theme */
+            --theme-color: #667eea;
+            --theme-bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+
+            /* Dynamic Contrast Variables */
+            --dynamic-text-primary: #ffffff;
+            --dynamic-text-secondary: rgba(255, 255, 255, 0.85);
+            --dynamic-icon-fill: #ffffff;
+            --dynamic-nav-bg: rgba(255, 255, 255, 0.15);
+            --dynamic-nav-border: rgba(255, 255, 255, 0.2);
+            --dynamic-nav-hover: rgba(255, 255, 255, 0.25);
+            --dynamic-search-bg: rgba(255, 255, 255, 0.15);
+            --dynamic-search-border: rgba(255, 255, 255, 0.2);
+            --dynamic-btn-text: #ffffff;
+            --dynamic-btn-border: transparent;
+            --dynamic-btn-glow: none;
+
+            /* Scaling Variables */
+            --card-w: 320px;
+            --card-h: 320px;
+            --mockup-size: 300px;
+            --mockup-offset: -150px;
+            --card-gap: 25px;
+            --card-padding-top: 80px;
+            --title-fs: 22px;
+            --info-p: 15px 20px 20px;
+            --hand-img-size: 80px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            min-height: 100dvh;
+            background: var(--bg-primary);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.5s ease;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 25px 30px 15px;
+            /* Increased top padding */
+            background: transparent;
+            position: relative;
+        }
+
+        /* Centered branding */
+        .nav-center-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .branding {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .branding-icon {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .branding-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        .branding-icon span { display: none; }
+
+        .branding-icon span {
+            color: var(--dynamic-text-primary);
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .branding-text {
+            color: var(--dynamic-text-primary);
+            font-size: 18px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--dynamic-nav-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--dynamic-nav-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-icon:hover {
+            transform: translateY(-3px);
+            background: var(--dynamic-nav-hover);
+        }
+
+        .nav-icon,
+        .back-btn,
+        .theme-toggle svg,
+        .theme-fab svg {
+            width: 24px;
+            height: 24px;
+            color: var(--dynamic-text-primary);
+            fill: currentColor;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn {
+            width: 42px;
+            height: 42px;
+            background: var(--dynamic-nav-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--dynamic-nav-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            background: var(--dynamic-nav-hover);
+        }
+
+        .back-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--dynamic-text-primary);
+        }
+
+        /* Search Bar */
+        .search-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            margin: 0 20px;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 400px;
+            height: 42px;
+            background: var(--dynamic-search-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--dynamic-search-border);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            background: var(--glass-bg-strong);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--dynamic-text-primary);
+            margin-right: 10px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .search-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--dynamic-text-primary);
+            font-size: 16px;
+            font-family: 'Outfit', sans-serif;
+            width: 100%;
+        }
+
+        .search-input::placeholder {
+            color: var(--dynamic-text-secondary);
+        }
+
+        /* Cards Container */
+        .cards-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: var(--card-gap);
+            padding: var(--card-padding-top) 50px 30px;
+            /* Added top padding for floating placeholders */
+            width: max-content;
+        }
+
+        .course-card {
+            width: var(--card-w);
+            height: var(--card-h);
+            /* Square card */
+            border-radius: 30px;
+            position: relative;
+            overflow: visible;
+            /* Allow placeholder to float out */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
+            margin-top: 100px;
+            /* Space for the floating placeholder */
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Card Color Variants - Glassmorphism */
+        .card-android {
+            background: rgba(255, 184, 0, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 184, 0, 0.4);
+        }
+
+        .card-html5 {
+            background: rgba(90, 90, 90, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(90, 90, 90, 0.4);
+        }
+
+        .card-website {
+            background: rgba(0, 198, 251, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 198, 251, 0.4);
+        }
+
+        .card-unity {
+            background: rgba(217, 70, 184, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(217, 70, 184, 0.4);
+        }
+
+        .card-flutter {
+            background: rgba(2, 86, 155, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(2, 86, 155, 0.4);
+        }
+
+        .card-python {
+            background: rgba(48, 105, 152, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(48, 105, 152, 0.4);
+        }
+
+        /* Floating Mockup Image */
+        .floating-mockup {
+            width: var(--mockup-size);
+            /* Larger size for better visibility */
+            height: var(--mockup-size);
+            object-fit: contain;
+            position: absolute;
+            top: var(--mockup-offset);
+            /* 50% height outside (150px) */
+            left: 50%;
+            transform: translateX(-50%);
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.3));
+            z-index: 10;
+            transition: transform 0.3s ease;
+        }
+
+        .course-card:hover .floating-mockup {
+            transform: translateX(-50%) translateY(-10px) scale(1.05);
+        }
+
+        /* Card Info Section */
+        .card-info {
+            padding: var(--info-p);
+        }
+
+        .card-title {
+            font-size: var(--title-fs);
+            font-weight: 700;
+            color: var(--dynamic-text-primary);
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: var(--dynamic-text-secondary);
+            line-height: 1.4;
+            margin-bottom: 12px;
+            min-height: 36px;
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 14px 30px;
+            background: var(--theme-color);
+            border: 1px solid var(--dynamic-btn-border);
+            border-radius: 12px;
+            color: var(--dynamic-btn-text);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), var(--dynamic-btn-glow);
+            filter: brightness(1.1);
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            filter: brightness(1.2);
+        }
+
+        /* Progress Bar */
+        .progress-wrapper {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .progress-text {
+            color: var(--dynamic-text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #fff;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Scrollbar Styling */
+        .cards-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .cards-wrapper::-webkit-scrollbar-track {
+            background: var(--dynamic-nav-bg);
+            border-radius: 10px;
+            margin: 0 50px;
+        }
+
+        .cards-wrapper::-webkit-scrollbar-thumb {
+            background: var(--dynamic-nav-border);
+            border-radius: 10px;
+        }
+
+        .cards-wrapper::-webkit-scrollbar-thumb:hover {
+            background: var(--dynamic-nav-hover);
+        }
+
+
+        /* ===== HIGH-RESOLUTION LARGE DISPLAY OPTIMIZATION (Desktop/Huge Foldables) ===== */
+        @media screen and (min-width: 1400px) and (min-height: 900px) {
+            :root {
+                --card-w: 480px;
+                --card-h: 450px;
+                --mockup-size: 420px;
+                --mockup-offset: -200px;
+                --title-fs: 32px;
+                --info-p: 25px 35px 35px;
+                --card-gap: 40px;
+            }
+
+            .branding-text {
+                font-size: 24px;
+            }
+
+            .branding-icon {
+                width: 48px;
+                height: 48px;
+            }
+
+            .branding-icon,
+            .nav-icon,
+            .theme-toggle,
+            .theme-fab {
+                width: 54px;
+                height: 54px;
+            }
+
+            .search-bar {
+                width: 50%;
+                /* Fluid width for big screens */
+                max-width: 800px;
+                height: 54px;
+                padding: 0 25px;
+            }
+
+            .search-input {
+                font-size: 18px;
+            }
+
+            .search-icon {
+                width: 24px;
+                height: 24px;
+            }
+
+            .top-nav {
+                padding-top: 40px !important;
+            }
+
+            .card-description {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+
+            .start-btn {
+                padding: 18px 40px;
+                font-size: 20px;
+                border-radius: 15px;
+            }
+
+            .progress-container {
+                height: 8px;
+            }
+        }
+
+        /* ===== SETTINGS PAGE RESPONSIVE ===== */
+        /* Mobile-first. Always vertically scrollable. */
+
+        /* Compact nav on small screens */
+        @media (max-width: 480px) {
+            .top-nav {
+                padding: 12px 16px 8px;
+            }
+            .branding-icon {
+                width: 36px;
+                height: 36px;
+            }
+            .branding-text {
+                font-size: 15px;
+            }
+            .nav-icon {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* Refined 6-Tier Landscape System (Sync'd with Info Page) */
+        @media screen and (orientation: landscape) {
+            /* Fix body to prevent it from clipping the horizontal scrolling content */
+            html, body {
+                overflow: hidden !important;
+                height: 100dvh !important;
+                width: 100vw !important;
+                max-width: 100vw !important;
+            }
+            
+            /* Unified 44px Top Navigation */
+            .top-nav {
+                height: 44px !important;
+                padding: 0 20px !important;
+                display: flex !important;
+                align-items: center !important;
+                background: var(--dynamic-nav-bg) !important;
+                backdrop-filter: blur(10px) !important;
+                border-bottom: 1px solid var(--dynamic-nav-border) !important;
+            }
+            .branding { display: flex !important; align-items: center !important; gap: 8px !important; }
+            .branding-icon { width: 32px !important; height: 32px !important; }
+            .branding-text { font-size: 14px !important; display: block !important; white-space: nowrap !important; color: var(--dynamic-text-primary) !important; }
+
+            .nav-icon, .back-btn { width: 30px !important; height: 30px !important; border-radius: 8px !important; border: 1px solid var(--dynamic-nav-border) !important; text-decoration: none !important; }
+            .nav-icon svg, .back-btn svg { width: 16px !important; height: 16px !important; fill: var(--dynamic-text-primary) !important; }
+
+            /* position:fixed - bypasses ALL parent overflow:hidden - bulletproof scroll fix */
+            .settings-wrapper {
+                position: fixed !important;
+                top: 44px !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                padding: 0 !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                align-items: stretch !important;
+            }
+
+            /* Safe centering: expands when there's extra space, collapses when content overflows */
+            .settings-wrapper::before,
+            .settings-wrapper::after {
+                content: '' !important;
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+            }
+
+            .settings-container {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+                padding: 10px 40px !important;
+                gap: 30px !important;
+                width: max-content !important;
+                max-width: none !important;
+                height: 100% !important;
+                margin: 0 !important; /* CRITICAL: Override portrait margin: 0 auto to prevent left-side clipping */
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+
+            /* Center horizontally on very wide screens (Desktop) */
+            @media (min-width: 1300px) {
+                .settings-container { 
+                    padding: 10px 60px !important; /* Balanced padding */
+                }
+            }
+
+            .settings-card {
+                background: var(--dynamic-nav-bg);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid var(--dynamic-nav-border);
+                border-radius: 20px;
+                display: flex !important;
+                flex-direction: column !important;
+                flex-shrink: 0 !important;
+                justify-content: flex-start;
+                padding: 25px !important;
+                width: 340px !important;
+            }
+
+            .main-branding-card {
+                justify-content: center !important;
+                align-items: center !important;
+                text-align: center !important;
+                background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08)) !important;
+                border: 1px solid rgba(255,255,255,0.3) !important;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
+            }
+
+            .screen-title { margin: 0 !important; font-weight: 700; width: 100% !important; color: var(--dynamic-text-primary); }
+            .settings-card h4 { font-size: 11px !important; margin-bottom: 5px !important; opacity: 0.8; text-transform: uppercase; }
+            
+            /* High-Density Column Items Fix (for inline styled divs) */
+            .settings-card div[style*="padding: 20px"] { padding: 12px !important; border-radius: 12px !important; gap: 10px !important; margin-bottom: 8px !important; background: rgba(0,0,0,0.05) !important; border: none !important; }
+            .settings-card div[style*="font-size: 18px"] { font-size: 15px !important; }
+            .settings-card div[style*="font-size: 14px"] { font-size: 11px !important; }
+            
+            /* Internal Elements Scaling */
+            .switch { transform: scale(0.75) !important; transform-origin: right !important; }
+            input[type="range"] { height: 4px !important; }
+            input[type="color"] { width: 40px !important; height: 40px !important; border-radius: 10px !important; }
+
+            /* TIER 1: Ultra-Compact (< 344px) */
+            @media (max-height: 344px) {
+                .settings-card { width: 275px !important; height: 215px !important; padding: 15px !important; gap: 8px !important; }
+                .screen-title { font-size: 16px !important; }
+                .settings-card div[style*="padding: 20px"] { padding: 8px !important; gap: 6px !important; margin-bottom: 4px !important; }
+                .settings-card div[style*="font-size: 18px"] { font-size: 13px !important; }
+                .switch { transform: scale(0.6) !important; }
+                :root { --hand-img-size: 50px; }
+                .hand-card { padding: 10px 5px !important; gap: 6px !important; }
+            }
+
+            /* TIER 2: Compact-Mobile (345px-374px) - GALAXY NOTE II FIX */
+            @media (min-height: 345px) and (max-height: 374px) {
+                .settings-card { width: 295px !important; height: 255px !important; padding: 18px !important; gap: 10px !important; }
+                .screen-title { font-size: 18px !important; }
+                .settings-card div[style*="padding: 20px"] { padding: 10px !important; gap: 8px !important; }
+                :root { --hand-img-size: 60px; }
+                .hand-card { padding: 12px 8px !important; gap: 8px !important; }
+            }
+
+            /* TIER 3: Standard-Mobile (375px-399px) */
+            @media (min-height: 375px) and (max-height: 399px) {
+                .settings-card { width: 340px !important; height: 270px !important; padding: 20px !important; gap: 15px !important; }
+                .screen-title { font-size: 22px !important; }
+                :root { --hand-img-size: 70px; }
+            }
+
+            /* TIER 4: Large-Mobile (400px - 499px) */
+            @media (min-height: 400px) and (max-height: 499px) {
+                .settings-card { width: 360px !important; height: 300px !important; padding: 22px !important; gap: 18px !important; }
+                .screen-title { font-size: 24px !important; }
+                :root { --hand-img-size: 85px; }
+            }
+
+            /* TIER 5: Small-Tablet (500px-699px) */
+            @media (min-height: 500px) and (max-height: 699px) {
+                .top-nav { height: 60px !important; padding: 15px 20px 10px !important; }
+                .branding-icon { width: 42px !important; height: 42px !important; }
+                .branding-text { font-size: 16px !important; }
+                .back-btn, .nav-icon { width: 42px !important; height: 42px !important; border-radius: 12px !important; }
+                .settings-wrapper { top: 60px !important; } /* Update fixed position to match nav */
+                .settings-card { width: 360px !important; height: 400px !important; padding: 30px !important; gap: 20px !important; }
+                .screen-title { font-size: 26px !important; }
+                .settings-card div[style*="font-size: 18px"] { font-size: 16px !important; }
+                .settings-card div[style*="padding: 20px"] { padding: 15px !important; gap: 12px !important; }
+                .switch { transform: scale(0.9) !important; }
+                input[type="color"] { width: 45px !important; height: 45px !important; }
+                :root { --hand-img-size: 110px; }
+            }
+
+            /* TIER 6: Desktop / Large Tablet (700px+) */
+            @media (min-height: 700px) {
+                .top-nav { height: 70px !important; padding: 20px 25px 12px !important; }
+                .branding-icon { width: 52px !important; height: 52px !important; }
+                .branding-text { font-size: 22px !important; }
+                .back-btn, .nav-icon { width: 52px !important; height: 52px !important; border-radius: 15px !important; }
+                .settings-wrapper { top: 70px !important; } /* Update fixed position to match nav */
+                .settings-card { width: 440px !important; height: 500px !important; padding: 35px !important; gap: 25px !important; }
+                .screen-title { font-size: 32px !important; }
+                .settings-card div[style*="font-size: 18px"] { font-size: 18px !important; }
+                .settings-card div[style*="padding: 20px"] { padding: 20px !important; gap: 15px !important; }
+                .switch { transform: scale(1.0) !important; }
+                input[type="color"] { width: 50px !important; height: 50px !important; }
+                :root { --hand-img-size: 130px; }
+            }
+
+            /* Utilities */
+            .settings-wrapper::-webkit-scrollbar { height: 6px; }
+            .settings-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; margin: 0 40px; }
+            .settings-wrapper::-webkit-scrollbar-thumb { background: var(--dynamic-nav-border); border-radius: 10px; }
+
+        }
+
+        /* Desktop / large tablet - Portrait only */
+        @media (min-width: 900px) and (orientation: portrait) {
+            .settings-container {
+                max-width: 700px !important;
+            }
+        }
+
+        /* Hand Selection */
+        .hand-selection-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .hand-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 20px 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hand-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .hand-card.active {
+            background: rgba(79, 172, 254, 0.15);
+            border-color: #4facfe;
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .hand-card img {
+            width: var(--hand-img-size);
+            height: var(--hand-img-size);
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .hand-card:hover img {
+            transform: scale(1.15);
+        }
+
+        .hand-card span {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dynamic-text-primary);
+        }
+
+        .hand-card .check-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 16px;
+            height: 16px;
+            background: #4facfe;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hand-card.active .check-badge {
+            display: flex;
+        }
+
+        .hand-card .check-badge svg {
+            width: 10px;
+            height: 10px;
+            fill: white;
+        }
+
+        /* Hide the injected theme toggle on settings page top nav */
+        .theme-toggle {
+            display: none !important;
+        }
+    </style>
+
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+</head>
+
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="javascript:history.back()" class="back-btn" title="Back">
+                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            </a>
+        </div>
+        <div class="nav-center-brand">
+            <div class="branding-icon">
+                <img src="assets/images/logo.png" alt="Logo">
+            </div>
+            <span class="branding-text">Pro coding</span>
+        </div>
+
+        <div class="search-container" style="visibility: hidden;">
+            <!-- Hidden to keep layout alignment -->
+        </div>
+
+        <div class="nav-icons">
+            <!-- Icons removed for cleaner landscape UI -->
+        </div>
+    </nav>
+
+    <!-- Settings Container -->
+    <div class="settings-wrapper">
+        <div class="settings-container">
+            
+            <!-- Column 1: Header & Premium -->
+            <div class="settings-card main-branding-card">
+                <h2 class="screen-title">Settings</h2>
+                <!-- Premium Ads Removal -->
+                <button
+                    style="width: 100%; padding: 15px; background: var(--btn-primary-bg); border: none; border-radius: 12px; color: var(--dynamic-btn-text); font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--dynamic-btn-glow); display: flex; justify-content: center; align-items: center; gap: 10px;"
+                    onmouseover="this.style.transform='translateY(-2px)';"
+                    onmouseout="this.style.transform='none';">
+                    <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    Premium (Remove Ads)
+                </button>
+                
+                <!-- Share App (Moved here) -->
+                <button
+                    style="width: 100%; padding: 12px; background: var(--btn-primary-bg); border: none; border-radius: 12px; color: var(--dynamic-btn-text); font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--dynamic-btn-glow); display: flex; justify-content: center; align-items: center; gap: 10px;"
+                    onmouseover="this.style.transform='translateY(-2px)';"
+                    onmouseout="this.style.transform='none';"
+                    onclick="window.location.href='refer_earn.html'">
+                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: currentColor;" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                    </svg>
+                    Share App
+                </button>
+
+            </div>
+
+            <!-- Column 2: Appearance -->
+            <div class="settings-card">
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <h4 style="color: var(--dynamic-text-secondary); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Appearance</h4>
+                    
+                    <!-- Night Mode Toggle -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background: rgba(0,0,0,0.05); border-radius: 16px; border: 1px solid var(--dynamic-search-border);">
+                        <div>
+                            <div style="color: var(--dynamic-text-primary); font-weight: 600; font-size: 18px;">Night Mode</div>
+                            <div style="color: var(--dynamic-text-secondary); font-size: 14px;">Switch light/dark</div>
+                        </div>
+                        <label class="switch" style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                            <input type="checkbox" id="night-mode-toggle" style="opacity: 0; width: 0; height: 0;">
+                            <span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.2); transition: .4s; border-radius: 34px;">
+                                <span style="position: absolute; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                    <!-- Icons inside toggle knob -->
+                                    <svg class="moon-icon" viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: #764ba2; display: none;"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+                                    <svg class="sun-icon" viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: #f59e0b;"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- Gradient Theme Selector -->
+                    <div style="display: flex; flex-direction: column; gap: 15px; padding: 20px; background: rgba(0,0,0,0.05); border-radius: 16px; border: 1px solid var(--dynamic-search-border);">
+                        <div style="color: var(--dynamic-text-primary); font-weight: 600; font-size: 18px;">Theme Colors</div>
+                        <div style="display: flex; gap: 20px; align-items: center;">
+                            <div id="settings-start-color" style="width: 50px; height: 50px; border-radius: 12px; border: 1px solid var(--dynamic-nav-border); cursor: pointer;"></div>
+                            <div id="settings-end-color" style="width: 50px; height: 50px; border-radius: 12px; border: 1px solid var(--dynamic-nav-border); cursor: pointer;"></div>
+                            <div style="flex: 1; height: 50px; border-radius: 12px; background: var(--theme-bg-gradient); border: 1px solid var(--dynamic-nav-border);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 3: Voice Assist -->
+            <div class="settings-card">
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <h4 style="color: var(--dynamic-text-secondary); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Voice Assist</h4>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 15px; padding: 20px; background: rgba(0,0,0,0.05); border-radius: 16px; border: 1px solid var(--dynamic-search-border);">
+                        
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <label style="color: var(--dynamic-text-primary); font-size: 14px; font-weight: 500;">Speech Rate</label>
+                            <input type="range" min="0.5" max="2" value="1" step="0.1" style="width: 100%; cursor: pointer;">
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <label style="color: var(--dynamic-text-primary); font-size: 14px; font-weight: 500;">Pitch</label>
+                            <input type="range" min="0" max="2" value="1" step="0.1" style="width: 100%; cursor: pointer;">
+                        </div>
+
+                        <div style="margin-top: 10px; display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--dynamic-nav-bg); border-radius: 12px; border: 1px solid var(--dynamic-nav-border);">
+                            <span style="color: var(--dynamic-text-secondary); font-size: 13px; font-style: italic; flex: 1;">Speech Settings</span>
+                            <button style="padding: 6px 12px; background: transparent; border: 1px solid var(--dynamic-nav-border); border-radius: 6px; color: var(--dynamic-text-primary); font-size: 12px; cursor: pointer;">Test</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 4: App & Footer -->
+            <div class="settings-card">
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <h4 style="color: var(--dynamic-text-secondary); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Application</h4>
+                    <!-- Handedness Selection -->
+                    <div style="display: flex; flex-direction: column; gap: 10px; padding: 15px; background: rgba(0,0,0,0.05); border-radius: 12px; border: 1px solid var(--dynamic-search-border);">
+                        <div style="color: var(--dynamic-text-primary); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Handedness</div>
+                        <div class="hand-selection-container">
+                            <!-- Left Hand -->
+                            <div class="hand-card" id="hand-left" onclick="setHandedness('left')">
+                                <div class="check-badge"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                                <img src="assets/images/left hand.png" alt="Left Hand">
+                                <span>Left Hand</span>
+                            </div>
+                            <!-- Right Hand -->
+                            <div class="hand-card" id="hand-right" onclick="setHandedness('right')">
+                                <div class="check-badge"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                                <img src="assets/images/right hand.png" alt="Right Hand">
+                                <span>Right Hand</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const root = document.documentElement;
+        const nightModeToggle = document.getElementById('night-mode-toggle');
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+        
+        let pickrStart = null;
+        let pickrEnd = null;
+        let currentStartHex = '#667eea';
+        let currentEndHex = '#764ba2';
+
+        // Initial Theme Load
+        function initSettings() {
+            const currentTheme = root.getAttribute('data-theme') || 'light';
+            nightModeToggle.checked = (currentTheme === 'dark');
+            updateToggleVisuals(nightModeToggle.checked);
+
+            const savedHand = localStorage.getItem('procodingHandedness') || 'right';
+            setHandedness(savedHand, false);
+
+            const savedTheme = localStorage.getItem('themeSettings');
+            if (savedTheme) {
+                try {
+                    const theme = JSON.parse(savedTheme);
+                    if (theme.start && theme.end) { currentStartHex = theme.start; currentEndHex = theme.end; }
+                } catch(e) {}
+            } else {
+                const currentStart = getComputedStyle(root).getPropertyValue('--theme-color').trim();
+                const legacy = localStorage.getItem('themeColor');
+                if (currentStart.startsWith('#')) currentStartHex = currentStart;
+                if (legacy && legacy.startsWith('#')) currentEndHex = legacy;
+            }
+
+            if (root.getAttribute('data-theme') !== 'dark') {
+                updateTheme(currentStartHex, currentEndHex);
+            } else {
+                root.style.setProperty('--theme-color', currentStartHex);
+                root.style.setProperty('--theme-bg-gradient', `linear-gradient(135deg, ${currentStartHex} 0%, ${currentEndHex} 100%)`);
+                root.style.removeProperty('--bg-primary');
+            }
+            document.getElementById('settings-start-color').style.backgroundColor = currentStartHex;
+            document.getElementById('settings-end-color').style.backgroundColor = currentEndHex;
+
+            const opts = { theme:'nano', useAsButton:true, swatches:['#667eea','#764ba2','#f093fb','#f5576c','#4facfe','#ffffff','#000000','#10B981','#F59E0B','#EF4444'], components:{ preview:true, opacity:false, hue:true, interaction:{hex:true,input:true,save:true} } };
+            pickrStart = Pickr.create({...opts, el:'#settings-start-color', default:currentStartHex});
+            pickrEnd   = Pickr.create({...opts, el:'#settings-end-color',   default:currentEndHex});
+            pickrStart.on('change',(c)=>{ currentStartHex=c.toHEXA().toString(); document.getElementById('settings-start-color').style.backgroundColor=currentStartHex; handleColorChange(); }).on('save',()=>pickrStart.hide());
+            pickrEnd.on('change',(c)=>{ currentEndHex=c.toHEXA().toString(); document.getElementById('settings-end-color').style.backgroundColor=currentEndHex; handleColorChange(); }).on('save',()=>pickrEnd.hide());
+        }
+
+        function setHandedness(hand, save=true) {
+            document.querySelectorAll('.hand-card').forEach(c=>c.classList.remove('active'));
+            document.getElementById(`hand-${hand}`).classList.add('active');
+            root.setAttribute('data-handedness', hand);
+            if (save) localStorage.setItem('procodingHandedness', hand);
+        }
+
+        function updateToggleVisuals(isDark) {
+            const slider = nightModeToggle.nextElementSibling;
+            const knob = slider.firstElementChild;
+            slider.style.backgroundColor = isDark ? '#4facfe' : 'rgba(255,255,255,0.2)';
+            knob.style.transform = isDark ? 'translateX(26px)' : 'translateX(0)';
+            sunIcon.style.display = isDark ? 'none' : 'block';
+            moonIcon.style.display = isDark ? 'block' : 'none';
+        }
+
+        nightModeToggle.addEventListener('change', function() {
+            const isDark = this.checked;
+            updateToggleVisuals(isDark);
+            const mode = isDark ? 'dark' : 'light';
+            if (window.setTheme) { window.setTheme(mode); }
+            else {
+                root.setAttribute('data-theme', mode);
+                localStorage.setItem('procodingThemeMode', mode);
+                if (isDark) root.style.removeProperty('--bg-primary');
+                else root.style.setProperty('--bg-primary', `linear-gradient(135deg, ${currentStartHex} 0%, ${currentEndHex} 100%)`);
+            }
+            try { const bc=new BroadcastChannel('procoding_theme'); bc.postMessage({type:'themeMode',mode}); bc.close(); } catch(e) {}
+        });
+
+        function handleColorChange() {
+            const start=currentStartHex, end=currentEndHex;
+            updateTheme(start, end);
+            localStorage.setItem('themeSettings', JSON.stringify({start,end}));
+            localStorage.setItem('themeColor', start);
+            try { const bc=new BroadcastChannel('procoding_theme'); bc.postMessage({type:'themeSettings',start,end}); bc.close(); } catch(e) {}
+        }
+
+        function updateTheme(start, end) {
+            const gradient = `linear-gradient(135deg, ${start} 0%, ${end} 100%)`;
+            root.style.setProperty('--theme-color', start);
+            root.style.setProperty('--theme-bg-gradient', gradient);
+            if (root.getAttribute('data-theme') !== 'dark') root.style.setProperty('--bg-primary', gradient);
+            else root.style.removeProperty('--bg-primary');
+            updateDynamicContrast(start, end);
+        }
+
+        function updateDynamicContrast(c1, c2) {
+            function getBrightness(hex) {
+                if (!hex||hex[0]!=='#') return 0;
+                const r=parseInt(hex.substring(1,3),16),g=parseInt(hex.substring(3,5),16),b=parseInt(hex.substring(5,7),16);
+                return (r*299+g*587+b*114)/1000;
+            }
+            const b1=getBrightness(c1),b2=getBrightness(c2),avg=(b1+b2)/2;
+            const isDarkMode=root.getAttribute('data-theme')==='dark';
+            const isEffectiveDark=isDarkMode||avg<120;
+            const isLightBg=!isEffectiveDark&&avg>170;
+            if (isLightBg) {
+                root.style.setProperty('--dynamic-text-primary','#333333');
+                root.style.setProperty('--dynamic-text-secondary','rgba(0,0,0,0.7)');
+                root.style.setProperty('--dynamic-nav-bg','rgba(0,0,0,0.08)');
+                root.style.setProperty('--dynamic-nav-border','rgba(0,0,0,0.12)');
+                root.style.setProperty('--dynamic-nav-hover','rgba(0,0,0,0.15)');
+                root.style.setProperty('--dynamic-search-bg','rgba(0,0,0,0.05)');
+                root.style.setProperty('--dynamic-search-border','rgba(0,0,0,0.1)');
+            } else {
+                root.style.setProperty('--dynamic-text-primary','#ffffff');
+                root.style.setProperty('--dynamic-text-secondary','rgba(255,255,255,0.85)');
+                root.style.setProperty('--dynamic-nav-bg','rgba(255,255,255,0.15)');
+                root.style.setProperty('--dynamic-nav-border','rgba(255,255,255,0.2)');
+                root.style.setProperty('--dynamic-nav-hover','rgba(255,255,255,0.25)');
+                root.style.setProperty('--dynamic-search-bg','rgba(255,255,255,0.15)');
+                root.style.setProperty('--dynamic-search-border','rgba(255,255,255,0.2)');
+            }
+            if (b1>180) {
+                root.style.setProperty('--dynamic-btn-text','#333333');
+                if (isLightBg||b1>240) { root.style.setProperty('--dynamic-btn-border','rgba(0,0,0,0.2)'); root.style.setProperty('--dynamic-btn-glow','0 4px 15px rgba(0,0,0,0.1)'); }
+                else { root.style.setProperty('--dynamic-btn-border','rgba(0,0,0,0.1)'); root.style.setProperty('--dynamic-btn-glow','none'); }
+            } else {
+                root.style.setProperty('--dynamic-btn-text','#ffffff');
+                if (isEffectiveDark||b1<50) { root.style.setProperty('--dynamic-btn-border','rgba(255,255,255,0.5)'); root.style.setProperty('--dynamic-btn-glow',`0 4px 15px ${c1==='#000000'?'rgba(255,255,255,0.1)':c1+'88'}`); }
+                else { root.style.setProperty('--dynamic-btn-border','transparent'); root.style.setProperty('--dynamic-btn-glow','none'); }
+            }
+        }
+
+        window.addEventListener('load', initSettings);
+
+        const themeObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'data-theme') {
+                    const isDark = root.getAttribute('data-theme') === 'dark';
+                    nightModeToggle.checked = isDark;
+                    updateToggleVisuals(isDark);
+                    updateDynamicContrast(currentStartHex, currentEndHex);
+                }
+            });
+        });
+        themeObserver.observe(document.documentElement, { attributes: true });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+</body>
+
+</html>
+
