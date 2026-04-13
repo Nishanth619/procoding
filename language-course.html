@@ -504,6 +504,15 @@
             .content-card {
                 padding: 12px 15px !important;
                 border-radius: 16px;
+                /* CRITICAL OVERLAP FIX: Limits height and allows safe internal scrolling */
+                max-height: calc(100dvh - 100px) !important;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                scrollbar-width: none;
+            }
+            
+            .content-card::-webkit-scrollbar {
+                display: none;
             }
 
             .icon-box {
