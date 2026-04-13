@@ -566,9 +566,11 @@
             /* Default landscape card sizing */
             .course-card {
                 width: 240px !important;
-                height: 180px !important;
+                height: auto !important;
+                min-height: 180px !important;
                 margin-top: 20px !important;
                 border-radius: 18px !important;
+                padding-bottom: 15px !important;
             }
 
             .floating-mockup {
@@ -578,7 +580,7 @@
             }
 
             .card-info {
-                padding: 70px 12px 10px !important;
+                padding: 70px 12px 0px !important;
             }
 
             .card-title {
@@ -594,12 +596,12 @@
                 overflow: hidden;
                 font-size: 11px !important;
                 line-height: 1.3 !important;
-                margin-bottom: 5px !important;
+                margin-bottom: 8px !important;
             }
 
             .progress-wrapper {
                 width: 100% !important;
-                margin-bottom: 5px !important;
+                margin-bottom: 8px !important;
             }
 
             .progress-text {
@@ -615,6 +617,8 @@
                 padding: 6px 15px !important;
                 font-size: 12px !important;
                 height: 28px !important;
+                min-height: 0 !important;
+                /* CRITICAL: Overrides global touch target */
             }
 
             /* TIER 1: Ultra-Compact (320-344px) */
@@ -635,11 +639,12 @@
 
                 .cards-container {
                     padding-top: 5px !important;
+                    padding-bottom: 20px !important;
                 }
 
                 .course-card {
                     width: 230px !important;
-                    height: 175px !important;
+                    min-height: 175px !important;
                     margin-top: 50px !important;
                 }
 
@@ -650,7 +655,7 @@
                 }
 
                 .card-info {
-                    padding: 60px 10px 8px !important;
+                    padding: 60px 10px 0px !important;
                 }
 
                 .card-title {
@@ -662,10 +667,11 @@
                     -webkit-line-clamp: 1 !important;
                     line-clamp: 1 !important;
                     font-size: 10px !important;
+                    margin-bottom: 5px !important;
                 }
 
                 .progress-wrapper {
-                    margin-bottom: 4px !important;
+                    margin-bottom: 5px !important;
                 }
 
                 .progress-text {
@@ -688,11 +694,12 @@
             @media (min-height: 345px) and (max-height: 374px) {
                 .cards-container {
                     padding-top: 10px !important;
+                    padding-bottom: 20px !important;
                 }
 
                 .course-card {
                     width: 250px !important;
-                    height: 190px !important;
+                    min-height: 190px !important;
                     margin-top: 55px !important;
                 }
 
@@ -703,7 +710,7 @@
                 }
 
                 .card-info {
-                    padding: 70px 12px 10px !important;
+                    padding: 70px 12px 0px !important;
                 }
 
                 .card-title {
@@ -715,6 +722,7 @@
                     -webkit-line-clamp: 2 !important;
                     line-clamp: 2 !important;
                     font-size: 11px !important;
+                    margin-bottom: 6px !important;
                 }
 
                 .progress-text {
@@ -732,11 +740,12 @@
             @media (min-height: 375px) and (max-height: 399px) {
                 .cards-container {
                     padding-top: 12px !important;
+                    padding-bottom: 25px !important;
                 }
 
                 .course-card {
                     width: 260px !important;
-                    height: 210px !important;
+                    min-height: 210px !important;
                     margin-top: 60px !important;
                 }
 
@@ -747,7 +756,7 @@
                 }
 
                 .card-info {
-                    padding: 75px 15px 12px !important;
+                    padding: 75px 15px 0px !important;
                 }
 
                 .card-title {
@@ -760,6 +769,7 @@
                     -webkit-line-clamp: 2 !important;
                     line-clamp: 2 !important;
                     font-size: 12px !important;
+                    margin-bottom: 8px !important;
                 }
 
                 .progress-text {
@@ -778,11 +788,12 @@
             @media (min-height: 400px) and (max-height: 499px) {
                 .cards-container {
                     padding-top: 20px !important;
+                    padding-bottom: 30px !important;
                 }
 
                 .course-card {
                     width: 280px !important;
-                    height: 240px !important;
+                    min-height: 240px !important;
                     margin-top: 70px !important;
                 }
 
@@ -793,7 +804,7 @@
                 }
 
                 .card-info {
-                    padding: 85px 18px 15px !important;
+                    padding: 85px 18px 0px !important;
                 }
 
                 .card-title {
@@ -806,6 +817,7 @@
                     -webkit-line-clamp: 2 !important;
                     line-clamp: 2 !important;
                     font-size: 13px !important;
+                    margin-bottom: 10px !important;
                 }
 
                 .progress-text {
@@ -843,12 +855,14 @@
                 .cards-container {
                     padding-top: 40px !important;
                     gap: 40px !important;
+                    padding-bottom: 40px !important;
                 }
 
                 .course-card {
                     width: 360px !important;
-                    height: 340px !important;
+                    min-height: 340px !important;
                     margin-top: 70px !important;
+                    padding-bottom: 25px !important;
                 }
 
                 .floating-mockup {
@@ -858,7 +872,7 @@
                 }
 
                 .card-info {
-                    padding: 120px 25px 22px !important;
+                    padding: 120px 25px 0px !important;
                 }
 
                 .card-title {
@@ -870,7 +884,7 @@
                     display: block !important;
                     font-size: 16px !important;
                     line-height: 1.5 !important;
-                    margin-bottom: 12px !important;
+                    margin-bottom: 15px !important;
                 }
 
                 .progress-wrapper {
@@ -929,13 +943,15 @@
                 .cards-container {
                     padding-top: 40px !important;
                     gap: 60px !important;
+                    padding-bottom: 50px !important;
                 }
 
                 .course-card {
                     width: 400px !important;
-                    height: 380px !important;
+                    min-height: 380px !important;
                     margin-top: 100px !important;
                     border-radius: 25px !important;
+                    padding-bottom: 30px !important;
                 }
 
                 .floating-mockup {
@@ -945,7 +961,7 @@
                 }
 
                 .card-info {
-                    padding: 145px 30px 25px !important;
+                    padding: 145px 30px 0px !important;
                 }
 
                 .card-title {
@@ -957,7 +973,7 @@
                     display: block !important;
                     font-size: 16px !important;
                     line-height: 1.5 !important;
-                    margin-bottom: 20px !important;
+                    margin-bottom: 25px !important;
                     padding: 0 10px;
                 }
 
