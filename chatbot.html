@@ -394,6 +394,68 @@
             }
         }
 
+        /* ------------------------------------- */
+        /* PORTRAIT OPTIMIZATION FOR SMALL DEVICES */
+        /* ------------------------------------- */
+        @media screen and (max-width: 500px) and (orientation: portrait) {
+            .chat-header {
+                padding: 12px 18px;
+                height: auto;
+            }
+            .support-avatar {
+                width: 38px;
+                height: 38px;
+                border-radius: 12px;
+            }
+            .support-name {
+                font-size: 16px;
+            }
+            .support-status {
+                font-size: 12px;
+            }
+            .status-dot {
+                width: 10px;
+                height: 10px;
+            }
+            .back-btn {
+                width: 38px;
+                height: 38px;
+                border-radius: 12px;
+            }
+            .chat-messages {
+                padding: 15px 15px 25px !important;
+                gap: 12px;
+            }
+            .message {
+                font-size: 14px;
+                padding: 10px 15px;
+                max-width: 90%;
+            }
+            .timestamp {
+                font-size: 10px;
+            }
+            .chat-input-area {
+                padding: 12px 18px;
+                gap: 10px;
+            }
+            .input-pill {
+                padding: 6px 15px;
+            }
+            #user-input {
+                font-size: 16px; /* Must remain 16px to prevent iOS auto-zoom */
+                padding: 8px 0;
+            }
+            .send-btn {
+                width: 44px;
+                height: 44px;
+                border-radius: 14px;
+            }
+            .send-btn svg {
+                width: 22px;
+                height: 22px;
+            }
+        }
+
         /* Hide dynamically injected theme toggle */
         .theme-toggle {
             display: none !important;
