@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <script src="assets/js/theme-critical.js"></script>
@@ -31,7 +31,7 @@
             flex-direction: column;
         }
 
-        /* â”€â”€â”€ TOP NAV â”€â”€â”€ */
+        /* ─── TOP NAV ─── */
         .top-nav {
             padding: 10px 18px;
             display: flex;
@@ -104,7 +104,7 @@
             50% { opacity: 0.4; transform: scale(0.7); }
         }
 
-        /* â”€â”€â”€ PAGE BODY â”€â”€â”€ */
+        /* ─── PAGE BODY ─── */
         .page-body {
             flex: 1; display: flex; gap: 14px;
             padding: 12px 18px;
@@ -112,7 +112,7 @@
             min-height: 0;
         }
 
-        /* â”€â”€â”€ LEFT PANEL â”€â”€â”€ */
+        /* ─── LEFT PANEL ─── */
         .left-panel {
             width: 230px;
             flex-shrink: 0;
@@ -135,7 +135,7 @@
             margin-bottom: 2px;
         }
 
-        /* â”€â”€â”€ HIGHLIGHTED HINT CARD â”€â”€â”€ */
+        /* ─── HIGHLIGHTED HINT CARD ─── */
         .hint-card {
             background: linear-gradient(135deg,
                 rgba(6,182,212,0.12) 0%,
@@ -218,7 +218,7 @@
         .info-label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--dynamic-text-secondary); }
         .info-value { font-size: 14px; font-weight: 600; color: var(--dynamic-text-primary); margin-top: 2px; line-height: 1.4; }
 
-        /* â”€â”€â”€ RIGHT PANEL â”€â”€â”€ */
+        /* ─── RIGHT PANEL ─── */
         .right-panel {
             flex: 1;
             display: flex;
@@ -264,7 +264,7 @@
         }
         .upload-grid::-webkit-scrollbar { display: none; }
 
-        /* â”€â”€â”€ UPLOAD SLOT (new + button design) â”€â”€â”€ */
+        /* ─── UPLOAD SLOT (new + button design) ─── */
         .upload-slot {
             border: 2px dashed rgba(6,182,212,0.35);
             border-radius: 14px;
@@ -292,12 +292,12 @@
             background: rgba(34,197,94,0.05);
         }
 
-        /* Hidden real file input â€” triggered by the + button */
+        /* Hidden real file input — triggered by the + button */
         .slot-file-input {
             display: none;
         }
 
-        /* â”€â”€ Empty state â”€â”€ */
+        /* ── Empty state ── */
         .slot-empty {
             display: flex;
             flex-direction: column;
@@ -341,7 +341,7 @@
             text-align: center;
         }
 
-        /* â”€â”€ Filled state: small thumbnail preview â”€â”€ */
+        /* ── Filled state: small thumbnail preview ── */
         .slot-preview {
             display: none;
             flex-direction: column;
@@ -416,7 +416,7 @@
         .upload-slot.has-file .slot-check { display: flex; }
         .slot-check svg { width: 11px; height: 11px; fill: white; }
 
-        /* Red Ã— remove button */
+        /* Red × remove button */
         .slot-remove-btn {
             position: absolute;
             top: 7px; right: 7px;
@@ -435,7 +435,7 @@
         .slot-remove-btn:hover { background: rgba(239,68,68,1); transform: scale(1.12); }
         .slot-remove-btn svg { width: 12px; height: 12px; fill: white; }
 
-        /* â”€â”€â”€ SEND BUTTON ROW â”€â”€â”€ */
+        /* ─── SEND BUTTON ROW ─── */
         .send-row {
             display: flex;
             align-items: center;
@@ -494,7 +494,7 @@
         .send-btn svg { width: 18px; height: 18px; fill: white; flex-shrink: 0; position: relative; z-index: 1; }
         .send-btn-text { position: relative; z-index: 1; display: inline-block !important; opacity: 1 !important; visibility: visible !important; }
 
-        /* â”€â”€â”€ SHIMMER ANIMATION on send â”€â”€â”€ */
+        /* ─── SHIMMER ANIMATION on send ─── */
         @keyframes shimmer-slide {
             0% { transform: translateX(-100%) skewX(-15deg); }
             100% { transform: translateX(300%) skewX(-15deg); }
@@ -508,7 +508,7 @@
             animation: shimmer-slide 0.8s ease infinite;
         }
 
-        /* â”€â”€â”€ LANDSCAPE SYSTEM â”€â”€â”€ */
+        /* ─── LANDSCAPE SYSTEM ─── */
         @media screen and (orientation: landscape) {
             html, body {
                 overflow-x: hidden !important;
@@ -557,7 +557,7 @@
                 min-width: 0 !important;
                 padding: 10px 20px !important;
                 gap: 16px !important;
-                min-height: calc(100vh - 44px) !important;
+                min-height: calc(100dvh - 44px) !important;
                 overflow: visible !important;
             }
 
@@ -622,7 +622,7 @@
             @media (max-height: 319px) {
                 .top-nav { height: 34px !important; }
                 .branding-text { display: none !important; }
-                .page-body { padding: 4px 8px !important; gap: 8px !important; min-height: calc(100vh - 34px) !important; }
+                .page-body { padding: 4px 8px !important; gap: 8px !important; min-height: calc(100dvh - 34px) !important; }
                 .left-panel { width: 110px !important; gap: 4px !important; }
                 .panel-title { font-size: 10px !important; }
                 .panel-subtitle { font-size: 8px !important; }
@@ -650,7 +650,7 @@
             @media (min-height: 320px) and (max-height: 374px) {
                 .top-nav { height: 38px !important; }
                 .branding-text { display: none !important; }
-                .page-body { padding: 5px 10px !important; gap: 10px !important; min-height: calc(100vh - 38px) !important; }
+                .page-body { padding: 5px 10px !important; gap: 10px !important; min-height: calc(100dvh - 38px) !important; }
                 .left-panel { width: 140px !important; gap: 6px !important; }
                 .panel-title { font-size: 11px !important; }
                 .panel-subtitle { font-size: 9px !important; }
@@ -676,7 +676,7 @@
             /* TIER 3: Standard (375-449px height) */
             @media (min-height: 375px) and (max-height: 449px) {
                 .top-nav { height: 42px !important; }
-                .page-body { padding: 8px 15px !important; gap: 14px !important; min-height: calc(100vh - 42px) !important; }
+                .page-body { padding: 8px 15px !important; gap: 14px !important; min-height: calc(100dvh - 42px) !important; }
                 .left-panel { width: 170px !important; gap: 8px !important; }
                 .panel-title { font-size: 12px !important; }
                 .panel-subtitle { font-size: 10px !important; }
@@ -696,7 +696,7 @@
             /* TIER 4: Large Mobile (450-499px height) */
             @media (min-height: 450px) and (max-height: 499px) {
                 .top-nav { height: 46px !important; }
-                .page-body { padding: 10px 20px !important; gap: 16px !important; min-height: calc(100vh - 46px) !important; }
+                .page-body { padding: 10px 20px !important; gap: 16px !important; min-height: calc(100dvh - 46px) !important; }
                 .left-panel { width: 185px !important; gap: 10px !important; }
                 .panel-title { font-size: 13px !important; }
                 .panel-subtitle { font-size: 11px !important; }
@@ -722,7 +722,7 @@
                 .back-btn { width: 38px !important; height: 38px !important; }
                 .back-btn svg { width: 19px !important; height: 19px !important; }
                 .nav-step-pill { padding: 6px 14px !important; font-size: 12px !important; }
-                .page-body { padding: 15px 36px !important; gap: 22px !important; min-height: calc(100vh - 56px) !important; }
+                .page-body { padding: 15px 36px !important; gap: 22px !important; min-height: calc(100dvh - 56px) !important; }
                 .left-panel { width: 230px !important; gap: 12px !important; }
                 .panel-title { font-size: 16px !important; letter-spacing: 0.8px !important; }
                 .panel-subtitle { font-size: 13px !important; line-height: 1.5 !important; }
@@ -753,7 +753,7 @@
                 .back-btn { width: 48px !important; height: 48px !important; }
                 .back-btn svg { width: 24px !important; height: 24px !important; }
                 .nav-step-pill { padding: 8px 18px !important; font-size: 14px !important; }
-                .page-body { padding: 28px 60px !important; gap: 36px !important; min-height: calc(100vh - 70px) !important; }
+                .page-body { padding: 28px 60px !important; gap: 36px !important; min-height: calc(100dvh - 70px) !important; }
                 .left-panel { width: 280px !important; gap: 16px !important; }
                 .panel-title { font-size: 20px !important; letter-spacing: 1px !important; }
                 .panel-subtitle { font-size: 15px !important; line-height: 1.6 !important; }
@@ -785,7 +785,7 @@
         /* Hide theme toggle */
         .theme-toggle { display: none !important; }
 
-        /* â”€â”€â”€ TOAST â”€â”€â”€ */
+        /* ─── TOAST ─── */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -876,7 +876,7 @@
                         </div>
                         <div class="info-text">
                             <div class="info-label">Review Time</div>
-                            <div class="info-value">Within 24â€“48 hours</div>
+                            <div class="info-value">Within 24–48 hours</div>
                         </div>
                     </div>
 
@@ -1058,7 +1058,7 @@
             const btn = document.getElementById('sendBtn');
             btn.classList.add('sending');
             btn.disabled = true;
-            btn.querySelector('.send-btn-text').textContent = 'Sendingâ€¦';
+            btn.querySelector('.send-btn-text').textContent = 'Sending…';
             setTimeout(() => {
                 btn.classList.remove('sending');
                 btn.disabled = false;
