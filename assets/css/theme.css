@@ -1097,26 +1097,183 @@ code {
     }
 }
 
-/* ============================================================
-   GLOBAL FORCE-LANDSCAPE MODE
-   All pages always render in landscape orientation.
-   When device is in portrait, we rotate the html element
-   -90deg so it appears as landscape.
-   ============================================================ */
-@media screen and (orientation: portrait) {
-    html {
-        transform: rotate(-90deg);
-        transform-origin: left top;
-        /* Swap width/height: html width = viewport height, html height = viewport width */
-        width: 100dvh;
-        height: 100vw;
-        overflow-x: hidden;
-        overflow-y: auto;
-        position: absolute;
-        top: 100%;
-        left: 0;
+
+
+        height: 4px !important;
+        width: 4px !important;
+    }
+
+    .left-section::-webkit-scrollbar-thumb,
+    .cards-container::-webkit-scrollbar-thumb {
+        border-radius: 2px !important;
     }
 }
+
+/* ===== PREVENT DOUBLE-TAP ZOOM ===== */
+* {
+    touch-action: manipulation;
+}
+
+/* ===== FIX 100dvh ON MOBILE ===== */
+@supports (-webkit-touch-callout: none) {
+    body {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+
+    /* Reduce animation complexity on mobile */
+    @keyframes gradientShift {
+
+        0%,
+        100% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+    }
+
+    /* Simplify backdrop blur on lower-end devices */
+    @supports not (backdrop-filter: blur(10px)) {
+
+        .glass-bg,
+        .card,
+        .byte-card,
+        .content-card,
+        .instruction-card,
+        .nav-icon,
+        .back-btn {
+            background: rgba(0, 0, 0, 0.6) !important;
+        }
+    }
+}
+
+/* ===== LANDSCAPE MOBILE - Quiz page specific ===== */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .quiz-container {
+        max-width: 100% !important;
+        padding: 15px 20px !important;
+        border-radius: 16px !important;
+    }
+
+    .quiz-header {
+        margin-bottom: 12px !important;
+    }
+
+    .quiz-title {
+        font-size: 22px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .quiz-progress {
+        font-size: 13px !important;
+    }
+
+    .question-box {
+        padding: 15px !important;
+        margin-bottom: 12px !important;
+        border-radius: 12px !important;
+    }
+
+    .question-text {
+        font-size: 16px !important;
+    }
+
+    .options-grid {
+        gap: 8px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .option-btn {
+        padding: 10px 14px !important;
+        font-size: 14px !important;
+        border-radius: 10px !important;
+    }
+
+    .next-btn {
+        padding: 12px !important;
+        font-size: 14px !important;
+        border-radius: 10px !important;
+    }
+
+    .back-home {
+        width: 35px !important;
+        height: 35px !important;
+        top: 10px !important;
+        left: 10px !important;
+        border-radius: 8px !important;
+    }
+
+    .back-home svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .score-circle {
+        width: 100px !important;
+        height: 100px !important;
+        font-size: 26px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .result-msg {
+        font-size: 18px !important;
+        margin-bottom: 15px !important;
+    }
+}
+
+/* ===== LANDSCAPE MOBILE - Chatbot page specific ===== */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .chat-container {
+        border-radius: 14px !important;
+    }
+
+    .chat-header {
+        padding: 10px 15px !important;
+        gap: 10px !important;
+    }
+
+    .chat-title {
+        font-size: 16px !important;
+    }
+
+    .chat-messages {
+        padding: 10px 15px !important;
+        gap: 10px !important;
+    }
+
+    .message {
+        padding: 10px 14px !important;
+        font-size: 14px !important;
+        border-radius: 14px !important;
+    }
+
+    .chat-input-area {
+        padding: 10px 15px !important;
+        gap: 10px !important;
+    }
+
+    .chat-input {
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+    }
+
+    .send-btn {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .send-btn svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+
+
 
 /* ============================================================
    UNIVERSAL SAFE AREA FIX
@@ -1128,7 +1285,8 @@ code {
     /* 1. Reset body padding for pages with dedicated layout wrappers
        to avoid double-padding. */
     body:has(.landscape-scroller),
-    body:has(.main-container) {
+    body:has(.main-container),
+    body:has(.chat-container) {
         padding: 0 !important;
     }
 
@@ -1147,7 +1305,8 @@ code {
     /* 3. Handle specific layout wrappers
        These take priority if they exist. */
     .landscape-scroller, 
-    .main-container {
+    .main-container,
+    .chat-container {
         padding-top:    env(safe-area-inset-top,    0px) !important;
         padding-bottom: env(safe-area-inset-bottom, 0px) !important;
         padding-left:   env(safe-area-inset-left,   0px) !important;
