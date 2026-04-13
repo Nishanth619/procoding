@@ -12,7 +12,9 @@
     <title>Python Course - Pro Coding</title>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="assets/css/theme.css">
 
     <!-- Lucide Icons -->
@@ -48,20 +50,30 @@
         body {
             font-family: 'Outfit', sans-serif;
             min-height: 100dvh;
-            min-height: 100dvh; /* dynamic viewport on mobile */
+            min-height: 100dvh;
+            /* dynamic viewport on mobile */
             background: var(--bg-primary);
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
-            overflow: hidden; /* keep this */
+            overflow: hidden;
+            /* keep this */
             display: flex;
             flex-direction: column;
             transition: all 0.4s ease;
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         /* Top Navigation Bar */
@@ -183,9 +195,11 @@
             -ms-overflow-style: none;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior-x: contain;
-            touch-action: pan-x; /* pan-x ONLY â€” not pan-y, which fights overflow-y:hidden */
+            touch-action: pan-x;
+            /* pan-x ONLY â€” not pan-y, which fights overflow-y:hidden */
             min-height: 0;
-            height: calc(100dvh - var(--header-h)); /* explicit height, not 100% */
+            height: calc(100dvh - var(--header-h));
+            /* explicit height, not 100% */
             width: 100%;
         }
 
@@ -280,8 +294,15 @@
         }
 
         @keyframes pulse-ring {
-            0% { transform: scale(1); opacity: 0.6; }
-            100% { transform: scale(2); opacity: 0; }
+            0% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
         }
 
         /* Content Cards */
@@ -438,86 +459,267 @@
                 --track-pt: 20px;
             }
 
-            .top-nav { padding: 0 15px; }
-            .branding-icon { width: 28px; height: 28px; font-size: 12px; }
-            .branding-text { font-size: 14px; display: block; white-space: nowrap; }
-            .course-info { display: none; }
-            .back-btn { width: 32px; height: 32px; border-radius: 8px; }
-            .back-btn svg { width: 18px; height: 18px; }
+            .top-nav {
+                padding: 0 15px;
+            }
+
+            .branding-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            .branding-text {
+                font-size: 14px;
+                display: block;
+                white-space: nowrap;
+            }
+
+            .course-info {
+                display: none;
+            }
+
+            .back-btn {
+                width: 32px;
+                height: 32px;
+                border-radius: 8px;
+            }
+
+            .back-btn svg {
+                width: 18px;
+                height: 18px;
+            }
 
             /* Default scale for landscape nodes */
-            .course-node { width: 280px !important; padding-top: 25px !important; }
-            .node-dot { top: -5px !important; }
-            .content-card { padding: 12px 15px !important; border-radius: 16px; }
-            .icon-box { width: 32px; height: 32px; margin-bottom: 10px !important; }
-            .icon-box lucide-icon { width: 18px !important; height: 18px !important; }
-            .node-title { font-size: 15px !important; margin-bottom: 6px; }
-            .lesson-list { gap: 4px; margin-top: 8px; padding-top: 8px; }
-            .lesson-item { padding: 5px 10px; }
-            .lesson-meta { font-size: 11px; }
-            .play-btn { padding: 3px 8px; font-size: 10px; }
-            .card-header { margin-bottom: 10px !important; }
+            .course-node {
+                width: 280px !important;
+                padding-top: 25px !important;
+            }
+
+            .node-dot {
+                top: 0 !important;
+                /* <--- THIS IS THE ONLY CHANGE */
+            }
+
+            .content-card {
+                padding: 12px 15px !important;
+                border-radius: 16px;
+            }
+
+            .icon-box {
+                width: 32px;
+                height: 32px;
+                margin-bottom: 10px !important;
+            }
+
+            .icon-box lucide-icon {
+                width: 18px !important;
+                height: 18px !important;
+            }
+
+            .node-title {
+                font-size: 15px !important;
+                margin-bottom: 6px;
+            }
+
+            .lesson-list {
+                gap: 4px;
+                margin-top: 8px;
+                padding-top: 8px;
+            }
+
+            .lesson-item {
+                padding: 5px 10px;
+            }
+
+            .lesson-meta {
+                font-size: 11px;
+            }
+
+            .play-btn {
+                padding: 3px 8px;
+                font-size: 10px;
+            }
+
+            .card-header {
+                margin-bottom: 10px !important;
+            }
 
             /* TIER 1: Ultra-Compact (Height < 345px) */
             @media (max-height: 344px) {
-                .track-wrapper { padding: 10px 20px; gap: 30px; }
-                .course-node { width: 240px !important; padding-top: 30px; }
-                .node-dot { width: 18px; height: 18px; left: 18px; }
-                .timeline-line, .timeline-progress { top: 8px; left: 18px; }
-                .content-card { padding: 10px !important; }
-                .lesson-list { gap: 4px; margin-top: 6px; padding-top: 6px; }
-                .lesson-item { padding: 4px 6px; }
-                .lesson-meta span:last-child { display: none; }
-                .project-scroll { max-height: 120px; }
-                .node-title { font-size: 14px !important; }
+                .track-wrapper {
+                    padding: 10px 20px;
+                    gap: 30px;
+                }
+
+                .course-node {
+                    width: 240px !important;
+                    padding-top: 30px;
+                }
+
+                .node-dot {
+                    width: 18px;
+                    height: 18px;
+                    left: 18px;
+                }
+
+                .timeline-line,
+                .timeline-progress {
+                    top: 8px;
+                    left: 18px;
+                }
+
+                .content-card {
+                    padding: 10px !important;
+                }
+
+                .lesson-list {
+                    gap: 4px;
+                    margin-top: 6px;
+                    padding-top: 6px;
+                }
+
+                .lesson-item {
+                    padding: 4px 6px;
+                }
+
+                .lesson-meta span:last-child {
+                    display: none;
+                }
+
+                .project-scroll {
+                    max-height: 120px;
+                }
+
+                .node-title {
+                    font-size: 14px !important;
+                }
             }
 
             /* TIER 2: Compact-Mobile (345-374px) */
             @media (min-height: 345px) and (max-height: 374px) {
-                .track-wrapper { padding: 15px 30px; gap: 35px; }
-                .course-node { width: 260px !important; }
-                .project-scroll { max-height: 150px; }
+                .track-wrapper {
+                    padding: 15px 30px;
+                    gap: 35px;
+                }
+
+                .course-node {
+                    width: 260px !important;
+                }
+
+                .project-scroll {
+                    max-height: 150px;
+                }
             }
 
             /* TIER 3: Standard-Mobile (375-399px) */
             @media (min-height: 375px) and (max-height: 399px) {
-                .course-node { width: 280px !important; }
-                .project-scroll { max-height: 160px; }
+                .course-node {
+                    width: 280px !important;
+                }
+
+                .project-scroll {
+                    max-height: 160px;
+                }
             }
 
             /* TIER 4: Large-Mobile (400-499px) */
             @media (min-height: 400px) and (max-height: 499px) {
-                .course-node { width: 320px !important; }
-                .project-scroll { max-height: 180px; }
+                .course-node {
+                    width: 320px !important;
+                }
+
+                .project-scroll {
+                    max-height: 180px;
+                }
             }
 
             /* TIER 5: Small-Tablet (500-699px) */
             @media (min-height: 500px) and (max-height: 699px) {
-                :root { --header-h: 60px; }
-                .course-info { display: flex; }
-                .course-node { width: 380px !important; }
-                .node-title { font-size: 20px !important; }
-                .project-scroll { max-height: 300px; }
+                :root {
+                    --header-h: 60px;
+                }
+
+                .course-info {
+                    display: flex;
+                }
+
+                .course-node {
+                    width: 380px !important;
+                }
+
+                .node-title {
+                    font-size: 20px !important;
+                }
+
+                .project-scroll {
+                    max-height: 300px;
+                }
             }
 
             /* TIER 6: Large-Tablet (700px+) */
             @media (min-height: 700px) {
-                :root { --header-h: 70px; --track-pt: 60px; }
-                .course-info { display: flex; }
-                .course-node { width: 450px !important; }
-                .node-title { font-size: 24px !important; }
+                :root {
+                    --header-h: 70px;
+                    --track-pt: 60px;
+                }
+
+                .course-info {
+                    display: flex;
+                }
+
+                .course-node {
+                    width: 450px !important;
+                }
+
+                .node-title {
+                    font-size: 24px !important;
+                }
             }
         }
 
         @media screen and (orientation: portrait) {
-            body { overflow-x: hidden; overflow-y: hidden; min-height: 100dvh; }
-            .top-nav { padding: 0 16px; }
-            .branding-icon { width: 34px; height: 34px; }
-            .branding-text { font-size: 15px; }
-            .course-info { display: none; }
-            .back-btn { width: 36px; height: 36px; border-radius: 10px; }
-            .back-btn svg { width: 20px; height: 20px; }
-            .main-container { overflow-x: auto; overflow-y: hidden; min-height: 0; height: auto; }
+            body {
+                overflow-x: hidden;
+                overflow-y: hidden;
+                min-height: 100dvh;
+            }
+
+            .top-nav {
+                padding: 0 16px;
+            }
+
+            .branding-icon {
+                width: 34px;
+                height: 34px;
+            }
+
+            .branding-text {
+                font-size: 15px;
+            }
+
+            .course-info {
+                display: none;
+            }
+
+            .back-btn {
+                width: 36px;
+                height: 36px;
+                border-radius: 10px;
+            }
+
+            .back-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .main-container {
+                overflow-x: auto;
+                overflow-y: hidden;
+                min-height: 0;
+                height: auto;
+            }
+
             .track-wrapper {
                 flex-direction: row;
                 padding: 28px 18px 36px;
@@ -526,7 +728,13 @@
                 height: 100%;
                 align-items: flex-start;
             }
-            .timeline-track { flex-direction: row; gap: 28px; width: max-content; }
+
+            .timeline-track {
+                flex-direction: row;
+                gap: 28px;
+                width: max-content;
+            }
+
             .timeline-line {
                 top: 10px;
                 left: 20px;
@@ -535,6 +743,7 @@
                 width: auto;
                 height: 3px;
             }
+
             .timeline-progress {
                 top: 10px;
                 left: 20px;
@@ -542,40 +751,104 @@
                 width: 25%;
                 height: 3px;
             }
+
             .course-node {
                 width: min(82vw, 300px) !important;
                 padding-top: 32px;
                 padding-left: 0;
             }
+
             .course-node.final-node {
                 width: min(88vw, 340px) !important;
             }
+
             .node-dot {
                 top: 0;
                 left: 20px;
                 width: 22px;
                 height: 22px;
             }
-            .content-card { padding: 16px 18px !important; }
-            .icon-box { width: 38px; height: 38px; }
-            .node-title { font-size: 18px !important; }
-            .lesson-list { gap: 8px; margin-top: 12px; padding-top: 12px; }
-            .lesson-item { padding: 8px 10px; }
-            .lesson-meta { font-size: 12px; }
-            .play-btn { padding: 4px 10px; font-size: 11px; }
-            .project-scroll { max-height: 210px; }
+
+            .content-card {
+                padding: 16px 18px !important;
+            }
+
+            .icon-box {
+                width: 38px;
+                height: 38px;
+            }
+
+            .node-title {
+                font-size: 18px !important;
+            }
+
+            .lesson-list {
+                gap: 8px;
+                margin-top: 12px;
+                padding-top: 12px;
+            }
+
+            .lesson-item {
+                padding: 8px 10px;
+            }
+
+            .lesson-meta {
+                font-size: 12px;
+            }
+
+            .play-btn {
+                padding: 4px 10px;
+                font-size: 11px;
+            }
+
+            .project-scroll {
+                max-height: 210px;
+            }
 
             @media (max-width: 390px) {
-                .top-nav { padding: 0 12px; }
-                .track-wrapper { padding: 24px 14px 30px; gap: 22px; }
-                .timeline-track { gap: 22px; }
-                .course-node { width: min(84vw, 274px) !important; }
-                .course-node.final-node { width: min(90vw, 310px) !important; }
-                .node-dot { left: 18px; width: 20px; height: 20px; }
-                .timeline-line, .timeline-progress { left: 18px; }
-                .content-card { padding: 14px 16px !important; }
-                .node-title { font-size: 16px !important; }
-                .project-scroll { max-height: 180px; }
+                .top-nav {
+                    padding: 0 12px;
+                }
+
+                .track-wrapper {
+                    padding: 24px 14px 30px;
+                    gap: 22px;
+                }
+
+                .timeline-track {
+                    gap: 22px;
+                }
+
+                .course-node {
+                    width: min(84vw, 274px) !important;
+                }
+
+                .course-node.final-node {
+                    width: min(90vw, 310px) !important;
+                }
+
+                .node-dot {
+                    left: 18px;
+                    width: 20px;
+                    height: 20px;
+                }
+
+                .timeline-line,
+                .timeline-progress {
+                    left: 18px;
+                }
+
+                .content-card {
+                    padding: 14px 16px !important;
+                }
+
+                .node-title {
+                    font-size: 16px !important;
+                }
+
+                .project-scroll {
+                    max-height: 180px;
+                }
             }
         }
 
@@ -594,7 +867,9 @@
     <nav class="top-nav">
         <div class="nav-left">
             <a href="javascript:history.back()" class="back-btn" title="Back">
-                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                <svg viewBox="0 0 24 24">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                </svg>
             </a>
         </div>
         <div class="nav-center-brand">
@@ -628,10 +903,12 @@
                             <span class="status-badge">COMPLETED</span>
                         </div>
                         <h3 class="node-title">Installation</h3>
-                        <p style="font-size:12px;color:var(--dynamic-text-secondary)">Set up your environment and your first Python script.</p>
+                        <p style="font-size:12px;color:var(--dynamic-text-secondary)">Set up your environment and your
+                            first Python script.</p>
                         <div class="lesson-list">
                             <div class="lesson-item">
-                                <div class="lesson-meta"><i data-lucide="play-circle"></i><span>Python Setup</span></div>
+                                <div class="lesson-meta"><i data-lucide="play-circle"></i><span>Python Setup</span>
+                                </div>
                                 <button class="play-btn">Review</button>
                             </div>
                         </div>
@@ -649,7 +926,8 @@
                             <span class="status-badge">COMPLETED</span>
                         </div>
                         <h3 class="node-title">Hello World</h3>
-                        <p style="font-size:12px;color:var(--dynamic-text-secondary)">Your very first step into the world of Python programming.</p>
+                        <p style="font-size:12px;color:var(--dynamic-text-secondary)">Your very first step into the
+                            world of Python programming.</p>
                         <div class="lesson-list">
                             <div class="lesson-item">
                                 <div class="lesson-meta"><i data-lucide="code"></i><span>Write & Run</span></div>
@@ -670,11 +948,13 @@
                         <h3 class="node-title">Control Statements</h3>
                         <div class="lesson-list">
                             <div class="lesson-item">
-                                <div class="lesson-meta"><i data-lucide="check-circle-2" style="color:#34d399"></i><span>Booleans</span></div>
+                                <div class="lesson-meta"><i data-lucide="check-circle-2"
+                                        style="color:#34d399"></i><span>Booleans</span></div>
                                 <button class="play-btn">Review</button>
                             </div>
                             <div class="lesson-item" style="background:rgba(139,92,246,0.1)">
-                                <div class="lesson-meta"><i data-lucide="play-circle" style="color:#a78bfa"></i><span style="font-weight:700">If/Else Logic</span></div>
+                                <div class="lesson-meta"><i data-lucide="play-circle" style="color:#a78bfa"></i><span
+                                        style="font-weight:700">If/Else Logic</span></div>
                                 <button class="play-btn">Play</button>
                             </div>
                             <div class="lesson-item">
@@ -699,7 +979,8 @@
                                     <i data-lucide="calculator" style="width:16px;color:#fbbf24"></i>
                                     <h4 style="font-size:13px;color:var(--dynamic-text-primary)">CLI Calculator</h4>
                                 </div>
-                                <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--dynamic-text-secondary)">
+                                <div
+                                    style="display:flex;justify-content:space-between;font-size:10px;color:var(--dynamic-text-secondary)">
                                     <span>15 MIN</span>
                                     <i data-lucide="arrow-right" style="width:12px"></i>
                                 </div>
@@ -709,7 +990,8 @@
                                     <i data-lucide="file-question" style="width:16px;color:#fbbf24"></i>
                                     <h4 style="font-size:13px;color:var(--dynamic-text-primary)">Quiz Game</h4>
                                 </div>
-                                <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--dynamic-text-secondary)">
+                                <div
+                                    style="display:flex;justify-content:space-between;font-size:10px;color:var(--dynamic-text-secondary)">
                                     <span>25 MIN</span>
                                     <i data-lucide="arrow-right" style="width:12px"></i>
                                 </div>
@@ -727,10 +1009,12 @@
                             <span class="status-badge">LOCKED</span>
                         </div>
                         <h3 class="node-title">Advanced Project</h3>
-                        <p style="font-size:12px;color:var(--dynamic-text-secondary)">Build a full-scale application with data persistence.</p>
+                        <p style="font-size:12px;color:var(--dynamic-text-secondary)">Build a full-scale application
+                            with data persistence.</p>
                         <div class="lesson-list">
                             <div class="lesson-item">
-                                <div class="lesson-meta"><i data-lucide="database"></i><span>Weather App API</span></div>
+                                <div class="lesson-meta"><i data-lucide="database"></i><span>Weather App API</span>
+                                </div>
                                 <button class="play-btn" style="opacity: 0.5; cursor: not-allowed;">Locked</button>
                             </div>
                         </div>
@@ -740,12 +1024,17 @@
                 <!-- Final Node: Certificate -->
                 <div class="course-node final-node">
                     <div class="node-dot locked"><i data-lucide="lock" style="width:10px;height:10px"></i></div>
-                    <div class="content-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:15px;background:var(--glass-bg-strong)">
-                        <div style="width:60px;height:60px;border-radius:50%;background:var(--glass-bg);display:flex;align-items:center;justify-content:center;border:1px solid var(--glass-border)">
+                    <div class="content-card"
+                        style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:15px;background:var(--glass-bg-strong)">
+                        <div
+                            style="width:60px;height:60px;border-radius:50%;background:var(--glass-bg);display:flex;align-items:center;justify-content:center;border:1px solid var(--glass-border)">
                             <i data-lucide="award" style="width:30px;height:30px;opacity:0.3"></i>
                         </div>
-                        <h3 style="font-size:18px;color:var(--dynamic-text-secondary);font-weight:800">Python Mastery Certificate</h3>
-                        <div style="font-size:10px;padding:4px 12px;border:1px solid var(--dynamic-nav-border);border-radius:20px;color:var(--dynamic-text-secondary)">LOCKED</div>
+                        <h3 style="font-size:18px;color:var(--dynamic-text-secondary);font-weight:800">Python Mastery
+                            Certificate</h3>
+                        <div
+                            style="font-size:10px;padding:4px 12px;border:1px solid var(--dynamic-nav-border);border-radius:20px;color:var(--dynamic-text-secondary)">
+                            LOCKED</div>
                     </div>
                 </div>
 
@@ -807,4 +1096,3 @@
 </body>
 
 </html>
-
