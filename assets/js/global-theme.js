@@ -189,4 +189,53 @@
             }
         };
     } catch(e) {}
+    // ─── UNIVERSAL SAFE-AREA TOP NAV FIX ───
+    // Directly reads the device's safe-area-inset-top and applies it as inline
+    // padding-top to every .top-nav on the page. This bypasses ALL CSS specificity
+    // conflicts from page-level landscape media queries that override theme.css.
+    // This is the definitive fix for Samsung S8 / Android status bar cropping.
+    function applySafeAreaFix() {
+        // Use CSS custom property trick to read env() value into JS
+        const testEl = document.createElement('div');
+        testEl.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:env(safe-area-inset-top,0px);visibility:hidden;pointer-events:none;z-index:-1;';
+        document.body.appendChild(testEl);
+        const insetTop = testEl.getBoundingClientRect().height;
+        document.body.removeChild(testEl);
+
+        if (insetTop > 0) {
+            const navs = document.querySelectorAll('.top-nav');
+            navs.forEach(function(nav) {
+                const currentPT = parseFloat(getComputedStyle(nav).paddingTop) || 0;
+                // Only add if not already padded enough
+                if (currentPT < insetTop) {
+                    nav.style.setProperty('padding-top', insetTop + 'px', 'important');
+                }
+            });
+
+            // Also fix body if it has no wrapper
+            const hasWrapper = document.querySelector('.main-container, .landscape-scroller, .chat-container');
+            if (!hasWrapper) {
+                const currentBodyPT = parseFloat(getComputedStyle(document.body).paddingTop) || 0;
+                if (currentBodyPT < insetTop) {
+                    document.body.style.setProperty('padding-top', insetTop + 'px', 'important');
+                }
+            }
+        }
+    }
+
+    // Run on DOM ready and again after full load (to catch dynamically injected navs)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applySafeAreaFix);
+    } else {
+        applySafeAreaFix();
+    }
+    window.addEventListener('load', applySafeAreaFix);
+    // Re-apply on orientation change (landscape ↔ portrait transition)
+    window.addEventListener('orientationchange', function() {
+        setTimeout(applySafeAreaFix, 300);
+    });
+    window.addEventListener('resize', function() {
+        clearTimeout(window._safeAreaTimer);
+        window._safeAreaTimer = setTimeout(applySafeAreaFix, 200);
+    });
 })();

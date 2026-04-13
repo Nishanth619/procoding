@@ -1296,7 +1296,7 @@ code {
        on devices WITHOUT notches. */
     body {
         padding-top:    max(14px, env(safe-area-inset-top,    0px)) !important;
-        padding-bottom: max(14px, env(safe-area-inset-bottom, 0px)) !important;
+        padding-bottom: max(14px, env(safe-area-inset-bottom, 0px) !important;
         padding-left:   max(14px, env(safe-area-inset-left,   0px)) !important;
         padding-right:  max(14px, env(safe-area-inset-right,  0px)) !important;
         box-sizing: border-box !important;
@@ -1320,13 +1320,21 @@ code {
         height: 100% !important;
     }
 
-    /* 5. Ensure top-navs don't double-pad if parent has padding */
-    .top-nav {
+    /* 5. CRITICAL: Force top-nav to always sit below the status bar.
+       This is the primary fix for Samsung S8 landscape cropping.
+       We directly push the top-nav down by the safe-area inset,
+       preventing it from sliding under the browser status bar. */
+    html body .top-nav {
+        padding-top: max(env(safe-area-inset-top, 0px), 0px) !important;
         margin-top: 0 !important;
     }
+
+    /* 6. Force html itself to account for the safe area so no element
+       at position:fixed or position:sticky can hide behind the bar */
+    html {
+        padding-top: env(safe-area-inset-top, 0px) !important;
+    }
 }
-
-
 
 /* Prevent absolute centered logo from overlapping nav buttons on constrained scopes */
 @media screen and (max-height: 499px) and (orientation: landscape), screen and (max-width: 650px) and (orientation: portrait) {
@@ -1337,3 +1345,4 @@ code {
         justify-content: center !important;
     }
 }
+
