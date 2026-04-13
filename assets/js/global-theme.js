@@ -189,53 +189,73 @@
             }
         };
     } catch(e) {}
-    // ─── UNIVERSAL SAFE-AREA TOP NAV FIX ───
-    // Directly reads the device's safe-area-inset-top and applies it as inline
-    // padding-top to every .top-nav on the page. This bypasses ALL CSS specificity
-    // conflicts from page-level landscape media queries that override theme.css.
-    // This is the definitive fix for Samsung S8 / Android status bar cropping.
-    function applySafeAreaFix() {
-        // Use CSS custom property trick to read env() value into JS
-        const testEl = document.createElement('div');
-        testEl.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:env(safe-area-inset-top,0px);visibility:hidden;pointer-events:none;z-index:-1;';
+    // ─── UNIVERSAL BROWSER-CHROME / SAFE-AREA TOP FIX ───
+    // Handles TWO distinct cases:
+    // 1. Notch devices (iPhone X, Pixel 6, etc.): env(safe-area-inset-top) > 0
+    // 2. No-notch devices (Samsung S8, etc.): env() = 0 but browser toolbar overlaps
+    //    content — detected via window.outerHeight - window.innerHeight.
+    // Applies inline padding-top to .top-nav so no CSS rule can override it.
+    function getTopInset() {
+        // ── Method 1: CSS env(safe-area-inset-top) ──
+        var testEl = document.createElement('div');
+        testEl.style.cssText = [
+            'position:fixed', 'top:0', 'left:0', 'width:1px',
+            'height:env(safe-area-inset-top,0px)',
+            'visibility:hidden', 'pointer-events:none', 'z-index:-9999'
+        ].join(';');
         document.body.appendChild(testEl);
-        const insetTop = testEl.getBoundingClientRect().height;
+        var envVal = parseFloat(window.getComputedStyle(testEl).height) || 0;
         document.body.removeChild(testEl);
+        if (envVal > 1) return envVal;
 
-        if (insetTop > 0) {
-            const navs = document.querySelectorAll('.top-nav');
-            navs.forEach(function(nav) {
-                const currentPT = parseFloat(getComputedStyle(nav).paddingTop) || 0;
-                // Only add if not already padded enough
-                if (currentPT < insetTop) {
-                    nav.style.setProperty('padding-top', insetTop + 'px', 'important');
-                }
-            });
+        // ── Method 2: Browser toolbar height (for non-notch like Samsung S8) ──
+        // outerHeight = window height including browser UI (but not OS status bar)
+        // innerHeight = layout viewport height (content area below browser toolbar)
+        // Difference = browser toolbar height
+        var toolbarH = window.outerHeight - window.innerHeight;
+        if (toolbarH > 15 && toolbarH < 150) return toolbarH;
 
-            // Also fix body if it has no wrapper
-            const hasWrapper = document.querySelector('.main-container, .landscape-scroller, .chat-container');
-            if (!hasWrapper) {
-                const currentBodyPT = parseFloat(getComputedStyle(document.body).paddingTop) || 0;
-                if (currentBodyPT < insetTop) {
-                    document.body.style.setProperty('padding-top', insetTop + 'px', 'important');
-                }
+        return 0;
+    }
+
+    function applySafeAreaFix() {
+        var insetTop = getTopInset();
+        if (insetTop <= 0) return;
+
+        // Apply to all .top-nav elements on this page
+        document.querySelectorAll('.top-nav').forEach(function(nav) {
+            nav.style.setProperty('padding-top', insetTop + 'px', 'important');
+        });
+
+        // For pages without a dedicated layout wrapper, also pad the body
+        var hasWrapper = document.querySelector(
+            '.main-container, .landscape-scroller, .chat-container'
+        );
+        if (!hasWrapper) {
+            var curPT = parseFloat(window.getComputedStyle(document.body).paddingTop) || 0;
+            if (curPT < insetTop) {
+                document.body.style.setProperty('padding-top', insetTop + 'px', 'important');
             }
         }
     }
 
-    // Run on DOM ready and again after full load (to catch dynamically injected navs)
+    // Run immediately if DOM is ready, else wait
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', applySafeAreaFix);
     } else {
         applySafeAreaFix();
     }
     window.addEventListener('load', applySafeAreaFix);
-    // Re-apply on orientation change (landscape ↔ portrait transition)
+
+    // Re-apply dynamically when browser toolbar shows/hides or orientation changes
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', applySafeAreaFix);
+    }
     window.addEventListener('orientationchange', function() {
-        setTimeout(applySafeAreaFix, 300);
+        setTimeout(applySafeAreaFix, 350);
     });
     window.addEventListener('resize', function() {
         clearTimeout(window._safeAreaTimer);
-        window._safeAreaTimer = setTimeout(applySafeAreaFix, 200);
+        window._safeAreaTimer = setTimeout(applySafeAreaFix, 150);
     });
 })();
