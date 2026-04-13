@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -50,9 +50,17 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         /* Top Navigation Bar */
@@ -271,21 +279,26 @@
             .top-nav {
                 padding: 12px 16px 8px;
             }
+
             .branding-icon {
                 width: 36px;
                 height: 36px;
             }
+
             .info-wrapper {
                 padding: 20px 14px;
             }
+
             .info-container {
                 padding: 20px 16px;
                 gap: 20px;
                 border-radius: 18px;
             }
+
             .screen-title {
                 font-size: 22px;
             }
+
             .item-heading {
                 font-size: 16px;
             }
@@ -293,26 +306,54 @@
 
         /* Comprehensive 6-Tier Landscape Optimization for Info Page */
         @media screen and (orientation: landscape) {
+
             /* Fix body to prevent it from clipping the horizontal scrolling content */
-            html, body {
+            html,
+            body {
                 overflow: hidden !important;
                 height: 100dvh !important;
                 width: 100vw !important;
                 max-width: 100vw !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                position: fixed !important;
             }
-            
+
+            /* Unified 48px Top Navigation - FIXED BUG */
             .top-nav {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100vw !important;
                 height: 48px !important;
-                padding: 0 20px !important;
+                padding: 0 max(20px, env(safe-area-inset-right)) 0 max(20px, env(safe-area-inset-left)) !important;
                 display: flex !important;
                 align-items: center !important;
                 background: var(--dynamic-nav-bg) !important;
                 backdrop-filter: blur(10px) !important;
+                -webkit-backdrop-filter: blur(10px) !important;
                 border-bottom: 1px solid var(--dynamic-nav-border) !important;
+                z-index: 1000 !important;
+                box-sizing: border-box !important;
             }
-            .branding { display: flex !important; align-items: center !important; gap: 8px !important; }
-            .branding-icon { width: 32px !important; height: 32px !important; }
-            .branding-text { font-size: 14px !important; display: block !important; white-space: nowrap !important; }
+
+            .branding {
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+            }
+
+            .branding-icon {
+                width: 32px !important;
+                height: 32px !important;
+            }
+
+            .branding-text {
+                font-size: 14px !important;
+                display: block !important;
+                white-space: nowrap !important;
+            }
 
             /* position:fixed - bypasses ALL parent overflow:hidden - bulletproof scroll fix */
             .info-wrapper {
@@ -321,31 +362,37 @@
                 left: 0 !important;
                 right: 0 !important;
                 bottom: 0 !important;
-                width: 100% !important;
-                max-width: 100% !important;
+                width: 100vw !important;
+                max-width: 100vw !important;
                 display: flex !important;
                 flex-direction: row !important;
                 justify-content: flex-start !important;
-                padding: 0 !important;
+                padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left) !important;
                 overflow-x: auto !important;
                 overflow-y: hidden !important;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
                 align-items: stretch !important;
+                box-sizing: border-box !important;
             }
-            .info-wrapper::-webkit-scrollbar { display: none; }
+
+            .info-wrapper::-webkit-scrollbar {
+                display: none;
+            }
 
             .info-container {
                 display: flex !important;
                 flex-direction: row !important;
                 flex-wrap: nowrap !important;
                 justify-content: flex-start !important;
-                align-items: center !important; /* Center cards vertically inside the container */
+                align-items: center !important;
+                /* Center cards vertically inside the container */
                 padding: 20px 40px !important;
                 gap: 30px !important;
                 width: max-content !important;
                 max-width: none !important;
-                margin: 0 !important; /* CRITICAL: Override portrait margin: 0 auto to prevent left-side clipping */
+                margin: 0 !important;
+                /* CRITICAL: Override portrait margin: 0 auto to prevent left-side clipping */
                 background: transparent !important;
                 border: none !important;
                 box-shadow: none !important;
@@ -355,7 +402,9 @@
 
             /* Center horizontally on very wide screens */
             @media (min-width: 1300px) {
-                .info-container { margin: 0 auto !important; }
+                .info-container {
+                    margin: 0 auto !important;
+                }
             }
 
             .info-card {
@@ -369,97 +418,267 @@
                 flex-shrink: 0 !important;
                 justify-content: flex-start;
                 padding: 25px !important;
-                gap: 12px !important; /* Space between sections inside the card */
+                gap: 12px !important;
+                /* Space between sections inside the card */
                 width: 340px !important;
-                overflow: hidden !important; /* Clip content that exceeds card size */
+                overflow: hidden !important;
+                /* Clip content that exceeds card size */
             }
 
             .main-branding-card {
                 justify-content: center !important;
                 align-items: center !important;
                 text-align: center !important;
-                background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08)) !important;
-                border: 1px solid rgba(255,255,255,0.3) !important;
-                box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08)) !important;
+                border: 1px solid rgba(255, 255, 255, 0.3) !important;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
             }
 
-            .screen-title { margin: 0 !important; color: var(--dynamic-text-primary); font-weight: 700; width: 100% !important; }
-            .section-title { font-size: 11px !important; margin-bottom: 5px !important; opacity: 0.8; }
-            .info-item, .contact-card { background: rgba(0,0,0,0.05); border-radius: 12px; width: 100%; transition: none !important; padding: 12px !important; gap: 8px !important; display: flex !important; flex-direction: column !important; }
-            .action-btn { width: 100%; font-weight: 600; }
-            .item-heading { font-size: 14px !important; font-weight: 500; }
+            .screen-title {
+                margin: 0 !important;
+                color: var(--dynamic-text-primary);
+                font-weight: 700;
+                width: 100% !important;
+            }
+
+            .section-title {
+                font-size: 11px !important;
+                margin-bottom: 5px !important;
+                opacity: 0.8;
+            }
+
+            .info-item,
+            .contact-card {
+                background: rgba(0, 0, 0, 0.05);
+                border-radius: 12px;
+                width: 100%;
+                transition: none !important;
+                padding: 12px !important;
+                gap: 8px !important;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
+            .action-btn {
+                width: 100%;
+                font-weight: 600;
+            }
+
+            .item-heading {
+                font-size: 14px !important;
+                font-weight: 500;
+            }
 
             /* TIER 1: Ultra-Compact (< 344px) */
             @media (max-height: 344px) {
-                .info-card { width: 230px !important; min-height: 185px !important; padding: 12px !important; gap: 6px !important; }
-                .screen-title { font-size: 14px !important; }
-                .item-heading { font-size: 11px !important; }
-                .action-btn { padding: 5px !important; font-size: 10px !important; }
-                .info-item, .contact-card { padding: 8px !important; gap: 4px !important; }
-                .section-title { font-size: 9px !important; }
+                .info-card {
+                    width: 230px !important;
+                    min-height: 185px !important;
+                    padding: 12px !important;
+                    gap: 6px !important;
+                }
+
+                .screen-title {
+                    font-size: 14px !important;
+                }
+
+                .item-heading {
+                    font-size: 11px !important;
+                }
+
+                .action-btn {
+                    padding: 5px !important;
+                    font-size: 10px !important;
+                }
+
+                .info-item,
+                .contact-card {
+                    padding: 8px !important;
+                    gap: 4px !important;
+                }
+
+                .section-title {
+                    font-size: 9px !important;
+                }
             }
 
             /* TIER 2: Compact-Mobile (345px-374px) */
             @media (min-height: 345px) and (max-height: 374px) {
-                .info-card { width: 275px !important; min-height: 230px !important; padding: 14px !important; gap: 8px !important; }
-                .screen-title { font-size: 16px !important; }
-                .info-item, .contact-card { padding: 10px !important; }
+                .info-card {
+                    width: 275px !important;
+                    min-height: 230px !important;
+                    padding: 14px !important;
+                    gap: 8px !important;
+                }
+
+                .screen-title {
+                    font-size: 16px !important;
+                }
+
+                .info-item,
+                .contact-card {
+                    padding: 10px !important;
+                }
             }
 
             /* TIER 3: Standard-Mobile (375px-399px) */
             @media (min-height: 375px) and (max-height: 399px) {
-                .info-card { width: 300px !important; min-height: 250px !important; padding: 18px !important; gap: 10px !important; }
-                .screen-title { font-size: 20px !important; }
+                .info-card {
+                    width: 300px !important;
+                    min-height: 250px !important;
+                    padding: 18px !important;
+                    gap: 10px !important;
+                }
+
+                .screen-title {
+                    font-size: 20px !important;
+                }
             }
 
             /* TIER 4: Large-Mobile (400px-499px) */
             @media (min-height: 400px) and (max-height: 499px) {
-                .info-card { width: 330px !important; min-height: 280px !important; padding: 20px !important; gap: 14px !important; }
-                .screen-title { font-size: 22px !important; }
+                .info-card {
+                    width: 330px !important;
+                    min-height: 280px !important;
+                    padding: 20px !important;
+                    gap: 14px !important;
+                }
+
+                .screen-title {
+                    font-size: 22px !important;
+                }
             }
 
             /* TIER 5: Small-Tablet (500-699px) */
             @media (min-height: 500px) and (max-height: 699px) {
-                .top-nav { height: 60px !important; padding: 15px 20px 10px !important; }
-                .branding-icon { width: 42px !important; height: 42px !important; }
-                .branding-text { font-size: 16px !important; }
-                .info-wrapper { top: 60px !important; }
-                .info-card { width: 360px !important; min-height: 350px !important; padding: 28px !important; gap: 18px !important; }
-                .screen-title { font-size: 26px !important; }
-                .action-btn { padding: 12px !important; font-size: 14px !important; }
-                .contact-email { font-size: 16px !important; }
-                .item-heading { font-size: 15px !important; }
-                .section-title { font-size: 12px !important; }
+                .top-nav {
+                    height: 60px !important;
+                    padding: 15px 20px 10px !important;
+                }
+
+                .branding-icon {
+                    width: 42px !important;
+                    height: 42px !important;
+                }
+
+                .branding-text {
+                    font-size: 16px !important;
+                }
+
+                .info-wrapper {
+                    top: 60px !important;
+                }
+
+                .info-card {
+                    width: 360px !important;
+                    min-height: 350px !important;
+                    padding: 28px !important;
+                    gap: 18px !important;
+                }
+
+                .screen-title {
+                    font-size: 26px !important;
+                }
+
+                .action-btn {
+                    padding: 12px !important;
+                    font-size: 14px !important;
+                }
+
+                .contact-email {
+                    font-size: 16px !important;
+                }
+
+                .item-heading {
+                    font-size: 15px !important;
+                }
+
+                .section-title {
+                    font-size: 12px !important;
+                }
             }
 
             /* TIER 6: Desktop / Large Tablet (700px+) */
             @media (min-height: 700px) {
-                .top-nav { height: 70px !important; padding: 20px 25px 12px !important; }
-                .branding-icon { width: 52px !important; height: 52px !important; }
-                .branding-text { font-size: 22px !important; }
-                .info-wrapper { top: 70px !important; }
-                .info-card { width: 440px !important; min-height: 420px !important; padding: 35px !important; gap: 25px !important; }
-                .screen-title { font-size: 32px !important; }
-                .action-btn { padding: 15px !important; font-size: 16px !important; }
-                .contact-email { font-size: 18px !important; }
-                .item-heading { font-size: 16px !important; }
-                .section-title { font-size: 13px !important; }
+                .top-nav {
+                    height: 70px !important;
+                    padding: 20px 25px 12px !important;
+                }
+
+                .branding-icon {
+                    width: 52px !important;
+                    height: 52px !important;
+                }
+
+                .branding-text {
+                    font-size: 22px !important;
+                }
+
+                .info-wrapper {
+                    top: 70px !important;
+                }
+
+                .info-card {
+                    width: 440px !important;
+                    min-height: 420px !important;
+                    padding: 35px !important;
+                    gap: 25px !important;
+                }
+
+                .screen-title {
+                    font-size: 32px !important;
+                }
+
+                .action-btn {
+                    padding: 15px !important;
+                    font-size: 16px !important;
+                }
+
+                .contact-email {
+                    font-size: 18px !important;
+                }
+
+                .item-heading {
+                    font-size: 16px !important;
+                }
+
+                .section-title {
+                    font-size: 13px !important;
+                }
             }
 
             /* Utilities */
-            .info-wrapper::-webkit-scrollbar { height: 6px; }
-            .info-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; margin: 0 40px; }
-            .info-wrapper::-webkit-scrollbar-thumb { background: var(--dynamic-nav-border); border-radius: 10px; }
+            .info-wrapper::-webkit-scrollbar {
+                height: 6px;
+            }
+
+            .info-wrapper::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 10px;
+                margin: 0 40px;
+            }
+
+            .info-wrapper::-webkit-scrollbar-thumb {
+                background: var(--dynamic-nav-border);
+                border-radius: 10px;
+            }
         }
 
         /* Portrait override (Optional: ensures consistency if page is loaded in portrait on high-res) */
         @media (min-width: 900px) and (orientation: portrait) {
-            .info-container { max-width: 800px !important; padding: 60px !important; }
-            .info-card { width: 100% !important; margin-bottom: 30px; }
+            .info-container {
+                max-width: 800px !important;
+                padding: 60px !important;
+            }
+
+            .info-card {
+                width: 100% !important;
+                margin-bottom: 30px;
+            }
         }
 
         /* Hide injected elements from global theme script if any */
-        #top-nav-night-mode, 
+        #top-nav-night-mode,
         .theme-fab,
         .theme-toggle {
             display: none !important;
@@ -474,7 +693,9 @@
     <nav class="top-nav">
         <div class="nav-left">
             <a href="javascript:history.back()" class="back-btn" title="Back">
-                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                <svg viewBox="0 0 24 24">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                </svg>
             </a>
         </div>
         <div class="nav-center-brand">
@@ -483,13 +704,12 @@
             </div>
             <span class="branding-text">Pro coding</span>
         </div>
-        <div class="nav-right"></div>
     </nav>
 
     <!-- Info Container -->
     <div class="info-wrapper">
         <div class="info-container">
-            
+
             <!-- Column 1: Header & Legal -->
             <div class="info-card main-branding-card">
                 <h2 class="screen-title">About Pro Coding</h2>
@@ -499,8 +719,10 @@
                     <div class="info-item">
                         <div class="item-heading">Privacy Policy</div>
                         <button class="action-btn">
-                            <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: currentColor;" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                            <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: currentColor;"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
                             </svg>
                             View Privacy
                         </button>
@@ -538,10 +760,12 @@
                             Rate Now
                         </button>
                     </div>
-                    
+
                     <div class="contact-card" style="margin-top: 5px; padding: 15px !important;">
-                        <p style="color: var(--dynamic-text-secondary); font-size: 11px; margin-bottom: 8px;">For any support, feedback or issues, please reach out to us at:</p>
-                        <a href="mailto:support@procoding.school" class="contact-email" style="font-size: 14px; color: var(--dynamic-text-primary); font-weight: 700;">support@procoding.school</a>
+                        <p style="color: var(--dynamic-text-secondary); font-size: 11px; margin-bottom: 8px;">For any
+                            support, feedback or issues, please reach out to us at:</p>
+                        <a href="mailto:support@procoding.school" class="contact-email"
+                            style="font-size: 14px; color: var(--dynamic-text-primary); font-weight: 700;">support@procoding.school</a>
                     </div>
                 </div>
 
@@ -631,4 +855,3 @@
 </body>
 
 </html>
-
