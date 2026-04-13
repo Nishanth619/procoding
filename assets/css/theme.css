@@ -173,7 +173,7 @@
 }
 
 .branding-text {
-    color: var(--dynamic-text-primary) !important;
+    color: #ffffff !important;
     font-size: 18px !important;
     font-weight: 700 !important;
     letter-spacing: -0.5px !important;
