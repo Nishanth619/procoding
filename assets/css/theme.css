@@ -138,11 +138,18 @@
 }
 
 /* ===== GLOBAL BRANDING ===== */
-.branding {
+.branding,
+.nav-center-brand {
     display: flex !important;
     align-items: center !important;
     gap: 12px !important;
     text-decoration: none !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
 }
 
 .branding-icon {
