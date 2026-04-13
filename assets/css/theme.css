@@ -1167,3 +1167,14 @@ code {
     }
 }
 
+
+
+/* Prevent absolute centered logo from overlapping nav buttons on constrained scopes */
+@media screen and (max-height: 499px) and (orientation: landscape), screen and (max-width: 650px) and (orientation: portrait) {
+    .nav-center-brand {
+        position: static !important;
+        transform: none !important;
+        flex: 1 1 auto !important;
+        justify-content: center !important;
+    }
+}
