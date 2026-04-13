@@ -197,6 +197,7 @@
     // Applies inline padding-top to .top-nav so no CSS rule can override it.
     function getTopInset() {
         // ── Method 1: CSS env(safe-area-inset-top) ──
+        // Works for notch devices (iPhone X+, Pixel, etc.)
         var testEl = document.createElement('div');
         testEl.style.cssText = [
             'position:fixed', 'top:0', 'left:0', 'width:1px',
@@ -208,12 +209,19 @@
         document.body.removeChild(testEl);
         if (envVal > 1) return envVal;
 
-        // ── Method 2: Browser toolbar height (for non-notch like Samsung S8) ──
-        // outerHeight = window height including browser UI (but not OS status bar)
-        // innerHeight = layout viewport height (content area below browser toolbar)
-        // Difference = browser toolbar height
-        var toolbarH = window.outerHeight - window.innerHeight;
-        if (toolbarH > 15 && toolbarH < 150) return toolbarH;
+        // ── Method 2: Browser toolbar height ──
+        // ONLY on real mobile devices (touch + small screen).
+        // On desktop, outerHeight - innerHeight includes the title bar, tab bar,
+        // bookmarks bar etc. which would incorrectly add 100-150px of padding.
+        var isMobile = (
+            ('ontouchstart' in window || navigator.maxTouchPoints > 0) &&
+            window.screen.width <= 1024
+        );
+        if (isMobile) {
+            var toolbarH = window.outerHeight - window.innerHeight;
+            // Sanity range: 20–80px covers Android/Samsung browser toolbar
+            if (toolbarH > 20 && toolbarH < 80) return toolbarH;
+        }
 
         return 0;
     }
