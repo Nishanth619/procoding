@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -334,14 +334,14 @@
             body { 
                 overflow: hidden !important; 
                 height: 100dvh !important; 
-                padding: 0 !important;
+                padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left) !important;
                 display: flex !important;
-                align-items: center !important;
+                align-items: flex-start !important;
                 justify-content: center !important;
             }
 
             .chat-container {
-                height: 100dvh !important;
+                height: 100% !important;
                 max-width: 100% !important;
                 border-radius: 0 !important;
                 border: none !important;
